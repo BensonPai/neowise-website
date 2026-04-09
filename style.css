@@ -130,6 +130,16 @@ a { text-decoration: none; color: inherit; }
 .case-card { transition: transform 0.3s, border-color 0.3s; }
 .case-card:hover { transform: translateY(-5px); border-color: #a855f7; }
 
+/* 案例分類標題 */
+.case-category { font-size: 1.6rem; color: #a855f7; margin: 50px 0 20px; padding-bottom: 10px; border-bottom: 2px solid #2a2a2a; }
+.case-category:first-of-type { margin-top: 10px; }
+
+/* 篩選按鈕 */
+.case-filter { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 40px; }
+.filter-btn { background: #1a1a1a; border: 1px solid #333; color: #ccc; padding: 10px 20px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s; }
+.filter-btn:hover { border-color: #a855f7; color: #fff; }
+.filter-btn.active { background: #a855f7; border-color: #a855f7; color: #fff; }
+
 /* 地圖容器 */
 .map-container { margin-top: 20px; }
 

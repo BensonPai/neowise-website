@@ -31,34 +31,214 @@
 
 <section class="page-header">
     <h1>成功案例</h1>
-    <p>我們為製造業客戶提供的視覺系統解決方案</p>
+    <p>橫跨面板、半導體、自動化製造、太陽能、醫療、食品等多個產業的視覺系統實績</p>
 </section>
 
 <section class="page-content">
     <div class="container">
+
+        <!-- 產業篩選 -->
+        <div class="case-filter">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="panel">LED / 面板</button>
+            <button class="filter-btn" data-filter="semi">半導體</button>
+            <button class="filter-btn" data-filter="auto">自動化製造</button>
+            <button class="filter-btn" data-filter="solar">太陽能</button>
+            <button class="filter-btn" data-filter="medical">醫療</button>
+            <button class="filter-btn" data-filter="food">食品</button>
+        </div>
+
+        <!-- LED / 面板產業 -->
+        <h2 class="case-category" id="panel">LED / 面板產業</h2>
         <div class="cases-grid">
-            <div class="case-card">
-                <h3>面板產業製造商</h3>
-                <div class="case-item"><p class="case-label">產業</p><p class="case-value">面板製造</p></div>
+            <div class="case-card" data-category="panel">
+                <h3>面板貼合對位系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">大尺寸面板自動對位貼合</p></div>
                 <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">製程對位精度要求高，人工校正耗時且不穩定</p></div>
-                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">導入自動化視覺對位系統，實現高精度即時對位補正</p></div>
-                <div class="case-item"><p class="case-label">成果</p><p class="case-value">對位精度提升至 Sub-pixel 等級，產線效率提升 40%</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">自動化視覺對位系統，即時補正回饋</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">對位精度達 Sub-pixel 等級，產線效率提升 40%</p></div>
             </div>
-            <div class="case-card">
-                <h3>精密機械廠</h3>
-                <div class="case-item"><p class="case-label">產業</p><p class="case-value">精密零件加工</p></div>
-                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">尺寸量測依賴人工，效率低</p></div>
+            <div class="case-card" data-category="panel">
+                <h3>手機面板貼合檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">手機面板貼合品質檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">貼合偏移、氣泡等瑕疵需即時檢出</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高精度視覺檢測系統，自動判定貼合品質</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">檢測準確率達 99% 以上，大幅降低人工複檢</p></div>
+            </div>
+            <div class="case-card" data-category="panel">
+                <h3>手機鏡頭檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">手機鏡頭外觀瑕疵檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">鏡頭表面微小瑕疵難以人眼辨識</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">自動化鏡片檢測系統，高解析度影像分析</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">微米級瑕疵檢出，漏檢率大幅降低</p></div>
+            </div>
+            <div class="case-card" data-category="panel">
+                <h3>LED 對位及檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">LED 元件精密對位與品質檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">LED 元件微小，對位精度要求極高</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">多相機同步對位系統搭配即時檢測</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">對位精度與檢測速度同步提升</p></div>
+            </div>
+            <div class="case-card" data-category="panel">
+                <h3>LED 燈板檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">LED 燈板外觀與功能檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">燈板瑕疵種類多樣，傳統規則難以涵蓋</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">AI 深度學習瑕疵分類系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">檢測準確率提升 35%，誤判率降低 60%</p></div>
+            </div>
+            <div class="case-card" data-category="panel">
+                <h3>ACF 貼附檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">面板 ACF 異方性導電膜貼附品質檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">ACF 貼附偏移或氣泡影響導通品質</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高精度視覺檢測，即時判定貼附品質</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">獲國內面板大廠採用，品質良率顯著提升</p></div>
+            </div>
+            <div class="case-card" data-category="panel">
+                <h3>面板 COF 對位</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">面板 COF（Chip on Film）精密對位</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">COF 與面板接合精度要求極高</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">自動點壓對位系統，多點校正補償</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">獲面板大廠採用，對位良率大幅提升</p></div>
+            </div>
+        </div>
+
+        <!-- 半導體產業 -->
+        <h2 class="case-category" id="semi">半導體產業</h2>
+        <div class="cases-grid">
+            <div class="case-card" data-category="semi">
+                <h3>晶片對位系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">晶片精密對位與定位</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">晶片尺寸微小，對位精度要求達微米等級</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高精度影像對位系統，Sub-pixel 演算法</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">對位精度達微米等級，滿足半導體製程需求</p></div>
+            </div>
+            <div class="case-card" data-category="semi">
+                <h3>晶圓對位系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">晶圓製程中的精密對位</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">晶圓對位需兼顧速度與精度</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高速影像處理搭配多點對位校正</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">對位速度與精度同步達標，提升產線效率</p></div>
+            </div>
+            <div class="case-card" data-category="semi">
+                <h3>晶圓檢測系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">晶圓表面瑕疵檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">晶圓表面瑕疵微小且種類多樣</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高解析度影像檢測搭配 AI 瑕疵分類</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">有效檢出微米級瑕疵，降低後製不良率</p></div>
+            </div>
+            <div class="case-card" data-category="semi">
+                <h3>晶粒對位及檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">晶粒取放對位與外觀檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">晶粒極小，需同時完成對位與品質判定</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">整合對位與檢測的雙功能視覺系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">一站式完成對位與檢測，節省製程時間</p></div>
+            </div>
+        </div>
+
+        <!-- 自動化製造 -->
+        <h2 class="case-category" id="auto">自動化製造</h2>
+        <div class="cases-grid">
+            <div class="case-card" data-category="auto">
+                <h3>貼合機對位系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">貼合製程自動對位</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">貼合精度直接影響產品良率</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">自動貼合對位系統，即時補正</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">獲 APPLE 供應商採用，良率顯著提升</p></div>
+            </div>
+            <div class="case-card" data-category="auto">
+                <h3>裂片機對位系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">裂片製程精密對位</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">裂片位置偏差導致材料浪費</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">視覺導引裂片對位系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">裂片精度大幅提升，材料損耗降低</p></div>
+            </div>
+            <div class="case-card" data-category="auto">
+                <h3>安全氣囊檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">汽車安全氣囊外觀品質檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">安全氣囊為安全關鍵零件，不容許瑕疵</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">全自動視覺檢測系統，100% 全檢</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">實現零漏檢目標，確保產品安全性</p></div>
+            </div>
+            <div class="case-card" data-category="auto">
+                <h3>WI-FI 模組檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">WI-FI 模組外觀與焊點檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">模組體積小，焊點瑕疵難以人眼辨識</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高倍率視覺檢測系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">檢測速度提升 5 倍，漏檢率降低 90%</p></div>
+            </div>
+            <div class="case-card" data-category="auto">
+                <h3>隨身碟組裝檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">隨身碟組裝完整性檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">組裝缺件、錯件需即時檢出</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">有無件檢測視覺系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">100% 線上全檢，杜絕缺件流出</p></div>
+            </div>
+            <div class="case-card" data-category="auto">
+                <h3>圓棒檢測系統</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">金屬圓棒外觀尺寸量測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">人工量測效率低且精度不穩定</p></div>
                 <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">自動化視覺量測系統</p></div>
                 <div class="case-item"><p class="case-label">成果</p><p class="case-value">量測時間縮短 80%，精度達 ±0.01mm</p></div>
             </div>
-            <div class="case-card">
-                <h3>電子零件製造商</h3>
-                <div class="case-item"><p class="case-label">產業</p><p class="case-value">SMT 電子組裝</p></div>
-                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">人工目視檢測速度慢、漏檢率高</p></div>
-                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">導入 AI 視覺檢測系統</p></div>
-                <div class="case-item"><p class="case-label">成果</p><p class="case-value">檢測速度提升 5 倍，漏檢率降低 90%</p></div>
+        </div>
+
+        <!-- 太陽能產業 -->
+        <h2 class="case-category" id="solar">太陽能產業</h2>
+        <div class="cases-grid">
+            <div class="case-card" data-category="solar">
+                <h3>電池基板檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">太陽能電池基板瑕疵檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">基板表面瑕疵影響發電效率</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高速線掃描檢測系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">有效檢出裂紋、髒污等瑕疵，提升良率</p></div>
+            </div>
+            <div class="case-card" data-category="solar">
+                <h3>電池模組檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">太陽能電池模組品質檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">模組組裝後需全面品質確認</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">多相機整合檢測系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">實現模組出貨前 100% 品質把關</p></div>
             </div>
         </div>
+
+        <!-- 醫療產業 -->
+        <h2 class="case-category" id="medical">醫療產業</h2>
+        <div class="cases-grid">
+            <div class="case-card" data-category="medical">
+                <h3>骨釘數量及尺寸量測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">醫療骨釘自動計數與尺寸量測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">骨釘為醫療器材，數量與尺寸不容許誤差</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">視覺自動計數與精密量測系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">100% 準確計數，量測精度符合醫療規範</p></div>
+            </div>
+            <div class="case-card" data-category="medical">
+                <h3>藥錠包裝檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">藥錠包裝完整性與外觀檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">藥品包裝缺陷直接影響用藥安全</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">高速視覺檢測系統，檢測缺錠、破損、異物</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">檢測速度達產線要求，確保包裝品質</p></div>
+            </div>
+        </div>
+
+        <!-- 食品產業 -->
+        <h2 class="case-category" id="food">食品產業</h2>
+        <div class="cases-grid">
+            <div class="case-card" data-category="food">
+                <h3>泡麵異物檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">泡麵生產線異物檢測</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">食品安全要求嚴格，異物不容許流入市場</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">即時影像異物檢測系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">有效攔截異物，保障食品安全</p></div>
+            </div>
+            <div class="case-card" data-category="food">
+                <h3>食品條碼檢測</h3>
+                <div class="case-item"><p class="case-label">應用</p><p class="case-value">食品包裝條碼辨識與驗證</p></div>
+                <div class="case-item"><p class="case-label">挑戰</p><p class="case-value">條碼印刷不良導致出貨退回</p></div>
+                <div class="case-item"><p class="case-label">解決方案</p><p class="case-value">自動條碼辨識與品質判定系統</p></div>
+                <div class="case-item"><p class="case-label">成果</p><p class="case-value">條碼辨識率達 99.9%，杜絕不良品出貨</p></div>
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -79,6 +259,30 @@
     </div>
     <div class="footer-bottom"><p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p></div>
 </footer>
-<script>document.querySelector('.menu-toggle').addEventListener('click', function() { document.querySelector('.nav-links').classList.toggle('active'); });</script>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+});
+
+// 案例篩選功能
+document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+        document.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var filter = btn.getAttribute('data-filter');
+        document.querySelectorAll('.case-card').forEach(function(card) {
+            card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
+        });
+        document.querySelectorAll('.case-category').forEach(function(cat) {
+            if (filter === 'all') { cat.style.display = ''; return; }
+            cat.style.display = (cat.id === filter) ? '' : 'none';
+        });
+        document.querySelectorAll('.cases-grid').forEach(function(grid) {
+            var visible = grid.querySelectorAll('.case-card[style=""], .case-card:not([style])');
+            grid.style.display = visible.length > 0 ? '' : 'none';
+        });
+    });
+});
+</script>
 </body>
 </html>
