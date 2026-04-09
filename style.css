@@ -11,6 +11,7 @@ a { text-decoration: none; color: inherit; }
 .nav-links { list-style: none; display: flex; gap: 30px; align-items: center; }
 .nav-links a { color: #ccc; transition: color 0.3s; }
 .nav-links a:hover { color: #fff; }
+.nav-links a.active { color: #a855f7; }
 .btn-nav { background: #fff; color: #0a0a0a !important; padding: 10px 24px; border-radius: 30px; font-weight: 600; }
 .btn-nav:hover { background: #a855f7; color: #fff !important; }
 .menu-toggle { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
@@ -103,6 +104,34 @@ a { text-decoration: none; color: inherit; }
 .form-group textarea { height: 120px; resize: vertical; }
 .btn-submit { background: #a855f7; color: #fff; padding: 14px 36px; border: none; border-radius: 30px; font-size: 1rem; font-weight: 600; cursor: pointer; width: 100%; }
 .btn-submit:hover { background: #9333ea; }
+
+/* 進場動畫 */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.hero-content { animation: fadeInUp 0.8s ease-out; }
+.service-card, .case-card, .feature-tag { opacity: 0; animation: fadeInUp 0.6s ease-out forwards; }
+.service-card:nth-child(1), .case-card:nth-child(1) { animation-delay: 0.1s; }
+.service-card:nth-child(2), .case-card:nth-child(2) { animation-delay: 0.2s; }
+.service-card:nth-child(3), .case-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-tag:nth-child(1) { animation-delay: 0.05s; }
+.feature-tag:nth-child(2) { animation-delay: 0.1s; }
+.feature-tag:nth-child(3) { animation-delay: 0.15s; }
+.feature-tag:nth-child(4) { animation-delay: 0.2s; }
+.feature-tag:nth-child(5) { animation-delay: 0.25s; }
+.feature-tag:nth-child(6) { animation-delay: 0.3s; }
+
+/* scroll 動畫 */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* case-card hover */
+.case-card { transition: transform 0.3s, border-color 0.3s; }
+.case-card:hover { transform: translateY(-5px); border-color: #a855f7; }
+
+/* 地圖容器 */
+.map-container { margin-top: 20px; }
 
 /* 手機版 */
 @media (max-width: 768px) {

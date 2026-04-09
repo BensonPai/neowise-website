@@ -3,8 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVQJDMZYRH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QVQJDMZYRH');</script>
     <title>炘智科技 NEOWISE TECHNOLOGY - 精準視覺，智慧未來</title>
     <meta name="description" content="炘智科技有限公司，專業的機器視覺系統開發商。視覺對位、瑕疵檢測、AI 智慧化升級。">
+    <meta name="keywords" content="機器視覺,視覺檢測,視覺對位,AI視覺檢測,瑕疵檢測,半導體視覺,PCB檢測,工業視覺,炘智科技,NeoWise">
+    <meta property="og:title" content="炘智科技 NEOWISE TECHNOLOGY - 精準視覺，智慧未來">
+    <meta property="og:description" content="專業的機器視覺系統開發商。視覺對位、瑕疵檢測、AI 智慧化升級。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neowise.com.tw">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -124,13 +132,28 @@
         </div>
     </div>
     <div class="footer-bottom">
-        <p>&copy; 2025 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p>
+        <p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p>
     </div>
 </footer>
 
 <script>
 document.querySelector('.menu-toggle').addEventListener('click', function() {
     document.querySelector('.nav-links').classList.toggle('active');
+});
+
+// Scroll reveal 動畫
+document.querySelectorAll('.services, .why-us, .about-preview, .cta').forEach(function(el) {
+    el.classList.add('reveal');
+});
+var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(function(el) {
+    observer.observe(el);
 });
 </script>
 </body>
