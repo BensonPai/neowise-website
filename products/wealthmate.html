@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WealthMate - 智慧理財系統 | 炘智科技</title>
+    <meta name="description" content="WealthMate：AI 個人理財助手，自動分析收支、追蹤投資組合。">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">炘智科技 <span>軟體產品</span></a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">產品總覽</a></li>
+            <li><a href="smartstock.html">AI 進銷存</a></li>
+            <li><a href="wealthmate.html" class="active">智慧理財</a></li>
+            <li><a href="swiftbridge.html">資料傳輸</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-header teal">
+    <div class="container">
+        <div class="coming-soon">
+            <span class="status-badge teal">🚀 開發中</span>
+            <div class="product-icon-large">💰</div>
+            <h1>WealthMate</h1>
+            <p>智慧個人理財助手，讓每一分錢都花得更聰明</p>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container">
+        <div class="coming-soon">
+            <h2>規劃中的核心功能</h2>
+            <p class="tagline teal">AI 幫你看懂自己的財務狀況</p>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>📂 自動收支分類</h4>
+                    <p>智慧辨識消費類型，自動歸類每筆支出，不用手動記帳也能掌握花費。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📈 投資組合追蹤</h4>
+                    <p>整合股票、基金、加密貨幣等資產，即時查看投資績效與配置比例。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🏥 財務健康評分</h4>
+                    <p>AI 綜合分析您的收支、儲蓄、負債狀況，給出直覺的財務健康分數。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎯 個人化儲蓄建議</h4>
+                    <p>根據您的消費習慣與目標，提供量身打造的省錢與儲蓄策略。</p>
+                </div>
+            </div>
+            <div class="notify-box">
+                <h3>搶先體驗通知</h3>
+                <p>留下 Email，產品上線時我們會第一時間通知您</p>
+                <form class="notify-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='已登記 ✓'; this.querySelector('button').disabled=true;">
+                    <input type="email" placeholder="your@email.com" required aria-label="電子郵件">
+                    <button type="submit">通知我</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h4>炘智科技</h4>
+                <p>NEOWISE TECHNOLOGY LTD.</p>
+            </div>
+            <div class="footer-right">
+                <p>&copy; 2026 炘智科技有限公司</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+{
+  "name": "neowise-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NeoWise 官網 Blog 靜態產生器（零外部相依）",
+  "type": "module",
+  "scripts": {
+    "blog": "node scripts/build-blog.mjs"
+  }
+}

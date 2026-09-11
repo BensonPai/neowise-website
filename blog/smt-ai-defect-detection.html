@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVQJDMZYRH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QVQJDMZYRH');</script>
+    <title>AI 視覺檢測如何降低 SMT 產線的漏檢率 - 炘智科技 NEOWISE</title>
+    <meta name="description" content="傳統人工目檢在 SMT 產線速度慢、漏檢率高。本文說明 AI 視覺檢測如何提升瑕疵辨識準確率，並分享導入時的評估重點。">
+    <meta name="keywords" content="SMT 視覺檢測,AI 瑕疵檢測,漏檢率,機器視覺,智慧製造">
+    <meta name="author" content="炘智科技">
+    <meta property="og:title" content="AI 視覺檢測如何降低 SMT 產線的漏檢率">
+    <meta property="og:description" content="傳統人工目檢在 SMT 產線速度慢、漏檢率高。本文說明 AI 視覺檢測如何提升瑕疵辨識準確率，並分享導入時的評估重點。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/blog/smt-ai-defect-detection.html">
+    <meta property="og:image" content="https://neowise.com.tw/blog/assets/smt-ai-defect-detection/cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://neowise.com.tw/blog/smt-ai-defect-detection.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI 視覺檢測如何降低 SMT 產線的漏檢率","description":"傳統人工目檢在 SMT 產線速度慢、漏檢率高。本文說明 AI 視覺檢測如何提升瑕疵辨識準確率，並分享導入時的評估重點。","image":"https://neowise.com.tw/blog/assets/smt-ai-defect-detection/cover.png","datePublished":"2026-09-11","dateModified":"2026-09-11","author":{"@type":"Organization","name":"炘智科技"},"publisher":{"@type":"Organization","name":"炘智科技 NEOWISE TECHNOLOGY","logo":{"@type":"ImageObject","url":"https://neowise.com.tw/neowiselogo.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/blog/smt-ai-defect-detection.html"}}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="../index.html" class="logo">炘智科技</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="../about.html">關於炘智科技</a></li>
+            <li><a href="../solutions.html">解決方案</a></li>
+            <li><a href="../cases.html">成功案例</a></li>
+            <li><a href="../blog/index.html" class="active">部落格</a></li>
+            <li><a href="../contact.html" class="btn-nav">聯絡我們</a></li>
+        </ul>
+    </div>
+</nav>
+
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="blog-tag">技術文章</span>
+            <h1>AI 視覺檢測如何降低 SMT 產線的漏檢率</h1>
+            <p class="article-meta">炘智科技　•　2026-09-11</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/smt-ai-defect-detection/cover.png" alt="SMT 產線上的 AI 視覺檢測相機特寫" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<h2>為什麼 SMT 產線需要 AI 視覺檢測</h2>
+<p>SMT（表面黏著技術）產線的檢測長期依賴人工目視，或是規則式的 AOI（自動光學檢測）。這兩種做法各有瓶頸：人工目檢速度慢、易疲勞，漏檢率隨工時上升；傳統 AOI 對規則明確的瑕疵有效，但面對外觀多變、邊界模糊的瑕疵時，誤判率偏高。</p>
+<p>導入 AI 深度學習後，系統能從大量樣本中學到「什麼是好、什麼是不好」，對複雜與新型瑕疵的辨識能力明顯優於固定規則。</p>
+<h2>常見瑕疵類型</h2>
+<p>在 SMT 焊點檢測中，最常見需要辨識的瑕疵包括：</p>
+<ul>
+<li><strong>少錫</strong>：焊料不足，影響電氣連接可靠度</li>
+<li><strong>空焊</strong>：焊點未確實接合</li>
+<li><strong>錫橋</strong>：相鄰焊點被多餘焊料連接，造成短路風險</li>
+<li><strong>偏移</strong>：元件貼裝位置偏離焊盤</li>
+</ul>
+<figure><img src="assets/smt-ai-defect-detection/defect-types.png" alt="常見 SMT 焊點瑕疵類型示意圖" loading="lazy"><figcaption>常見 SMT 焊點瑕疵類型示意圖</figcaption></figure>
+<h2>導入 AI 視覺檢測的評估重點</h2>
+<p>導入前建議先釐清三件事：</p>
+<ol>
+<li><strong>現況資料</strong>：目前的漏檢率與誤判率各是多少？有沒有可用的瑕疵影像樣本？</li>
+<li><strong>產線節拍</strong>：每片檢測時間上限，決定硬體與演算法的設計方向。</li>
+<li><strong>整合介面</strong>：需不需要與現有 PLC、MES 或 AOI 設備串接。</li>
+</ol>
+<blockquote>導入 AI 不是要完全取代既有系統，而是針對「規則式檢測搞不定的部分」補上一層學習能力，讓整體漏檢率與誤判率同時下降。</blockquote>
+<h2>預期效益</h2>
+<p>以炘智科技的實務經驗，導入 AI 視覺檢測後，檢測速度可較人工提升數倍，漏檢率明顯下降，同時透過持續回收誤判樣本再訓練，系統會越用越準。</p>
+<p>如果你的產線正面臨漏檢或誤判的困擾，歡迎<a href="../contact.html" rel="noopener">與我們聯絡</a>，一起評估最適合的視覺檢測方案。</p>
+        </div>
+        <div class="article-back"><a href="index.html">← 回部落格列表</a></div>
+    </div>
+</article>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand"><h3>炘智科技</h3><p>NEOWISE TECHNOLOGY LTD.</p></div>
+        <div class="footer-links"><h4>服務項目</h4><ul><li><a href="../about.html">關於炘智科技</a></li><li><a href="../solutions.html">解決方案</a></li><li><a href="../cases.html">成功案例</a></li><li><a href="../blog/index.html">部落格</a></li><li><a href="../contact.html">聯絡我們</a></li></ul></div>
+        <div class="footer-links"><h4>公司資訊</h4><ul><li><a href="../privacy.html">隱私權政策</a></li></ul></div>
+        <div class="footer-contact"><p>📍 231057 新北市新店區永平街18號3樓</p><p>📞 +886-2-3151-7027</p><p>📧 benson@neowise.com.tw</p><p>服務時間：週一至週五 09:00-18:00</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p></div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click', function() { document.querySelector('.nav-links').classList.toggle('active'); });</script>
+</body>
+</html>

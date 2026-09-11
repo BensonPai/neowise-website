@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartStock AI - AI 進銷存系統 | 炘智科技</title>
+    <meta name="description" content="SmartStock AI：AI 驅動的中小企業進銷存管理系統，智慧預測庫存需求。">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo">炘智科技 <span>軟體產品</span></a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">產品總覽</a></li>
+            <li><a href="smartstock.html" class="active">AI 進銷存</a></li>
+            <li><a href="wealthmate.html">智慧理財</a></li>
+            <li><a href="swiftbridge.html">資料傳輸</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="page-header purple">
+    <div class="container">
+        <div class="coming-soon">
+            <span class="status-badge purple">🚀 開發中</span>
+            <div class="product-icon-large">📦</div>
+            <h1>SmartStock AI</h1>
+            <p>AI 驅動的進銷存管理系統，專為中小企業打造</p>
+        </div>
+    </div>
+</section>
+
+<section class="page-content">
+    <div class="container">
+        <div class="coming-soon">
+            <h2>規劃中的核心功能</h2>
+            <p class="tagline purple">讓 AI 幫你管好每一筆庫存</p>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <h4>🤖 AI 銷售預測</h4>
+                    <p>根據歷史數據與市場趨勢，自動預測未來銷售量，提前做好備貨準備。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📊 即時庫存儀表板</h4>
+                    <p>一目了然的視覺化介面，即時掌握所有商品的庫存狀態與流動趨勢。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🔄 多通路整合</h4>
+                    <p>串接電商平台、POS 系統，所有通路的訂單與庫存統一管理。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📋 自動化報表</h4>
+                    <p>每日、每週、每月報表自動產出，營運數據一鍵匯出分析。</p>
+                </div>
+            </div>
+            <div class="notify-box">
+                <h3>搶先體驗通知</h3>
+                <p>留下 Email，產品上線時我們會第一時間通知您</p>
+                <form class="notify-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent='已登記 ✓'; this.querySelector('button').disabled=true;">
+                    <input type="email" placeholder="your@email.com" required aria-label="電子郵件">
+                    <button type="submit">通知我</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h4>炘智科技</h4>
+                <p>NEOWISE TECHNOLOGY LTD.</p>
+            </div>
+            <div class="footer-right">
+                <p>&copy; 2026 炘智科技有限公司</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+document.querySelector('.menu-toggle').addEventListener('click', function() {
+    document.querySelector('.nav-links').classList.toggle('active');
+});
+</script>
+</body>
+</html>
