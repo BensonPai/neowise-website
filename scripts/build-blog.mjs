@@ -173,6 +173,30 @@ function markdownToHtml(md) {
       continue;
     }
 
+    // 表格（| 欄 | 欄 | 形式，第二行為 |---|---| 分隔列）
+    if (trimmed.startsWith('|') && i + 1 < lines.length &&
+        /^\|?[\s:-]*-[\s:|-]*\|?$/.test(lines[i + 1].trim()) &&
+        lines[i + 1].includes('-')) {
+      closeList();
+      const splitRow = (row) => row.trim().replace(/^\||\|$/g, '').split('|').map(c => c.trim());
+      const headers = splitRow(lines[i]);
+      i += 2; // 跳過表頭與分隔列
+      const bodyRows = [];
+      while (i < lines.length && lines[i].trim().startsWith('|')) {
+        bodyRows.push(splitRow(lines[i]));
+        i++;
+      }
+      let table = '<div class="table-wrap"><table><thead><tr>';
+      table += headers.map(h => `<th>${inlineMarkdown(h)}</th>`).join('');
+      table += '</tr></thead><tbody>';
+      for (const row of bodyRows) {
+        table += '<tr>' + row.map(c => `<td>${inlineMarkdown(c)}</td>`).join('') + '</tr>';
+      }
+      table += '</tbody></table></div>';
+      html.push(table);
+      continue;
+    }
+
     // 分隔線
     if (/^(-{3,}|\*{3,})$/.test(trimmed)) {
       closeList();
@@ -210,7 +234,7 @@ function markdownToHtml(md) {
     const para = [line];
     i++;
     while (i < lines.length && lines[i].trim() &&
-           !/^(#{1,4}\s|[-*]\s|\d+\.\s|>\s|-{3,}|\*{3,})/.test(lines[i].trim())) {
+           !/^(#{1,4}\s|[-*]\s|\d+\.\s|>\s|-{3,}|\*{3,}|\|)/.test(lines[i].trim())) {
       para.push(lines[i]);
       i++;
     }

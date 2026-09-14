@@ -17,3 +17,22 @@
 
 放好圖片後（檔名要一致），把文章的 status 改成 approved，再執行「產生部落格.bat」即可。
 建議尺寸：封面圖 1200x630（適合社群分享），內文圖寬度 800 以上。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.png：
+A futuristic smart factory with machine vision systems combining 3D depth
+sensing and AI computing, blue and purple tech lighting, futuristic mood,
+wide banner composition, high resolution.
+
+edge-ai.png（建議改用 Canva）：
+如需 AI 生：An infographic of a production-line camera with a built-in AI
+chip performing real-time defect inference at the edge, flat design,
+dark background, purple accents, no text.
+
+3d-vision.png（建議改用 Canva）：
+如需 AI 生：An infographic comparing three 3D sensing methods (structured
+light, stereo vision, time-of-flight), flat design, dark background,
+purple accents, no text.

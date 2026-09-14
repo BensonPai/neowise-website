@@ -14,3 +14,18 @@
 建議尺寸：封面圖 1200x630（適合社群分享），內文圖寬度 800 以上。
 
 免費圖片來源：Unsplash / Pexels / Pixabay（照片）、Canva / unDraw（資訊圖）。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.png：
+An Industry 4.0 smart factory where machine vision cameras above the
+production line are connected to data dashboards, blue and purple tech
+lighting, futuristic mood, wide banner composition, high resolution.
+
+vision-role.png（建議改用 Canva）：
+如需 AI 生：An infographic of the four roles of machine vision in smart
+manufacturing (quality inspection, data collection, process feedback,
+traceability), flat design, dark background, purple accents, no text.
+（四個角色的中文標題請在 Canva 補上）

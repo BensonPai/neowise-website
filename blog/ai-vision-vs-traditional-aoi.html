@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVQJDMZYRH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QVQJDMZYRH');</script>
+    <title>AI 機器視覺 vs 傳統 AOI：差在哪裡，怎麼選？ - 炘智科技 NEOWISE</title>
+    <meta name="description" content="傳統 AOI 與 AI 機器視覺各有優勢。本文從原理、彈性、誤判率到導入成本，完整比較兩者差異，幫你判斷產線該用哪一種，或如何搭配。">
+    <meta name="keywords" content="AI機器視覺,傳統AOI,AOI比較,AI瑕疵檢測,自動光學檢測,深度學習檢測">
+    <meta name="author" content="炘智科技">
+    <meta property="og:title" content="AI 機器視覺 vs 傳統 AOI：差在哪裡，怎麼選？">
+    <meta property="og:description" content="傳統 AOI 與 AI 機器視覺各有優勢。本文從原理、彈性、誤判率到導入成本，完整比較兩者差異，幫你判斷產線該用哪一種，或如何搭配。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/blog/ai-vision-vs-traditional-aoi.html">
+    <meta property="og:image" content="https://neowise.com.tw/blog/assets/ai-vision-vs-traditional-aoi/cover.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://neowise.com.tw/blog/ai-vision-vs-traditional-aoi.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI 機器視覺 vs 傳統 AOI：差在哪裡，怎麼選？","description":"傳統 AOI 與 AI 機器視覺各有優勢。本文從原理、彈性、誤判率到導入成本，完整比較兩者差異，幫你判斷產線該用哪一種，或如何搭配。","image":"https://neowise.com.tw/blog/assets/ai-vision-vs-traditional-aoi/cover.png","datePublished":"2026-09-13","dateModified":"2026-09-13","author":{"@type":"Organization","name":"炘智科技"},"publisher":{"@type":"Organization","name":"炘智科技 NEOWISE TECHNOLOGY","logo":{"@type":"ImageObject","url":"https://neowise.com.tw/neowiselogo.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/blog/ai-vision-vs-traditional-aoi.html"}}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="../index.html" class="logo">炘智科技</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="../about.html">關於炘智科技</a></li>
+            <li><a href="../solutions.html">解決方案</a></li>
+            <li><a href="../cases.html">成功案例</a></li>
+            <li><a href="../blog/index.html" class="active">部落格</a></li>
+            <li><a href="../contact.html" class="btn-nav">聯絡我們</a></li>
+        </ul>
+    </div>
+</nav>
+
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="blog-tag">技術文章</span>
+            <h1>AI 機器視覺 vs 傳統 AOI：差在哪裡，怎麼選？</h1>
+            <p class="article-meta">炘智科技　•　2026-09-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/ai-vision-vs-traditional-aoi/cover.png" alt="AI 機器視覺與傳統 AOI 檢測比較示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>在瑕疵檢測的世界裡，AOI（自動光學檢測）已經是製造業用了多年的成熟工具。近年 AI 機器視覺興起後，很多人開始問：AI 是不是要取代 AOI 了？該換嗎？</p>
+<p>答案沒有那麼二元。兩者各有擅長的場景，理解差異才能做對選擇。這篇文章把它們攤開來比。</p>
+<h2>先搞懂：兩者的根本差異</h2>
+<p>傳統 AOI 與 AI 機器視覺最核心的差別，在於「怎麼判斷一個東西是好是壞」。</p>
+<ul>
+<li><strong>傳統 AOI 靠規則</strong>：工程師事先設定好判定條件——尺寸範圍、顏色閾值、對比度、位置公差等。系統照著這些規則比對，符合就過、不符合就擋。它像一位遵守明確 SOP 的檢查員。</li>
+<li><strong>AI 機器視覺靠學習</strong>：不寫死規則，而是餵大量「好品」與「不良品」的影像，讓模型自己學會分辨。它像一位看過大量案例、憑經驗判斷的資深檢查員。</li>
+</ul>
+<p>這個根本差異，決定了它們在各種情境下的表現。</p>
+<h2>六大面向比較</h2>
+<div class="table-wrap"><table><thead><tr><th>面向</th><th>傳統 AOI</th><th>AI 機器視覺</th></tr></thead><tbody><tr><td>檢測原理</td><td>預設規則比對</td><td>深度學習模型判斷</td></tr><tr><td>瑕疵彈性</td><td>規則明確者佳，多變者吃力</td><td>擅長外觀多變、邊界模糊的瑕疵</td></tr><tr><td>誤判率</td><td>複雜瑕疵易誤判</td><td>訓練得當後明顯較低</td></tr><tr><td>導入速度</td><td>規則清楚時快</td><td>需收集資料與訓練，前期較久</td></tr><tr><td>維護成本</td><td>新瑕疵需人工重設規則</td><td>可用新樣本再訓練持續優化</td></tr><tr><td>學習能力</td><td>不會自己進步</td><td>越用越準</td></tr></tbody></table></div>
+<figure><img src="assets/ai-vision-vs-traditional-aoi/comparison-table.png" alt="AI 機器視覺與傳統 AOI 六項指標比較表" loading="lazy"></figure>
+<h2>傳統 AOI 的強項</h2>
+<p>別急著覺得 AI 一定比較好。在對的場景，傳統 AOI 依然非常有競爭力：</p>
+<ul>
+<li><strong>規則明確的檢測</strong>：例如尺寸量測、有無件判斷、明確的位置對位，規則寫得出來，AOI 又快又穩。</li>
+<li><strong>導入快、成本可控</strong>：不需要大量訓練資料，規則設定好就能上線。</li>
+<li><strong>判定可解釋</strong>：為什麼判不良，直接對應到哪條規則超標，追溯清楚。</li>
+</ul>
+<p>如果你的瑕疵類型固定、規則明確，傳統 AOI 往往是更務實的選擇。</p>
+<h2>AI 機器視覺的強項</h2>
+<p>當問題變複雜，AI 的價值就浮現了：</p>
+<ul>
+<li><strong>應付多變瑕疵</strong>：刮痕、髒污、色差、形狀不規則這類「說不清規則」的瑕疵，正是 AI 的主場。</li>
+<li><strong>誤判率更低</strong>：規則式系統為了不漏檢，常把判定拉得很嚴，導致大量誤殺；AI 訓練得當後能更精準地區分真假瑕疵。</li>
+<li><strong>會持續進步</strong>：遇到新的瑕疵類型，收集樣本再訓練即可，不必重寫一整套規則。</li>
+</ul>
+<h2>那到底該怎麼選？</h2>
+<p>與其問「AI 還是 AOI」，更好的問法是「我的產線問題是哪一種」：</p>
+<ul>
+<li><strong>瑕疵規則明確、追求速度與低成本</strong> → 傳統 AOI 通常足夠。</li>
+<li><strong>瑕疵多變、現有系統誤判率高、想長期優化</strong> → AI 機器視覺更適合。</li>
+<li><strong>兩者兼有</strong> → 最務實的做法往往是「搭配使用」。</li>
+</ul>
+<blockquote>實務上，越來越多產線採取混合策略：用 AOI 處理規則清楚的量測與判斷，再用 AI 補上那些「規則搞不定」的複雜瑕疵。兩者不是取代關係，而是分工。</blockquote>
+<h2>炘智科技的建議</h2>
+<p>選 AI 還是 AOI，不該從技術偏好出發，而該從你的實際製程與瑕疵特性出發。同樣一句「想做瑕疵檢測」，半導體、PCB 與精密組裝的最佳解可能完全不同。</p>
+<p>炘智科技的做法，是先了解你的產線現況——目前的漏檢率、誤判率、瑕疵類型與節拍需求，再判斷該用規則式檢測、AI 檢測，還是兩者結合，並負責從開發到與 PLC／MES 整合的完整落地。</p>
+<p>如果你正在評估要不要升級現有的 AOI，或不確定 AI 檢測適不適合你的產線，歡迎<a href="../contact.html" rel="noopener">與我們聯絡</a>，我們可以一起釐清最合適的方向。</p>
+        </div>
+        <div class="article-back"><a href="index.html">← 回部落格列表</a></div>
+    </div>
+</article>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand"><h3>炘智科技</h3><p>NEOWISE TECHNOLOGY LTD.</p></div>
+        <div class="footer-links"><h4>服務項目</h4><ul><li><a href="../about.html">關於炘智科技</a></li><li><a href="../solutions.html">解決方案</a></li><li><a href="../cases.html">成功案例</a></li><li><a href="../blog/index.html">部落格</a></li><li><a href="../contact.html">聯絡我們</a></li></ul></div>
+        <div class="footer-links"><h4>公司資訊</h4><ul><li><a href="../privacy.html">隱私權政策</a></li></ul></div>
+        <div class="footer-contact"><p>📍 231057 新北市新店區永平街18號3樓</p><p>📞 +886-2-3151-7027</p><p>📧 benson@neowise.com.tw</p><p>服務時間：週一至週五 09:00-18:00</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p></div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click', function() { document.querySelector('.nav-links').classList.toggle('active'); });</script>
+</body>
+</html>
