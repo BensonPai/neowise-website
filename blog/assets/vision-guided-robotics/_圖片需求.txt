@@ -1,0 +1,41 @@
+本資料夾放這篇文章需要的圖片。依 front-matter 的 images 清單準備：
+
+1. cover.png
+   用途：文章頂部主視覺
+   alt：視覺引導機械手臂在產線上精準取放工件
+   建議：工業機械手臂在產線上由上方視覺相機引導精準取放電子零件，藍紫色科技光線，特寫，高解析
+
+2. vgr-flow.png
+   用途：放在「VGR 怎麼運作」段落之後
+   alt：VGR 系統運作流程示意圖
+   建議：資訊圖，四步驟流程（影像擷取→目標定位→座標轉換→手臂動作），由左到右箭頭，扁平化設計，深色底
+
+3. applications.png
+   用途：放在「哪些場景適合 VGR」段落之後
+   alt：VGR 四大應用場景示意圖
+   建議：資訊圖，四大場景（取放上下料、精密組裝、瑕疵分揀、無序抓取），2x2 方格，扁平化設計，深色底
+
+放好圖片後（檔名要一致），把文章的 status 改成 approved，再執行 build-blog.bat 即可。
+建議尺寸：封面圖 1200x630，內文圖寬度 800 以上。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.png：
+An industrial robotic arm on a production line, guided by a vision camera
+mounted above, precisely picking up an electronic component, blue and purple
+tech lighting, close-up, high resolution, industrial photography style,
+wide banner composition.
+
+vgr-flow.png（建議改用 Canva）：
+如需 AI 生底圖：A four-step process flow infographic (image capture, target
+localization, coordinate transform, robot action), left to right arrows,
+flat design, dark background, purple accents, no text.
+（四步驟的中文標題請在 Canva 補上）
+
+applications.png（建議改用 Canva）：
+如需 AI 生底圖：A 2x2 grid infographic showing four VGR applications
+(pick and place, precision assembly, defect sorting, bin picking),
+flat design, dark background, purple accents, no text.
+（四個場景的中文標題請在 Canva 補上）
