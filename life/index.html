@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智慧喵 - 理財 · 旅遊 · 生活</title>
+    <meta name="description" content="智慧喵的生活部落格：理財教學、旅遊工具與生活分享，順便介紹我自己開發的實用軟體。">
+    <meta name="keywords" content="智慧喵,理財教學,旅遊工具,生活部落格,個人理財,投資">
+    <meta property="og:title" content="智慧喵 - 理財 · 旅遊 · 生活">
+    <meta property="og:description" content="理財教學、旅遊工具與生活分享。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://neowise.com.tw/life/">
+    <link rel="canonical" href="https://neowise.com.tw/life/">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">首頁</a></li>
+            <li><a href="index.html#理財">理財</a></li>
+            <li><a href="index.html#旅遊">旅遊</a></li>
+            <li><a href="index.html#生活">生活</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<section class="hero">
+    <div class="hero-content">
+        <h1>你好，我是<em>智慧喵</em> 🐾</h1>
+        <p class="hero-subtitle">分享理財教學、好用的旅遊工具，還有生活中的大小事<br>順便聊聊我自己開發的實用軟體</p>
+        <a href="tools.html" class="btn-primary">看看我做的工具</a>
+    </div>
+</section>
+<section class="page-content">
+    <div class="container">
+        <div class="cat-filter">
+            <button class="filter-btn active" data-filter="all">全部</button>
+            <button class="filter-btn" data-filter="理財">理財</button>
+            <button class="filter-btn" data-filter="旅遊">旅遊</button>
+            <button class="filter-btn" data-filter="生活">生活</button>
+        </div>
+        <div class="post-grid">
+            <a class="post-card" href="start-personal-finance.html" data-category="理財">
+                <img class="post-card-cover" src="assets/start-personal-finance/cover.png" alt="記帳與個人理財示意" loading="lazy">
+                <div class="post-card-body">
+                    <span class="post-tag ">理財</span>
+                    <h3>理財第一步：先搞懂錢跑去哪了</h3>
+                    <p class="post-date">2026-09-17</p>
+                    <p class="excerpt">想開始理財卻不知從何下手？別急著投資，先從記帳搞懂自己的收支開始。本文用最白話的方式，帶你踏出理財的第一步。</p>
+                </div>
+            </a>
+        </div>
+        
+    </div>
+</section>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.filter-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+        document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
+        btn.classList.add('active');
+        var f = btn.getAttribute('data-filter');
+        document.querySelectorAll('.post-card').forEach(function(c){
+            c.style.display = (f === 'all' || c.getAttribute('data-category') === f) ? '' : 'none';
+        });
+    });
+});
+</script>
+</body>
+</html>

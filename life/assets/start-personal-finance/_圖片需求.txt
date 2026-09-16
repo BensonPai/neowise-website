@@ -1,0 +1,13 @@
+本資料夾放這篇文章的圖片。
+
+cover.png（封面）
+  alt：記帳與個人理財示意
+  建議：溫暖明亮的桌面，筆記本、計算機與一杯咖啡，記帳理財氛圍，柔和薄荷綠色調，清新生活風，高解析
+  尺寸：1200x630
+
+英文 prompt（可貼 Google AI Studio）：
+A warm bright desk with a notebook, calculator and a cup of coffee,
+budgeting and personal finance vibe, soft mint-green tones, fresh
+lifestyle style, high resolution.
+
+放好圖後（檔名一致）雙擊 build-life.bat 重新產生。

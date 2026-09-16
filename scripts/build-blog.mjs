@@ -33,7 +33,6 @@ const GA_ID = 'G-QVQJDMZYRH';
 const STATIC_PAGES = [
   '', 'about.html', 'solutions.html', 'cases.html', 'contact.html',
   'alignment.html', 'inspection.html', 'privacy.html',
-  'products/', 'products/smartstock.html', 'products/swiftbridge.html', 'products/wealthmate.html',
 ];
 
 /* ============================================================
