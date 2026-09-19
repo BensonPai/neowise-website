@@ -15,14 +15,24 @@ import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, statSy
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+// sharp 為選用相依：沒安裝也能照常產生 HTML，只是不縮圖。
+let sharp = null;
+try { sharp = (await import('sharp')).default; }
+catch { console.warn('⚠ 未安裝 sharp，略過自動縮圖（如需縮圖請在 life/ 執行 npm install）。'); }
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const LIFE_ROOT = resolve(__dirname, '..');          // life/
 const CONTENT_DIR = join(LIFE_ROOT, 'content');
+const ASSETS_DIR = join(LIFE_ROOT, 'assets');
 const SITE_URL = 'https://neowise.com.tw/life';
 const YT_URL = 'https://www.youtube.com/@智慧喵';
 
+// 縮圖設定：超過此寬度就等比縮小並覆寫原檔（考慮 2x 高解析螢幕，760px 版面用 1600 足夠）
+const MAX_IMG_WIDTH = 1600;
+const IMG_EXT = /\.(png|jpe?g|webp)$/i;
+
 // 分類 -> 標籤 CSS class（對應 style.css）
-const CAT_CLASS = { '理財': '', '旅遊': 'travel', '生活': 'life' };
+const CAT_CLASS = { '投資理財': 'invest', '旅遊': 'travel', '生活': 'life' };
 
 /* ---------- 工具 ---------- */
 function escapeHtml(str = '') {
@@ -32,6 +42,55 @@ function stripQuotes(s = '') {
   const t = s.trim();
   if ((t.startsWith('"') && t.endsWith('"')) || (t.startsWith("'") && t.endsWith("'"))) return t.slice(1, -1);
   return t;
+}
+
+// 從各種形式的 YouTube 輸入取出影片 ID：純 ID、youtu.be/xxx、watch?v=xxx、embed/xxx、shorts/xxx
+function youtubeId(input = '') {
+  const s = String(input).trim();
+  if (!s) return '';
+  // 已是純 ID（11 碼英數與 -_）
+  if (/^[\w-]{11}$/.test(s)) return s;
+  const m = s.match(/(?:youtu\.be\/|v=|\/embed\/|\/shorts\/)([\w-]{11})/);
+  return m ? m[1] : '';
+}
+
+/* ---------- 自動縮圖 ---------- */
+// 掃描 assets 下所有圖檔，寬度超過 MAX_IMG_WIDTH 就等比縮小並「覆寫原檔」。
+// 已在範圍內的圖不動，避免重複壓縮失真。
+async function optimizeImages() {
+  if (!sharp || !existsSync(ASSETS_DIR)) return;
+  const files = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir)) {
+      const full = join(dir, e);
+      if (statSync(full).isDirectory()) walk(full);
+      else if (IMG_EXT.test(e)) files.push(full);
+    }
+  };
+  walk(ASSETS_DIR);
+
+  let resized = 0;
+  for (const file of files) {
+    try {
+      // 先把原圖整個讀進 buffer，用 buffer 當來源處理，避免 Windows 上同檔讀寫的鎖定問題。
+      const input = readFileSync(file);
+      const meta = await sharp(input, { failOn: 'none' }).metadata();
+      if (!meta.width || meta.width <= MAX_IMG_WIDTH) continue;
+
+      const output = await sharp(input, { failOn: 'none' })
+        .resize({ width: MAX_IMG_WIDTH, withoutEnlargement: true })
+        .toBuffer();
+      writeFileSync(file, output);
+
+      const rel = file.slice(LIFE_ROOT.length + 1).replace(/\\/g, '/');
+      console.log(`  ↓ 縮圖：${rel}（${meta.width}px → ${MAX_IMG_WIDTH}px）`);
+      resized++;
+    } catch (err) {
+      const rel = file.slice(LIFE_ROOT.length + 1).replace(/\\/g, '/');
+      console.warn(`  ⚠ 縮圖失敗（略過）：${rel} — ${err.message}`);
+    }
+  }
+  if (sharp) console.log(`  ✔ 縮圖檢查完成（縮小 ${resized} 張，其餘已在尺寸內）`);
 }
 
 /* ---------- front-matter ---------- */
@@ -131,9 +190,6 @@ function navbar(active) {
         <button class="menu-toggle" aria-label="開啟選單">☰</button>
         <ul class="nav-links">
             <li><a href="index.html"${on('home')}>首頁</a></li>
-            <li><a href="index.html#理財"${on('money')}>理財</a></li>
-            <li><a href="index.html#旅遊"${on('travel')}>旅遊</a></li>
-            <li><a href="index.html#生活"${on('life')}>生活</a></li>
             <li><a href="tools.html"${on('tools')}>我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -182,12 +238,20 @@ function loadArticles() {
 /* ---------- 文章頁 ---------- */
 function renderArticle(a) {
   const { title, description = '', keywords = [], slug, date = '', author = '智慧喵',
-          category = '生活', cover_alt = '', images = [], body } = a;
+          category = '生活', cover_alt = '', images = [], youtube = '', youtube_title = '', body } = a;
   const kw = Array.isArray(keywords) ? keywords.join(',') : keywords;
   const url = `${SITE_URL}/${slug}.html`;
   const cover = images && images[0] ? `assets/${slug}/${images[0].file}` : '';
   const coverUrl = cover ? `${SITE_URL}/${cover}` : '';
   const catClass = CAT_CLASS[category] !== undefined ? CAT_CLASS[category] : '';
+  const ytId = youtubeId(youtube);
+  const videoLabel = youtube_title ? `🎬 ${escapeHtml(youtube_title)}` : '🎬 影片版';
+  const videoHint = ytId ? `<p class="video-hint">🎬 這篇也有影片版，可以搭配<a href="#article-video">文末的影片</a>一起看。</p>\n` : '';
+  const videoBlock = ytId ? `
+        <div class="article-video" id="article-video">
+            <p class="article-video-label">${videoLabel}</p>
+            <div class="video-embed"><iframe src="https://www.youtube.com/embed/${ytId}" title="${escapeHtml(youtube_title || title)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe></div>
+        </div>` : '';
   const jsonLd = {
     '@context': 'https://schema.org', '@type': 'BlogPosting', headline: title, description,
     datePublished: date, dateModified: date,
@@ -225,7 +289,14 @@ ${navbar(null)}
     ${cover ? `<div class="container article-container"><img class="article-cover" src="${cover}" alt="${escapeHtml(cover_alt || title)}" loading="lazy"></div>` : ''}
     <div class="container article-container">
         <div class="article-body">
-${markdownToHtml(body)}
+${videoHint}${markdownToHtml(body)}
+        </div>${videoBlock}
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="${YT_URL}?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
         </div>
         <div class="article-back"><a href="index.html">← 回文章列表</a></div>
     </div>
@@ -240,8 +311,12 @@ function renderIndex(arts) {
   const card = (a) => {
     const cover = a.images && a.images[0] ? `assets/${a.slug}/${a.images[0].file}` : '';
     const catClass = CAT_CLASS[a.category] !== undefined ? CAT_CLASS[a.category] : '';
+    const hasVideo = !!youtubeId(a.youtube || '');
+    const videoBadge = hasVideo ? '<span class="card-video-badge" title="含影片">🎬</span>' : '';
     return `            <a class="post-card" href="${a.slug}.html" data-category="${escapeHtml(a.category || '生活')}">
-                ${cover ? `<img class="post-card-cover" src="${cover}" alt="${escapeHtml(a.cover_alt || a.title)}" loading="lazy">` : '<div class="post-card-cover"></div>'}
+                <div class="post-card-cover-wrap">
+                ${cover ? `<img class="post-card-cover" src="${cover}" alt="${escapeHtml(a.cover_alt || a.title)}" loading="lazy">` : '<div class="post-card-cover"></div>'}${videoBadge}
+                </div>
                 <div class="post-card-body">
                     <span class="post-tag ${catClass}">${escapeHtml(a.category || '生活')}</span>
                     <h3>${escapeHtml(a.title)}</h3>
@@ -281,7 +356,7 @@ ${navbar('home')}
     <div class="container">
         <div class="cat-filter">
             <button class="filter-btn active" data-filter="all">全部</button>
-            <button class="filter-btn" data-filter="理財">理財</button>
+            <button class="filter-btn" data-filter="投資理財">投資理財</button>
             <button class="filter-btn" data-filter="旅遊">旅遊</button>
             <button class="filter-btn" data-filter="生活">生活</button>
         </div>
@@ -322,8 +397,9 @@ ${urls.join('\n')}
 }
 
 /* ---------- 主流程 ---------- */
-function main() {
+async function main() {
   console.log('🐾 智慧喵部落格產生器啟動…\n');
+  await optimizeImages();
   const all = loadArticles();
   const pub = all.filter(a => a.status === 'approved' || a.status === 'published')
     .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
@@ -340,4 +416,4 @@ function main() {
   console.log('  ✔ sitemap：life/sitemap.xml');
   console.log('\n✅ 完成。');
 }
-main();
+main().catch(err => { console.error('❌ 產生失敗：', err); process.exit(1); });

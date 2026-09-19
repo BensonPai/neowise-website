@@ -1,0 +1,13 @@
+{
+  "name": "neowise-life-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "智慧喵 生活部落格 靜態產生器（含自動縮圖）",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-life-blog.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.35.4"
+  }
+}
