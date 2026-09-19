@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVQJDMZYRH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QVQJDMZYRH');</script>
+    <title>汽車產業的視覺追溯：從零件序號到全程品質履歷 - 炘智科技 NEOWISE</title>
+    <meta name="description" content="汽車零件量產講究可追溯性。本文說明 AI 機器視覺如何辨識 DPM 雷雕碼與序號，建立從零件到成車的全程追溯與防呆機制。">
+    <meta name="keywords" content="視覺追溯,汽車零件追溯,DPM 辨識,機器視覺,品質追溯,汽車製造">
+    <meta name="author" content="炘智科技">
+    <meta property="og:title" content="汽車產業的視覺追溯：從零件序號到全程品質履歷">
+    <meta property="og:description" content="汽車零件量產講究可追溯性。本文說明 AI 機器視覺如何辨識 DPM 雷雕碼與序號，建立從零件到成車的全程追溯與防呆機制。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/blog/automotive-vision-traceability.html">
+    <meta property="og:image" content="https://neowise.com.tw/blog/assets/automotive-vision-traceability/cover.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://neowise.com.tw/blog/automotive-vision-traceability.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"汽車產業的視覺追溯：從零件序號到全程品質履歷","description":"汽車零件量產講究可追溯性。本文說明 AI 機器視覺如何辨識 DPM 雷雕碼與序號，建立從零件到成車的全程追溯與防呆機制。","image":"https://neowise.com.tw/blog/assets/automotive-vision-traceability/cover.jpg","datePublished":"2026-09-18","dateModified":"2026-09-18","author":{"@type":"Organization","name":"炘智科技"},"publisher":{"@type":"Organization","name":"炘智科技 NEOWISE TECHNOLOGY","logo":{"@type":"ImageObject","url":"https://neowise.com.tw/neowiselogo.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/blog/automotive-vision-traceability.html"}}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="../index.html" class="logo">炘智科技</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="../about.html">關於炘智科技</a></li>
+            <li><a href="../solutions.html">解決方案</a></li>
+            <li><a href="../cases.html">成功案例</a></li>
+            <li><a href="../blog/index.html" class="active">部落格</a></li>
+            <li><a href="../contact.html" class="btn-nav">聯絡我們</a></li>
+        </ul>
+    </div>
+</nav>
+
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="blog-tag">應用案例</span>
+            <h1>汽車產業的視覺追溯：從零件序號到全程品質履歷</h1>
+            <p class="article-meta">炘智科技　•　2026-09-18</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/automotive-vision-traceability/cover.jpg" alt="汽車產線上的視覺系統正在讀取零件雷雕追溯碼" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<h2>為什麼汽車產業特別重視追溯</h2>
+<p>汽車是安全性要求極高的產品，一顆螺絲、一片煞車來令、一組電子模組出問題，都可能引發召回。因此車廠與 Tier 1、Tier 2 供應商都被要求建立<strong>可追溯性（Traceability）</strong>：每個關鍵零件都要能查到它是哪一批、哪一台設備、哪個時間點生產的，以及最後裝到哪一台車上。</p>
+<p>一旦發生品質異常，完整的追溯資料能把召回範圍從「整個批次」縮小到「特定序號」，大幅降低召回成本與商譽損失。</p>
+<h2>什麼是全程視覺追溯</h2>
+<p>全程視覺追溯，是用機器視覺讀取零件上的識別碼（多為 DPM 直接零件標記），並在每個製程站點自動記錄，串成一條完整的品質履歷。</p>
+<figure><img src="assets/automotive-vision-traceability/traceability-flow.jpg" alt="汽車零件全程追溯流程示意圖" loading="lazy"></figure>
+<p>典型的流程包含：</p>
+<ol>
+<li><strong>進料</strong>：讀取供應商零件上的序號，比對進料資訊。</li>
+<li><strong>加工/組裝</strong>：每站讀碼後，將製程參數、設備編號、時間戳綁定到該序號。</li>
+<li><strong>檢測</strong>：視覺檢測結果（合格/不合格）一併寫入該零件的履歷。</li>
+<li><strong>成車綁定</strong>：最終將零件序號與車身號（VIN）關聯，完成從零件到成車的追溯鏈。</li>
+</ol>
+<h2>DPM 辨識的難點</h2>
+<p>汽車零件多為金屬材質，識別碼常用雷射雕刻或針打方式直接標記在零件本體，也就是 DPM（Direct Part Marking）。相較於紙標籤上的印刷條碼，DPM 辨識困難得多：</p>
+<ul>
+<li><strong>低對比</strong>：雕刻碼與金屬底色對比低，普通讀碼器容易失敗。</li>
+<li><strong>反光與曲面</strong>：金屬反光、零件曲面造成影像變形。</li>
+<li><strong>油污與磨損</strong>：產線上的油污、刮痕會讓碼面模糊。</li>
+</ul>
+<figure><img src="assets/automotive-vision-traceability/dpm-marking.jpg" alt="金屬零件上的 DPM 直接零件標記碼特寫" loading="lazy"></figure>
+<p>這正是 AI 機器視覺的價值所在。透過適當的打光設計搭配深度學習辨識模型，系統能在低對比、反光、局部磨損的情況下，仍穩定讀出 DPM 碼，讀取率明顯優於傳統規則式讀碼器。</p>
+<h2>導入視覺追溯的評估重點</h2>
+<p>導入前建議先釐清幾件事：</p>
+<ol>
+<li><strong>標記方式</strong>：零件用的是雷雕、針打還是印刷？碼種是 Data Matrix 還是 QR？決定打光與鏡頭配置。</li>
+<li><strong>產線節拍</strong>：每件的讀碼時間上限，影響硬體選型。</li>
+<li><strong>資料串接</strong>：讀取結果要寫進 MES、SCADA 還是既有追溯資料庫？介面要先談清楚。</li>
+<li><strong>不良處理</strong>：讀碼失敗或檢測不合格時，產線要如何攔截、標示與重工。</li>
+</ol>
+<blockquote>視覺追溯的重點不只是「讀得到碼」，而是把讀碼結果可靠地綁進整條製程資料鏈。讀取率、誤讀率與系統整合，三者缺一不可。</blockquote>
+<h2>預期效益</h2>
+<p>導入視覺追溯後，車廠與供應商能得到幾項具體效益：</p>
+<ul>
+<li><strong>精準召回</strong>：從批次縮小到序號，降低召回範圍與成本。</li>
+<li><strong>品質防呆</strong>：錯料、漏站、重複加工在讀碼當下即被攔截。</li>
+<li><strong>製程可視化</strong>：每個序號都有完整履歷，方便追查異常根因。</li>
+</ul>
+<p>如果你的產線正要建立零件追溯，或現有讀碼器面對 DPM 碼讀取率不佳，歡迎<a href="../contact.html" rel="noopener">與我們聯絡</a>，一起評估最適合的視覺追溯方案。</p>
+        </div>
+        <div class="article-back"><a href="index.html">← 回部落格列表</a></div>
+    </div>
+</article>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand"><h3>炘智科技</h3><p>NEOWISE TECHNOLOGY LTD.</p></div>
+        <div class="footer-links"><h4>服務項目</h4><ul><li><a href="../about.html">關於炘智科技</a></li><li><a href="../solutions.html">解決方案</a></li><li><a href="../cases.html">成功案例</a></li><li><a href="../blog/index.html">部落格</a></li><li><a href="../contact.html">聯絡我們</a></li></ul></div>
+        <div class="footer-links"><h4>公司資訊</h4><ul><li><a href="../privacy.html">隱私權政策</a></li></ul></div>
+        <div class="footer-contact"><p>📍 231057 新北市新店區永平街18號3樓</p><p>📞 +886-2-3151-7027</p><p>📧 benson@neowise.com.tw</p><p>服務時間：週一至週五 09:00-18:00</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p></div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click', function() { document.querySelector('.nav-links').classList.toggle('active'); });</script>
+</body>
+</html>

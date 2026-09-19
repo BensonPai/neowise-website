@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVQJDMZYRH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QVQJDMZYRH');</script>
+    <title>半導體製程檢測：AI 機器視覺如何守住奈米級良率 - 炘智科技 NEOWISE</title>
+    <meta name="description" content="半導體製程對缺陷零容忍。本文說明 AI 機器視覺如何檢測晶圓表面、光罩與封裝缺陷，協助產線在奈米尺度下維持高良率。">
+    <meta name="keywords" content="半導體檢測,晶圓檢測,AI 缺陷檢測,機器視覺,半導體良率,製程檢測">
+    <meta name="author" content="炘智科技">
+    <meta property="og:title" content="半導體製程檢測：AI 機器視覺如何守住奈米級良率">
+    <meta property="og:description" content="半導體製程對缺陷零容忍。本文說明 AI 機器視覺如何檢測晶圓表面、光罩與封裝缺陷，協助產線在奈米尺度下維持高良率。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/blog/semiconductor-process-inspection.html">
+    <meta property="og:image" content="https://neowise.com.tw/blog/assets/semiconductor-process-inspection/cover.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://neowise.com.tw/blog/semiconductor-process-inspection.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"半導體製程檢測：AI 機器視覺如何守住奈米級良率","description":"半導體製程對缺陷零容忍。本文說明 AI 機器視覺如何檢測晶圓表面、光罩與封裝缺陷，協助產線在奈米尺度下維持高良率。","image":"https://neowise.com.tw/blog/assets/semiconductor-process-inspection/cover.jpg","datePublished":"2026-09-19","dateModified":"2026-09-19","author":{"@type":"Organization","name":"炘智科技"},"publisher":{"@type":"Organization","name":"炘智科技 NEOWISE TECHNOLOGY","logo":{"@type":"ImageObject","url":"https://neowise.com.tw/neowiselogo.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/blog/semiconductor-process-inspection.html"}}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="../index.html" class="logo">炘智科技</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="../about.html">關於炘智科技</a></li>
+            <li><a href="../solutions.html">解決方案</a></li>
+            <li><a href="../cases.html">成功案例</a></li>
+            <li><a href="../blog/index.html" class="active">部落格</a></li>
+            <li><a href="../contact.html" class="btn-nav">聯絡我們</a></li>
+        </ul>
+    </div>
+</nav>
+
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="blog-tag">技術文章</span>
+            <h1>半導體製程檢測：AI 機器視覺如何守住奈米級良率</h1>
+            <p class="article-meta">炘智科技　•　2026-09-19</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/semiconductor-process-inspection/cover.jpg" alt="半導體晶圓在檢測設備下呈現彩色繞射光的特寫" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<h2>為什麼半導體製程對檢測特別嚴苛</h2>
+<p>半導體製造要在矽晶圓上疊出數十層、線寬僅奈米等級的電路結構。任何一層出現微粒、刮痕或圖案偏移,都可能讓整顆晶片失效。加上一片晶圓要經過上百道製程,越後段發現缺陷,報廢成本越高。</p>
+<p>因此半導體廠對檢測的要求近乎「零容忍」:不只要找得到缺陷,還要在製程早期就攔截,避免不良繼續往下流。這對檢測的解析度、速度與判別準確度都是極大挑戰。</p>
+<h2>常見的製程缺陷</h2>
+<p>在晶圓與封裝檢測中,常見需要辨識的缺陷包括:</p>
+<ul>
+<li><strong>微粒(Particle)</strong>:附著在晶圓表面的微小顆粒,可能造成短路或斷路。</li>
+<li><strong>刮痕(Scratch)</strong>:搬運或研磨過程造成的表面損傷。</li>
+<li><strong>圖案缺陷(Pattern Defect)</strong>:微影或蝕刻造成的線路缺損、橋接或偏移。</li>
+<li><strong>殘留物(Residue)</strong>:清洗不完全留下的化學殘留。</li>
+</ul>
+<figure><img src="assets/semiconductor-process-inspection/defect-types.jpg" alt="常見半導體製程缺陷類型示意圖" loading="lazy"></figure>
+<h2>傳統檢測的瓶頸與 AI 的價值</h2>
+<p>傳統的自動光學檢測(AOI)與規則式演算法,對規則明確、對比清晰的缺陷有效。但半導體缺陷往往極小、對比低,且晶圓上正常的電路圖案本身就很複雜,規則式方法容易把正常結構誤判成缺陷,造成過殺(overkill)。</p>
+<p>導入 AI 深度學習後,系統能從大量影像中學到「正常圖案長什麼樣」,再把偏離正常的區域標為可疑缺陷。這種做法對複雜圖案與新型缺陷的辨識力明顯優於固定規則,能在維持高偵測率的同時,降低過殺率。</p>
+<blockquote>半導體檢測的難處不只是「找到缺陷」,而是要在極複雜的正常圖案中,把真正的缺陷和無害的圖案變異分開。這正是 AI 學習式檢測的強項。</blockquote>
+<h2>檢測導入的評估重點</h2>
+<p>導入前建議先釐清幾件事:</p>
+<ol>
+<li><strong>缺陷樣本</strong>:是否有足量、已標註的缺陷影像可供訓練?這往往是成敗關鍵。</li>
+<li><strong>解析度需求</strong>:要偵測的最小缺陷尺寸,決定鏡頭、光源與放大倍率。</li>
+<li><strong>產線節拍</strong>:每片晶圓的檢測時間上限,影響硬體與演算法設計。</li>
+<li><strong>資料串接</strong>:檢測結果要如何寫進 MES 與良率分析系統,支援後續根因分析。</li>
+</ol>
+<figure><img src="assets/semiconductor-process-inspection/inspection-flow.jpg" alt="半導體製程各站點檢測流程示意圖" loading="lazy"></figure>
+<h2>預期效益</h2>
+<p>導入 AI 視覺檢測後,半導體產線能得到幾項具體效益:</p>
+<ul>
+<li><strong>早期攔截</strong>:在缺陷往下流之前就發現,降低報廢與重工成本。</li>
+<li><strong>降低過殺</strong>:減少把正常品誤判為不良,提升有效產出。</li>
+<li><strong>良率可視化</strong>:每片晶圓的缺陷分布可追蹤,方便追查製程根因。</li>
+</ul>
+<p>如果你的產線正面臨過殺率偏高,或現有檢測抓不到微小缺陷的困擾,歡迎<a href="../contact.html" rel="noopener">與我們聯絡</a>,一起評估最適合的半導體製程檢測方案。</p>
+        </div>
+        <div class="article-back"><a href="index.html">← 回部落格列表</a></div>
+    </div>
+</article>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand"><h3>炘智科技</h3><p>NEOWISE TECHNOLOGY LTD.</p></div>
+        <div class="footer-links"><h4>服務項目</h4><ul><li><a href="../about.html">關於炘智科技</a></li><li><a href="../solutions.html">解決方案</a></li><li><a href="../cases.html">成功案例</a></li><li><a href="../blog/index.html">部落格</a></li><li><a href="../contact.html">聯絡我們</a></li></ul></div>
+        <div class="footer-links"><h4>公司資訊</h4><ul><li><a href="../privacy.html">隱私權政策</a></li></ul></div>
+        <div class="footer-contact"><p>📍 231057 新北市新店區永平街18號3樓</p><p>📞 +886-2-3151-7027</p><p>📧 benson@neowise.com.tw</p><p>服務時間：週一至週五 09:00-18:00</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p></div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click', function() { document.querySelector('.nav-links').classList.toggle('active'); });</script>
+</body>
+</html>
