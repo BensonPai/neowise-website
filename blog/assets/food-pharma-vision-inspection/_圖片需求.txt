@@ -1,0 +1,30 @@
+本資料夾放這篇文章需要的圖片。依 front-matter 的 images 清單準備：
+
+1. cover.png
+   用途：文章頂部主視覺
+   alt：食品與製藥產線上的機器視覺檢測系統
+   建議：食品與製藥生產線的機器視覺檢測，檢測藥錠包裝與食品異物，潔淨無塵室環境，藍紫色科技光線，高解析
+
+2. applications.png
+   用途：放在「四大檢測應用」段落之後
+   alt：食品與製藥視覺檢測四大應用示意圖
+   建議：資訊圖，四大應用（異物檢測、包裝完整性、藥錠計數、標示辨識），2x2 方格，扁平化設計，深色底
+
+放好圖片後（檔名要一致），把文章的 status 改成 approved，再執行 build-blog.bat 即可。
+建議尺寸：封面圖 1200x630，內文圖寬度 800 以上。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.png：
+A machine vision inspection system on a food and pharmaceutical production
+line, inspecting tablet packaging and detecting food contaminants, bright
+clean cleanroom environment, blue and purple tech lighting, high resolution,
+wide banner composition.
+
+applications.png（建議改用 Canva）：
+如需 AI 生底圖：A 2x2 grid infographic showing four inspection applications
+(foreign object detection, package integrity, tablet counting, label/barcode
+recognition), flat design, dark background, purple accents, no text.
+（四個應用的中文標題請在 Canva 補上）

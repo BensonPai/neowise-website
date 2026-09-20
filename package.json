@@ -1,0 +1,13 @@
+{
+  "name": "neowise-blog",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NeoWise 官網 Blog 靜態產生器（自動縮圖需 sharp，未安裝時自動略過）",
+  "type": "module",
+  "scripts": {
+    "blog": "node scripts/build-blog.mjs"
+  },
+  "dependencies": {
+    "sharp": "^0.35.4"
+  }
+}

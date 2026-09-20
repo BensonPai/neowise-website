@@ -1,0 +1,38 @@
+本資料夾放這篇文章需要的圖片。依 front-matter 的 images 清單準備（新文章一律用 jpg）：
+
+1. cover.jpg
+   用途：文章頂部主視覺
+   alt：物流倉儲自動化視覺辨識示意
+   建議：現代化自動倉儲中,機器視覺相機辨識輸送帶上流動的包裹,藍色科技光線,乾淨明亮背景,高解析
+
+2. sorting-flow.jpg
+   用途：放在「視覺自動化的應用場景」段落之後
+   alt：電商包裹自動分揀流程示意圖
+   建議：資訊圖表,展示進倉→辨識→分揀→出貨的自動化流程,扁平化設計,深色底,藍色點綴
+
+3. vision-picking.jpg
+   用途：放在「視覺導引揀貨」段落之後
+   alt：視覺導引揀貨機器人抓取商品示意圖
+   建議：工業機械手臂在貨架前,由上方視覺相機導引抓取商品,藍色科技光線,乾淨背景
+
+放好圖片後（檔名要一致），重新執行「產生部落格.bat」即可。
+建議尺寸：封面圖 1200x630（適合社群分享），內文圖寬度 800 以上，一律不超過 1600px 寬。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.jpg：
+A machine vision camera identifying parcels moving on a conveyor belt in a
+modern automated warehouse, blue tech lighting, clean bright background,
+high resolution, industrial photography, wide banner composition.
+
+sorting-flow.jpg（建議改用 Canva，AI 生圖文字易出錯）：
+如需 AI 生：An infographic showing an e-commerce parcel automation flow from
+inbound, recognition, sorting to outbound, flat design, dark background,
+blue accents, no text labels.
+（各站點的中文標題請在 Canva 或後製補上）
+
+vision-picking.jpg：
+An industrial robotic arm picking a product from a shelf guided by an
+overhead vision camera, blue tech lighting, clean background, high resolution.

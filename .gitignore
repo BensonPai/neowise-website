@@ -1,0 +1,10 @@
+# Node 相依套件（sharp 縮圖用，本機安裝、不上傳）
+node_modules/
+
+# 系統/編輯器雜項
+.DS_Store
+Thumbs.db
+*.log
+
+# 依賴鎖定檔（可選，若想追蹤可自行移除此行）
+package-lock.json

@@ -1,0 +1,31 @@
+本資料夾放這篇文章需要的圖片。依 front-matter 的 images 清單準備：
+
+1. cover.png
+   用途：文章頂部主視覺
+   alt：AI 機器視覺與傳統 AOI 比較示意
+   建議：左右對比構圖，一側傳統規則式光學檢測設備、一側 AI 深度學習視覺檢測，藍紫色科技光線，工業感，高解析，寬幅
+
+2. comparison-table.png
+   用途：放在「六大面向比較」段落之後
+   alt：AI 機器視覺與傳統 AOI 六項指標比較表
+   建議：資訊圖，六項指標比較表（檢測原理、瑕疵彈性、誤判率、導入速度、維護成本、學習能力），扁平化設計，深色底，紫色點綴
+
+放好圖片後（檔名要一致），把文章的 status 改成 approved，再執行 build-blog.bat 即可。
+建議尺寸：封面圖 1200x630，內文圖寬度 800 以上。
+
+免費圖片來源：Unsplash / Pexels / Pixabay（照片）、Canva / unDraw（資訊圖）。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.png：
+A split-screen comparison: on the left a traditional rule-based optical
+inspection machine, on the right an AI deep-learning vision inspection
+system, blue and purple tech lighting, industrial style, high resolution,
+wide banner composition.
+
+comparison-table.png（建議改用 Canva，比較表文字多，AI 生圖易亂碼）：
+如需 AI 生底圖：A clean comparison-table infographic layout with two
+columns, flat design, dark background, purple accents, no text.
+（六項指標的中文文字請在 Canva 填入）
