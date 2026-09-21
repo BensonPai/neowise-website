@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QVQJDMZYRH"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-QVQJDMZYRH');</script>
+    <title>機器視覺專案導入流程全解析:需求評估、樣品測試、選型、整合到驗收 - 炘智科技 NEOWISE</title>
+    <meta name="description" content="導入機器視覺不是買設備就好。本文完整拆解需求評估、樣品測試、選型、整合到驗收五大階段,幫你少走冤枉路。">
+    <meta name="keywords" content="機器視覺導入,視覺檢測專案,樣品測試,系統整合,智慧製造,導入流程">
+    <meta name="author" content="炘智科技">
+    <meta property="og:title" content="機器視覺專案導入流程全解析:需求評估、樣品測試、選型、整合到驗收">
+    <meta property="og:description" content="導入機器視覺不是買設備就好。本文完整拆解需求評估、樣品測試、選型、整合到驗收五大階段,幫你少走冤枉路。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/blog/vision-project-implementation-guide.html">
+    <meta property="og:image" content="https://neowise.com.tw/blog/assets/vision-project-implementation-guide/cover.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://neowise.com.tw/blog/vision-project-implementation-guide.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="../style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"機器視覺專案導入流程全解析:需求評估、樣品測試、選型、整合到驗收","description":"導入機器視覺不是買設備就好。本文完整拆解需求評估、樣品測試、選型、整合到驗收五大階段,幫你少走冤枉路。","image":"https://neowise.com.tw/blog/assets/vision-project-implementation-guide/cover.jpg","datePublished":"2026-09-21","dateModified":"2026-09-21","author":{"@type":"Organization","name":"炘智科技"},"publisher":{"@type":"Organization","name":"炘智科技 NEOWISE TECHNOLOGY","logo":{"@type":"ImageObject","url":"https://neowise.com.tw/neowiselogo.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/blog/vision-project-implementation-guide.html"}}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="../index.html" class="logo">炘智科技</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="../about.html">關於炘智科技</a></li>
+            <li><a href="../solutions.html">解決方案</a></li>
+            <li><a href="../cases.html">成功案例</a></li>
+            <li><a href="../blog/index.html" class="active">部落格</a></li>
+            <li><a href="../contact.html" class="btn-nav">聯絡我們</a></li>
+        </ul>
+    </div>
+</nav>
+
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="blog-tag">技術文章</span>
+            <h1>機器視覺專案導入流程全解析:需求評估、樣品測試、選型、整合到驗收</h1>
+            <p class="article-meta">炘智科技　•　2026-09-21</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/vision-project-implementation-guide/cover.jpg" alt="工程師在產線前規劃機器視覺專案導入" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<h2>導入機器視覺,難的不是設備</h2>
+<p>很多人以為導入機器視覺就是「買一台相機加軟體」,結果實際上線後才發現讀取率不穩、誤判連連,或是跟現有設備兜不起來。問題往往不出在硬體,而是導入流程沒走扎實。</p>
+<p>機器視覺是一套牽涉光學、演算法、機構與資訊整合的系統工程。把流程拆清楚、每一步驗證到位,才能避免上線後的返工與爭議。以下用五個階段,完整說明一個機器視覺專案該怎麼走。</p>
+<h2>導入的五大階段</h2>
+<figure><img src="assets/vision-project-implementation-guide/process-steps.jpg" alt="機器視覺導入五大階段流程示意圖" loading="lazy"></figure>
+<h3>一、需求評估</h3>
+<p>先把問題定義清楚:要檢測什麼、判斷標準是什麼、可接受的誤判率與漏檢率各是多少。這個階段要蒐集的關鍵資訊包括:</p>
+<ul>
+<li><strong>檢測項目</strong>:瑕疵類型、尺寸範圍、判定規則。</li>
+<li><strong>產線條件</strong>:節拍(每件時間)、擺放方式、環境光源。</li>
+<li><strong>現況數據</strong>:目前的良率、漏檢率、人力成本。</li>
+</ul>
+<p>需求沒定義清楚,後面所有設計都會失焦。這一步花的時間,通常決定整個專案的成敗。</p>
+<h3>二、樣品測試</h3>
+<p>拿實際樣本做測試,確認「這個問題用視覺到底做不做得到」。重點是用真實產線的好品與不良品影像,測試辨識率與誤判率。</p>
+<blockquote>樣品測試一定要用真實樣本,尤其是各種「邊界不良品」。用挑過的漂亮樣本驗證,上線後幾乎一定翻車。</blockquote>
+<p>測試通過與否,是決定要不要投資的關鍵門檻。做不到就及早調整範圍或方法,避免後期投入大量資源才發現行不通。</p>
+<h3>三、選型</h3>
+<p>測試確認可行後,依樣品結果選定合適的軟硬體配置:</p>
+<ul>
+<li><strong>光學選型</strong>:光源、鏡頭、相機的選擇與打光方式,這是影像品質的地基。</li>
+<li><strong>演算法選擇</strong>:規則式、傳統機器學習,還是深度學習,依缺陷特性而定。</li>
+<li><strong>機構與治具</strong>:如何固定與帶動待測物,確保每次成像一致。</li>
+</ul>
+<p>選型要以樣品測試的數據為依據,而不是憑規格表,避免買了高階設備卻不對症。</p>
+<h3>四、整合</h3>
+<p>把視覺系統接進現有產線,與 PLC、MES、機械手臂或既有 AOI 設備串接。這一步的重點是介面與訊號時序:視覺判斷結果要在對的時間點,傳給對的設備做對的動作(過站、剔除、報警)。</p>
+<p>整合階段也會在真實產線上試跑,收集實際數據、微調參數與模型,並建立誤判與漏檢樣本的回收機制,讓系統越用越準。</p>
+<h3>五、驗收</h3>
+<p>依需求評估階段訂下的指標(辨識率、誤判率、漏檢率、節拍)實際量測,確認系統達標才算導入完成。驗收建議:</p>
+<ul>
+<li><strong>用明確數據驗收</strong>:以雙方事前約定的指標與樣本數量為準,不憑感覺。</li>
+<li><strong>涵蓋各種情境</strong>:不同批次、不同光線、各類不良品都要測到。</li>
+<li><strong>確認交付文件</strong>:操作手冊、維護方式、模型更新流程都要交接清楚。</li>
+</ul>
+<h2>常見的導入地雷</h2>
+<p>從實務經驗,以下幾點最容易踩雷:</p>
+<ul>
+<li><strong>跳過樣品測試直接下單</strong>:設備買了才發現做不到,損失最大。</li>
+<li><strong>用漂亮樣本驗證</strong>:上線遇到真實不良品就破功。</li>
+<li><strong>忽略光源設計</strong>:影像品質不穩,再好的演算法也救不回來。</li>
+<li><strong>沒規劃資料回收</strong>:模型無法持續進步,誤判率降不下來。</li>
+</ul>
+<h2>結語</h2>
+<p>機器視覺導入是一場系統工程,走對流程比買貴的設備更重要。從需求評估、樣品測試、選型、整合到驗收,每一步驗證到位,才能真正落地見效。</p>
+<p>如果你正要導入機器視覺,不知道從何評估起,歡迎<a href="../contact.html" rel="noopener">與我們聯絡</a>,我們可以從需求評估與樣品測試開始,陪你把專案走扎實。</p>
+        </div>
+        <div class="article-back"><a href="index.html">← 回部落格列表</a></div>
+    </div>
+</article>
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <div class="footer-brand"><h3>炘智科技</h3><p>NEOWISE TECHNOLOGY LTD.</p></div>
+        <div class="footer-links"><h4>服務項目</h4><ul><li><a href="../about.html">關於炘智科技</a></li><li><a href="../solutions.html">解決方案</a></li><li><a href="../cases.html">成功案例</a></li><li><a href="../blog/index.html">部落格</a></li><li><a href="../contact.html">聯絡我們</a></li></ul></div>
+        <div class="footer-links"><h4>公司資訊</h4><ul><li><a href="../privacy.html">隱私權政策</a></li></ul></div>
+        <div class="footer-contact"><p>📍 231057 新北市新店區永平街18號3樓</p><p>📞 +886-2-3151-7027</p><p>📧 benson@neowise.com.tw</p><p>服務時間：週一至週五 09:00-18:00</p></div>
+    </div>
+    <div class="footer-bottom"><p>&copy; 2026 炘智科技有限公司 NEOWISE TECHNOLOGY LTD.</p></div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click', function() { document.querySelector('.nav-links').classList.toggle('active'); });</script>
+</body>
+</html>
