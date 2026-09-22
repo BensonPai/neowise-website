@@ -1,0 +1,40 @@
+本資料夾放這篇文章需要的圖片。依 front-matter 的 images 清單準備（新文章一律用 jpg）：
+
+1. cover.jpg
+   用途：文章頂部主視覺
+   alt：機器視覺導入成本與 ROI 分析示意
+   建議：工程師與經理站在工業產線前,檢視平板上的成本效益圖表,藍色科技光線,乾淨明亮背景,高解析
+
+2. cost-breakdown.jpg
+   用途：放在「導入成本有哪些」段落之後
+   alt：機器視覺導入成本組成示意圖
+   建議：資訊圖表,展示硬體、軟體、整合、維運四大成本組成,圓餅或堆疊圖,扁平化設計,深色底,藍色點綴
+
+3. roi-curve.jpg
+   用途：放在「如何計算 ROI」段落之後
+   alt：機器視覺投資回收期曲線示意圖
+   建議：資訊圖表,展示投資成本與累積效益隨時間交叉達到回本點的折線圖,扁平化設計,深色底,藍色點綴
+
+放好圖片後（檔名要一致），重新執行「產生部落格.bat」即可。
+建議尺寸：封面圖 1200x630（適合社群分享），內文圖寬度 800 以上，一律不超過 1600px 寬。
+
+=======================================================
+英文 prompt（可直接貼到 Google AI Studio 生圖）
+=======================================================
+
+cover.jpg：
+An engineer and a manager standing in front of an industrial production line,
+reviewing a cost-benefit chart on a tablet, blue tech lighting, clean bright
+background, high resolution, industrial photography, wide banner composition.
+
+cost-breakdown.jpg（建議改用 Canva，AI 生圖文字易出錯）：
+如需 AI 生：An infographic showing machine vision cost breakdown (hardware,
+software, integration, maintenance), pie or stacked chart, flat design, dark
+background, blue accents, no text labels.
+（四大成本的中文標題請在 Canva 或後製補上）
+
+roi-curve.jpg（建議改用 Canva）：
+如需 AI 生：An infographic line chart showing investment cost and cumulative
+benefit crossing at a payback point over time, flat design, dark background,
+blue accents, no text labels.
+（座標軸與回本點的中文標題請在 Canva 或後製補上）
