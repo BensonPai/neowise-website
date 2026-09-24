@@ -85,6 +85,6 @@ images:
 
 - 📚 回到 [投資理財修煉 全系列目錄](invest.html)
 - ⬅️ 上一篇：[ETF 深入：怎麼挑、怎麼配](invest-etf-guide.html)
-- ➡️ 下一篇：槓桿工具：權證與期貨的風險與機會（即將推出）
+- ➡️ 下一篇：[槓桿工具：權證與期貨的風險與機會](invest-leverage-warrants-futures.html)
 
 > 本文為個人學習記錄與知識整理，非投資建議。投資有風險，請依自身情況獨立判斷 🐾
