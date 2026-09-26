@@ -27,8 +27,11 @@ const ASSETS_DIR = join(LIFE_ROOT, 'assets');
 const SITE_URL = 'https://neowise.com.tw/life';
 const YT_URL = 'https://www.youtube.com/@智慧喵';
 
-// 縮圖設定：超過此寬度就等比縮小並覆寫原檔（考慮 2x 高解析螢幕，760px 版面用 1600 足夠）
+// 縮圖設定：超過此寬度就等比縮小（考慮 2x 高解析螢幕，760px 版面用 1600 足夠）
 const MAX_IMG_WIDTH = 1600;
+// 檔案超過此大小就重新壓縮品質（加速網頁載入的主因）
+const MAX_IMG_BYTES = 300 * 1024;   // 300 KB
+const JPEG_QUALITY = 80;            // jpg 壓縮品質（80 幾乎看不出差別，檔案大幅變小）
 const IMG_EXT = /\.(png|jpe?g|webp)$/i;
 
 // 分類 -> 標籤 CSS class（對應 style.css）
@@ -69,28 +72,48 @@ async function optimizeImages() {
   };
   walk(ASSETS_DIR);
 
-  let resized = 0;
+  let processed = 0;
   for (const file of files) {
     try {
       // 先把原圖整個讀進 buffer，用 buffer 當來源處理，避免 Windows 上同檔讀寫的鎖定問題。
       const input = readFileSync(file);
       const meta = await sharp(input, { failOn: 'none' }).metadata();
-      if (!meta.width || meta.width <= MAX_IMG_WIDTH) continue;
+      const tooWide = meta.width && meta.width > MAX_IMG_WIDTH;
+      const tooBig = input.length > MAX_IMG_BYTES;
 
-      const output = await sharp(input, { failOn: 'none' })
-        .resize({ width: MAX_IMG_WIDTH, withoutEnlargement: true })
-        .toBuffer();
-      writeFileSync(file, output);
+      // 尺寸在範圍內、檔案也不大 → 不處理，避免重複壓縮失真
+      if (!tooWide && !tooBig) continue;
 
-      const rel = file.slice(LIFE_ROOT.length + 1).replace(/\\/g, '/');
-      console.log(`  ↓ 縮圖：${rel}（${meta.width}px → ${MAX_IMG_WIDTH}px）`);
-      resized++;
+      let pipeline = sharp(input, { failOn: 'none' });
+      if (tooWide) pipeline = pipeline.resize({ width: MAX_IMG_WIDTH, withoutEnlargement: true });
+
+      // 依格式重新壓縮：jpg 用品質壓縮、png 用最高壓縮等級、webp 用品質壓縮
+      const fmt = (meta.format || '').toLowerCase();
+      if (fmt === 'jpeg' || fmt === 'jpg') {
+        pipeline = pipeline.jpeg({ quality: JPEG_QUALITY, mozjpeg: true });
+      } else if (fmt === 'png') {
+        pipeline = pipeline.png({ compressionLevel: 9, palette: true });
+      } else if (fmt === 'webp') {
+        pipeline = pipeline.webp({ quality: JPEG_QUALITY });
+      }
+
+      const output = await pipeline.toBuffer();
+
+      // 只有在「確實變小」時才覆寫，避免壓縮後反而變大
+      if (output.length < input.length) {
+        writeFileSync(file, output);
+        const rel = file.slice(LIFE_ROOT.length + 1).replace(/\\/g, '/');
+        const before = Math.round(input.length / 1024);
+        const after = Math.round(output.length / 1024);
+        console.log(`  ↓ 優化：${rel}（${before}KB → ${after}KB${tooWide ? `, ${meta.width}px→${MAX_IMG_WIDTH}px` : ''}）`);
+        processed++;
+      }
     } catch (err) {
       const rel = file.slice(LIFE_ROOT.length + 1).replace(/\\/g, '/');
-      console.warn(`  ⚠ 縮圖失敗（略過）：${rel} — ${err.message}`);
+      console.warn(`  ⚠ 圖片優化失敗（略過）：${rel} — ${err.message}`);
     }
   }
-  if (sharp) console.log(`  ✔ 縮圖檢查完成（縮小 ${resized} 張，其餘已在尺寸內）`);
+  if (sharp) console.log(`  ✔ 圖片優化完成（處理 ${processed} 張，其餘已達標）`);
 }
 
 /* ---------- front-matter ---------- */
