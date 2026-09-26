@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【投資理財修煉·進階篇】技術面分析：看懂 K 線、均線與常見指標 - 智慧喵</title>
+    <meta name="description" content="技術面分析不看公司好不好，而是讀市場的情緒與趨勢。這篇介紹 K 線、均線、RSI、MACD 等常見工具，幫你建立用圖表輔助判斷買賣時機的基本功。">
+    <meta name="keywords" content="技術分析,K線,均線,RSI,MACD,技術指標,投資理財">
+    <meta property="og:title" content="【投資理財修煉·進階篇】技術面分析：看懂 K 線、均線與常見指標">
+    <meta property="og:description" content="技術面分析不看公司好不好，而是讀市場的情緒與趨勢。這篇介紹 K 線、均線、RSI、MACD 等常見工具，幫你建立用圖表輔助判斷買賣時機的基本功。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/invest-technical-analysis.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/invest-technical-analysis/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/invest-technical-analysis.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【投資理財修煉·進階篇】技術面分析：看懂 K 線、均線與常見指標","description":"技術面分析不看公司好不好，而是讀市場的情緒與趨勢。這篇介紹 K 線、均線、RSI、MACD 等常見工具，幫你建立用圖表輔助判斷買賣時機的基本功。","datePublished":"2026-09-25","dateModified":"2026-09-25","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/invest-technical-analysis.html"},"image":"https://neowise.com.tw/life/assets/invest-technical-analysis/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag invest">投資理財</span>
+            <h1>【投資理財修煉·進階篇】技術面分析：看懂 K 線、均線與常見指標</h1>
+            <p class="article-meta">智慧喵　•　2026-09-25</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/invest-technical-analysis/cover.jpg" alt="技術面分析 K 線與指標示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>上一篇的基本面分析，問的是「這家公司本質好不好」。這一篇的技術面分析，問的是另一個問題：<strong>「現在這個時機點，市場情緒是怎麼走的？」</strong></p>
+<p>兩種分析不是競爭關係，而是互補：<strong>基本面告訴你「買什麼」，技術面幫你判斷「什麼時候買」</strong>。很多投資人兩者都用。</p>
+<h2>技術面分析的基本邏輯</h2>
+<p>技術面分析有一個核心假設：<strong>歷史會重演</strong>。市場參與者的集體心理（貪婪、恐懼、追高殺低）會在圖表上留下痕跡，這些模式有一定的重複性，所以可以用來預測短期走勢。</p>
+<p>它看的不是公司財報，而是：</p>
+<ul>
+<li><strong>價格</strong>：股價怎麼走</li>
+<li><strong>成交量</strong>：有多少人在買賣</li>
+<li><strong>指標</strong>：從價格和成交量衍生出來的統計數字</li>
+</ul>
+<h2>K 線（蠟燭圖）：最基本的工具</h2>
+<p>K 線（又叫蠟燭圖）是技術分析的基礎。每一根 K 線代表一段時間內（例如一天）的四個價格資訊：</p>
+<ul>
+<li><strong>開盤價</strong>：這段時間開始的價格</li>
+<li><strong>收盤價</strong>：這段時間結束的價格</li>
+<li><strong>最高價</strong>：這段時間的最高點</li>
+<li><strong>最低價</strong>：這段時間的最低點</li>
+</ul>
+<figure><img src="assets/invest-technical-analysis/candlestick.jpg" alt="K 線（蠟燭圖）的結構示意" loading="lazy"></figure>
+<p>實體（開盤到收盤的部分）顯示漲跌方向：</p>
+<ul>
+<li><strong>紅色（陽線）</strong>：收盤 &gt; 開盤，代表這段時間是漲的</li>
+<li><strong>綠色（陰線）</strong>：收盤 &lt; 開盤，代表這段時間是跌的</li>
+</ul>
+<p>上下的「影線」代表最高和最低點。影線長，代表這段時間價格波動大、市場分歧明顯。</p>
+<h2>均線：趨勢的方向盤</h2>
+<p>均線（Moving Average，MA）是把過去 N 天的收盤價平均起來，連成一條線。常見的有：</p>
+<ul>
+<li><strong>MA5、MA10</strong>：短期均線，反映短期趨勢</li>
+<li><strong>MA20（月線）</strong>：中期趨勢指標</li>
+<li><strong>MA60、MA120、MA240</strong>：長期均線，反映長期趨勢</li>
+</ul>
+<p>均線的兩個核心用法：</p>
+<ol>
+<li><strong>趨勢判斷</strong>：股價在均線上方，趨勢向上；在均線下方，趨勢向下。</li>
+<li><strong>黃金交叉/死亡交叉</strong>：短期均線往上穿越長期均線（黃金交叉），可能是買進訊號；往下穿越（死亡交叉），可能是賣出訊號。</li>
+</ol>
+<h2>常見技術指標</h2>
+<p>除了 K 線和均線，還有幾個常用的技術指標：</p>
+<p><strong>RSI（相對強弱指數）</strong></p>
+<ul>
+<li>數值 0 到 100，反映近期漲跌的強弱</li>
+<li><strong>RSI &gt; 70</strong>：超買（漲太多、可能回調）</li>
+<li><strong>RSI &lt; 30</strong>：超賣（跌太多、可能反彈）</li>
+<li>新手最容易理解、也最廣泛被使用的指標之一</li>
+</ul>
+<p><strong>MACD（指數平滑異同移動平均）</strong></p>
+<ul>
+<li>由兩條均線的差距衍生，用來判斷趨勢動能</li>
+<li><strong>MACD 柱狀圖由負轉正</strong>：動能轉強，可能是買進訊號</li>
+<li><strong>MACD 柱狀圖由正轉負</strong>：動能轉弱，可能是賣出訊號</li>
+</ul>
+<p><strong>布林通道（Bollinger Bands）</strong></p>
+<ul>
+<li>由均線加減標準差畫出上下軌</li>
+<li>股價觸碰上軌可能過熱、觸碰下軌可能超跌</li>
+<li>通道收窄代表波動縮小，往往是大波動前的蓄積</li>
+</ul>
+<h2>技術面分析的限制</h2>
+<p>技術面很實用，但有幾個必須知道的限制：</p>
+<ol>
+<li><strong>不保證準確</strong>：指標是統計工具，不是水晶球。同一個指標，不同時機會有不同效果。</li>
+<li><strong>自我實現的預言</strong>：因為很多人同時在看同樣的指標，有時「大家都覺得要跌」就真的跌了——但這不代表指標本身有預測力。</li>
+<li><strong>單用容易誤導</strong>：指標要綜合看，單一指標訊號假訊號很多。</li>
+<li><strong>短線用途居多</strong>：技術面對短中期走勢比較有參考價值，長期投資還是以基本面為主。</li>
+</ol>
+<blockquote>技術分析是工具，不是神諭。<strong>用它輔助判斷時機，不要用它取代對公司基本面的理解。</strong></blockquote>
+<h2>用工具看技術指標更有效率</h2>
+<p>技術分析需要同時觀察多個指標、多個時間週期。手工翻圖非常耗時。我自己用的<a href="tools.html" rel="noopener">股票投資分析系統</a>整合了常用的技術指標，讓你可以快速切換不同股票和時間週期，把分析效率大幅提升。有興趣的話歡迎去看看。</p>
+<h2>小結</h2>
+<ul>
+<li><strong>K 線</strong>：每根包含開盤、收盤、最高、最低四個資訊，是技術分析的基礎。</li>
+<li><strong>均線</strong>：判斷趨勢方向，黃金/死亡交叉是常見訊號。</li>
+<li><strong>RSI</strong>：超買（&gt;70）超賣（&lt;30），直觀好用。</li>
+<li><strong>MACD</strong>：看趨勢動能的轉變。</li>
+<li>技術分析是輔助工具，搭配基本面使用效果更好。</li>
+</ul>
+<p>下一篇，我們把進階篇最後一個面向補齊——<strong>籌碼面與財務面</strong>：看懂法人動向和財報三表。</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="invest.html" rel="noopener">投資理財修煉 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="invest-fundamental-analysis.html" rel="noopener">基本面分析：怎麼看一家公司值不值得投資</a></li>
+<li>➡️ 下一篇：<a href="invest-chips-financial-analysis.html" rel="noopener">籌碼面與財務面：法人動向與財報三表</a></li>
+</ul>
+<blockquote>本文為個人學習記錄與知識整理，非投資建議。投資有風險，請依自身情況獨立判斷 🐾</blockquote>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+</body>
+</html>
