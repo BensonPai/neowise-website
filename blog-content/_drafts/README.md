@@ -17,6 +17,7 @@ date: "2026-09-11"
 author: "炘智科技"
 category: "技術文章"
 status: "draft"
+order: 1
 cover_alt: "封面圖的替代文字（無障礙 + SEO）"
 images:
   - file: "cover.jpg"
@@ -57,6 +58,7 @@ images:
 | author | 否 | 預設「炘智科技」 |
 | category | 否 | 分類標籤，顯示在卡片與文章頁 |
 | status | 是 | draft / approved / published，控制發布狀態 |
+| order | 否 | 同日期多篇時的排序（數字小的排前面）。首頁主要照日期排，同日期才看 order |
 | cover_alt | 否 | 列表卡片與 OG 圖的替代文字 |
 | images | 否 | 圖片需求清單（AI 產出，供審核與配圖用） |
 

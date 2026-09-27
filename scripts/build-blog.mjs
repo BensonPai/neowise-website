@@ -550,7 +550,15 @@ async function main() {
   const all = loadArticles();
   const published = all
     .filter(a => a.status === 'approved' || a.status === 'published')
-    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    .sort((a, b) => {
+      // 主要：日期新到舊
+      const byDate = String(b.date || '').localeCompare(String(a.date || ''));
+      if (byDate !== 0) return byDate;
+      // 次要：同日期時，依 order 由大到小（篇號大＝較新，排前面；沒填 order 的排在有填的後面）
+      const oa = a.order !== undefined && a.order !== '' ? Number(a.order) : -Infinity;
+      const ob = b.order !== undefined && b.order !== '' ? Number(b.order) : -Infinity;
+      return ob - oa;
+    });
 
   const drafts = all.filter(a => a.status === 'draft');
 

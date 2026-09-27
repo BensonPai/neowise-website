@@ -35,7 +35,7 @@ const JPEG_QUALITY = 80;            // jpg 壓縮品質（80 幾乎看不出差�
 const IMG_EXT = /\.(png|jpe?g|webp)$/i;
 
 // 分類 -> 標籤 CSS class（對應 style.css）
-const CAT_CLASS = { '投資理財': 'invest', '旅遊': 'travel', '生活': 'life' };
+const CAT_CLASS = { '投資理財': 'invest', '科技': 'tech', '旅遊': 'travel', '生活': 'life' };
 
 /* ---------- 工具 ---------- */
 function escapeHtml(str = '') {
@@ -213,6 +213,7 @@ function navbar(active) {
         <button class="menu-toggle" aria-label="開啟選單">☰</button>
         <ul class="nav-links">
             <li><a href="index.html"${on('home')}>首頁</a></li>
+            <li><a href="invest.html"${on('invest')}>投資理財修煉</a></li>
             <li><a href="tools.html"${on('tools')}>我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -380,6 +381,7 @@ ${navbar('home')}
         <div class="cat-filter">
             <button class="filter-btn active" data-filter="all">全部</button>
             <button class="filter-btn" data-filter="投資理財">投資理財</button>
+            <button class="filter-btn" data-filter="科技">科技</button>
             <button class="filter-btn" data-filter="旅遊">旅遊</button>
             <button class="filter-btn" data-filter="生活">生活</button>
         </div>
@@ -425,7 +427,15 @@ async function main() {
   await optimizeImages();
   const all = loadArticles();
   const pub = all.filter(a => a.status === 'approved' || a.status === 'published')
-    .sort((a, b) => String(b.date || '').localeCompare(String(a.date || '')));
+    .sort((a, b) => {
+      // 主要：日期新到舊
+      const byDate = String(b.date || '').localeCompare(String(a.date || ''));
+      if (byDate !== 0) return byDate;
+      // 次要：同日期時，依 order 由大到小（篇號大＝較新，排前面；沒填 order 的排在有填的後面）
+      const oa = a.order !== undefined && a.order !== '' ? Number(a.order) : -Infinity;
+      const ob = b.order !== undefined && b.order !== '' ? Number(b.order) : -Infinity;
+      return ob - oa;
+    });
   const drafts = all.filter(a => a.status === 'draft');
   console.log(`  找到文章：${all.length} 篇（發布 ${pub.length}、草稿 ${drafts.length}）`);
   drafts.forEach(d => console.log(`    - [草稿] ${d.title} (${d.slug})`));

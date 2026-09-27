@@ -4,6 +4,7 @@ description: "ETF 是最適合新手的投資工具，但市面上百百種怎�
 keywords: ["ETF", "ETF怎麼選", "指數投資", "資產配置", "被動投資", "投資理財"]
 slug: "invest-etf-guide"
 date: "2026-09-20"
+order: 5
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

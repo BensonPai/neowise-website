@@ -4,6 +4,7 @@ description: "投資的第一步不是選股，而是搞懂資產配置與風險
 keywords: ["資產配置", "風險管理", "投資入門", "理財基本概念", "投資理財", "分散投資"]
 slug: "invest-basics-asset-allocation"
 date: "2026-09-18"
+order: 2
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

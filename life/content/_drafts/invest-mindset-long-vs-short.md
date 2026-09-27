@@ -4,6 +4,7 @@ description: "投資最難的往往不是技術，而是心態。這篇談長期
 keywords: ["投資心態", "長期投資", "短線交易", "投資心理", "複利", "投資理財"]
 slug: "invest-mindset-long-vs-short"
 date: "2026-09-19"
+order: 3
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

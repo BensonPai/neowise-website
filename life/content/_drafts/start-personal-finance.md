@@ -4,6 +4,7 @@ description: "想開始理財卻不知從何下手？別急著投資，先從記
 keywords: ["理財入門", "記帳", "個人理財", "收支管理", "理財教學"]
 slug: "start-personal-finance"
 date: "2026-09-17"
+order: 1
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

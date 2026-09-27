@@ -4,6 +4,7 @@ description: "《富爸爸窮爸爸》是很多人理財路上的啟蒙書。這
 keywords: ["富爸爸窮爸爸", "理財書推薦", "資產與負債", "財務自由", "被動收入", "投資理財"]
 slug: "invest-book-rich-dad-poor-dad"
 date: "2026-09-19"
+order: 3.5
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

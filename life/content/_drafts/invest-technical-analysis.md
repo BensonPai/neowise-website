@@ -4,6 +4,7 @@ description: "技術面分析不看公司好不好，而是讀市場的情緒與
 keywords: ["技術分析", "K線", "均線", "RSI", "MACD", "技術指標", "投資理財"]
 slug: "invest-technical-analysis"
 date: "2026-09-25"
+order: 9
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

@@ -4,6 +4,7 @@ description: "進階篇的最後一塊拼圖：籌碼面看誰在買賣、法人
 keywords: ["籌碼面分析", "財務面分析", "法人買賣", "財報三表", "損益表", "資產負債表", "現金流量表"]
 slug: "invest-chips-financial-analysis"
 date: "2026-09-26"
+order: 10
 author: "智慧喵"
 category: "投資理財"
 status: "approved"
@@ -122,6 +123,6 @@ images:
 
 - 📚 回到 [投資理財修煉 全系列目錄](invest.html)
 - ⬅️ 上一篇：[技術面分析：看懂 K 線、均線與常見指標](invest-technical-analysis.html)
-- ➡️ 下一篇：被動收入策略：讓錢幫你工作（即將推出）
+- ➡️ 下一篇：[被動收入策略：讓錢幫你工作](invest-passive-income.html)
 
 > 本文為個人學習記錄與知識整理，非投資建議。投資有風險，請依自身情況獨立判斷 🐾

@@ -4,6 +4,7 @@ description: "債券常被忽略，但它其實是投資組合裡的穩定器。
 keywords: ["債券", "債券入門", "股債配置", "固定收益", "投資組合", "投資理財"]
 slug: "invest-bonds-intro"
 date: "2026-09-22"
+order: 6
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

@@ -4,6 +4,7 @@ description: "權證、期貨聽起來很厲害，但它們是這個系列裡風
 keywords: ["權證", "期貨", "槓桿投資", "期貨風險", "選擇權", "投資理財"]
 slug: "invest-leverage-warrants-futures"
 date: "2026-09-23"
+order: 7
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

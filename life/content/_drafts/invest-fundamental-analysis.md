@@ -4,6 +4,7 @@ description: "選股不是靠感覺，而是看懂一家公司的基本面。這
 keywords: ["基本面分析", "選股方法", "公司評價", "獲利能力", "本益比", "投資分析"]
 slug: "invest-fundamental-analysis"
 date: "2026-09-24"
+order: 8
 author: "智慧喵"
 category: "投資理財"
 status: "approved"
