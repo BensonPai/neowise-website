@@ -24,6 +24,7 @@
         <ul class="nav-links">
             <li><a href="index.html">首頁</a></li>
             <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
             <li><a href="tools.html">我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -142,6 +143,8 @@
             <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
             <div class="footer-links">
                 <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
                 <a href="tools.html">我的工具</a>
                 <a href="about.html">關於</a>
                 <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
@@ -151,5 +154,23 @@
     </div>
 </footer>
 <script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
 </body>
 </html>

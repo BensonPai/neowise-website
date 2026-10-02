@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】Kotlin 語言基礎：變數、型別、流程控制、函式與 null 安全 - 智慧喵</title>
+    <meta name="description" content="環境裝好後，就從 Kotlin 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Kotlin 的 null 安全機制，打好 Android 開發的地基。學過 Swift 會特別有感。">
+    <meta name="keywords" content="Kotlin 教學,Kotlin 基礎,Android 開發,null 安全,Kotlin 變數,Kotlin 函式,程式入門,nullable">
+    <meta property="og:title" content="【App 開發指南】Kotlin 語言基礎：變數、型別、流程控制、函式與 null 安全">
+    <meta property="og:description" content="環境裝好後，就從 Kotlin 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Kotlin 的 null 安全機制，打好 Android 開發的地基。學過 Swift 會特別有感。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/android-dev-kotlin-basics.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/android-dev-kotlin-basics/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/android-dev-kotlin-basics.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】Kotlin 語言基礎：變數、型別、流程控制、函式與 null 安全","description":"環境裝好後，就從 Kotlin 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Kotlin 的 null 安全機制，打好 Android 開發的地基。學過 Swift 會特別有感。","datePublished":"2026-09-22","dateModified":"2026-09-22","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/android-dev-kotlin-basics.html"},"image":"https://neowise.com.tw/life/assets/android-dev-kotlin-basics/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】Kotlin 語言基礎：變數、型別、流程控制、函式與 null 安全</h1>
+            <p class="article-meta">智慧喵　•　2026-09-22</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/android-dev-kotlin-basics/cover.jpg" alt="Android Studio 中一段 Kotlin 程式碼的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="android-dev-setup-tools.html" rel="noopener">環境裝好了</a>，這篇開始動手寫 <strong>Kotlin</strong>——Android 的官方語言。</p>
+<p>如果你學過這系列的 <a href="ios-dev-swift-basics.html" rel="noopener">Swift 篇</a>，這篇會非常輕鬆，因為 Kotlin 跟 Swift 像親戚，觀念幾乎能直接搬過來，我會順帶點出對照。如果 Kotlin 是你的第一個語言也沒關係，這篇從零講。</p>
+<p>小提醒：Android Studio 裡可以建立 Kotlin 檔案直接執行，或用線上的 Kotlin Playground 邊學邊試。跟著打最有效。</p>
+<h2>一、變數與常數</h2>
+<p>Kotlin 用兩個關鍵字存放資料：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">var score = 100      // var：變數，之後可以改
+val name = &quot;智慧喵&quot;   // val：常數，設定後不能改
+
+score = 120          // ✅ 可以，score 是 var
+// name = &quot;喵喵&quot;     // ❌ 會報錯，name 是 val</code></pre></div>
+<ul>
+<li><code>var</code>：<strong>變數</strong>，值可以變動。</li>
+<li><code>val</code>：<strong>常數</strong>，一旦設定就不能改。</li>
+</ul>
+<blockquote>學過 Swift 的話：<code>var</code> 一樣、Kotlin 的 <code>val</code> 就是 Swift 的 <code>let</code>。習慣一樣——<strong>能用 <code>val</code> 就用 <code>val</code></strong>，更安全。</blockquote>
+<h2>二、資料型別</h2>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">val age: Int = 30           // 整數
+val height: Double = 175.5  // 小數
+val isStudent: Boolean = false // 真／假
+val city: String = &quot;台北&quot;    // 文字</code></pre></div>
+<p>Kotlin 一樣有<strong>型別推斷</strong>，不寫型別它也懂：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">val count = 5          // 自動判斷 Int
+val price = 19.9       // 自動判斷 Double
+val title = &quot;教學&quot;      // 自動判斷 String</code></pre></div>
+<p>（跟 Swift 幾乎一樣，只是布林型別叫 <code>Boolean</code> 不是 <code>Bool</code>。）</p>
+<h2>三、流程控制</h2>
+<h3>條件判斷</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">val temperature = 28
+
+if (temperature &gt;= 30) {
+    println(&quot;好熱，開冷氣&quot;)
+} else if (temperature &gt;= 20) {
+    println(&quot;天氣舒服&quot;)
+} else {
+    println(&quot;有點冷&quot;)
+}</code></pre></div>
+<p>Kotlin 的 if 條件要<strong>加括號</strong> <code>( )</code>（Swift 不用），這是明顯的差異之一。</p>
+<h3>when：多重條件</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">val grade = &quot;B&quot;
+
+when (grade) {
+    &quot;A&quot; -&gt; println(&quot;優秀&quot;)
+    &quot;B&quot; -&gt; println(&quot;良好&quot;)
+    &quot;C&quot; -&gt; println(&quot;及格&quot;)
+    else -&gt; println(&quot;要加油&quot;)
+}</code></pre></div>
+<p><code>when</code> 就是 Kotlin 版的 switch，寫法更簡潔（用 <code>-&gt;</code>）。</p>
+<h3>迴圈</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">// for 迴圈：跑範圍
+for (i in 1..5) {
+    println(&quot;第 $i 次&quot;)   // $i 是字串模板，把變數塞進文字
+}
+
+// while 迴圈
+var count = 3
+while (count &gt; 0) {
+    println(&quot;倒數 $count&quot;)
+    count--
+}</code></pre></div>
+<p><code>1..5</code> 是 Kotlin 的範圍寫法。<code>$變數</code> 是<strong>字串模板</strong>（Swift 是 <code>\(變數)</code>，Kotlin 用 <code>$</code>）。</p>
+<h2>四、函式</h2>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">// 定義函式：接收名字，回傳打招呼的句子
+fun greet(name: String): String {
+    return &quot;哈囉，$name！&quot;
+}
+
+// 呼叫它
+val message = greet(&quot;智慧喵&quot;)
+println(message)   // 印出：哈囉，智慧喵！</code></pre></div>
+<p>拆解：</p>
+<ul>
+<li><code>fun</code>：宣告函式的關鍵字（Swift 是 <code>func</code>）。</li>
+<li><code>greet</code>：函式名稱。</li>
+<li><code>(name: String)</code>：參數。</li>
+<li><code>: String</code>：回傳型別（Swift 用 <code>-&gt; String</code>，Kotlin 用 <code>: String</code>）。</li>
+</ul>
+<p>概念跟 Swift 完全一樣，只是關鍵字和符號略有不同。</p>
+<h2>五、null 安全：Kotlin 最重要的特色</h2>
+<p>這是 Kotlin 跟 Swift「可選型別」對應的觀念，一樣是新手最該花時間的地方。</p>
+<p><strong>問題一樣</strong>：一個變數「可能有值，也可能沒有值（null）」。Kotlin 預設<strong>不允許 null</strong>，你必須明確標示「這個可以是 null」——在型別後面加 <code>?</code>：</p>
+<figure><img src="assets/android-dev-kotlin-basics/null-safety.jpg" alt="null 安全概念示意：可能有值、也可能是 null" loading="lazy"></figure>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">var nickname: String? = &quot;喵喵&quot;   // 型別後加 ? 表示可以是 null
+nickname = null                  // ✅ 可以，因為標了 ?
+
+var realName: String = &quot;喵喵&quot;
+// realName = null               // ❌ 沒標 ? 就不能是 null</code></pre></div>
+<p>那怎麼安全地使用可能為 null 的值？幾個常用工具：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">val nickname: String? = &quot;喵喵&quot;
+
+// 1. 安全呼叫 ?.：是 null 就整個變 null，不會爆
+println(nickname?.length)
+
+// 2. Elvis 運算子 ?:：是 null 就用預設值
+val displayName = nickname ?: &quot;訪客&quot;
+
+// 3. if 判斷（智慧轉型）
+if (nickname != null) {
+    println(&quot;暱稱長度 ${nickname.length}&quot;)  // 這裡 Kotlin 知道它不是 null
+}</code></pre></div>
+<ul>
+<li><strong><code>?.</code>（安全呼叫）</strong>：如果前面是 null，整個結果就是 null，不會讓程式崩潰。</li>
+<li><strong><code>?:</code>（Elvis 運算子）</strong>：對應 Swift 的 <code>??</code>，null 時給備用值。</li>
+<li><strong>智慧轉型</strong>：用 if 確認不是 null 後，Kotlin 會自動當它是非 null，直接用。</li>
+</ul>
+<p><strong>為什麼重要？</strong> 跟 Swift 一樣的道理——「以為有值、結果是 null」是 App 當機最經典的原因（Java 時代惡名昭彰的 NullPointerException）。Kotlin 從語言層面逼你處理，用一點前期麻煩換掉大量當機。</p>
+<h2>這一步大約要花多久？</h2>
+<p>Kotlin 基礎抓 <strong>2~3 週</strong>，但<strong>如果你學過 Swift，可能一週就上手</strong>，因為八成觀念相通，只是換語法。練法：</p>
+<ul>
+<li>每個觀念親手打、改數值看變化。</li>
+<li>null 安全多練（<code>?.</code>、<code>?:</code>、if 判斷）。</li>
+<li>寫個小程式綜合練習，例如「輸入分數印等第」。</li>
+</ul>
+<p>重點是手感，不是背。這些會在你寫每個 Android App 時反覆用到。</p>
+<h2>下一篇</h2>
+<p>語言基礎有了，下一篇開始好玩的——用 <strong>Jetpack Compose 做出第一個看得到、點得到的 App</strong>。如果你做過這系列的 SwiftUI 篇，會發現 Compose 的思路幾乎一樣，做起來會很快。</p>
+<p>下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="android-dev-setup-tools.html" rel="noopener">Android 開發第一步：環境準備</a></li>
+<li>➡️ 下一篇：<a href="android-dev-compose-first-app.html" rel="noopener">用 Jetpack Compose 做第一個 App</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

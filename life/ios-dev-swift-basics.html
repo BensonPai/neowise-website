@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】Swift 語言基礎：變數、型別、流程控制、函式與可選型別 - 智慧喵</title>
+    <meta name="description" content="環境裝好後，就從 Swift 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Swift 最有特色的『可選型別』，打好 iOS 開發的地基。">
+    <meta name="keywords" content="Swift 教學,Swift 基礎,iOS 開發,可選型別,Optional,Swift 變數,Swift 函式,程式入門">
+    <meta property="og:title" content="【App 開發指南】Swift 語言基礎：變數、型別、流程控制、函式與可選型別">
+    <meta property="og:description" content="環境裝好後，就從 Swift 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Swift 最有特色的『可選型別』，打好 iOS 開發的地基。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/ios-dev-swift-basics.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/ios-dev-swift-basics/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/ios-dev-swift-basics.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】Swift 語言基礎：變數、型別、流程控制、函式與可選型別","description":"環境裝好後，就從 Swift 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Swift 最有特色的『可選型別』，打好 iOS 開發的地基。","datePublished":"2026-09-16","dateModified":"2026-09-16","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/ios-dev-swift-basics.html"},"image":"https://neowise.com.tw/life/assets/ios-dev-swift-basics/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】Swift 語言基礎：變數、型別、流程控制、函式與可選型別</h1>
+            <p class="article-meta">智慧喵　•　2026-09-16</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/ios-dev-swift-basics/cover.jpg" alt="Xcode 中一段 Swift 程式碼的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>在<a href="ios-dev-setup-tools.html" rel="noopener">上一篇</a>，我們把 Mac、Xcode、Apple ID 都準備好了。這篇開始，真正動手寫程式。</p>
+<p>第一個要學的是 <strong>Swift</strong>——iOS 的程式語言。這篇是整個系列裡需要多花點時間的一篇，因為語言基礎是地基，後面刻畫面、串資料全都建立在這上面。別急著趕進度，這篇的觀念多練幾次比較實在。</p>
+<p>一個好消息：Xcode 內建一個叫 <strong>Playground</strong> 的功能，可以即時執行 Swift、馬上看到結果，不用建完整專案，很適合邊學邊試。</p>
+<p><strong>怎麼打開 Playground？</strong> 兩個方式：</p>
+<ul>
+<li><strong>從歡迎畫面</strong>：打開 Xcode 的歡迎畫面（上一篇看過的那個），點 <strong>New Project</strong> 旁邊的小箭頭展開選單，裡面就有 <strong>Playground</strong>（跟 App、Command Line Tool 並列）。選它、挑一個空白範本、存個位置就開好了。</li>
+<li><strong>或用選單</strong>：Xcode 上方選單 <strong>File → New → Playground</strong>。</li>
+</ul>
+<p>開好後大概長這樣：左邊是編輯區（寫程式碼），右邊會即時顯示執行結果。</p>
+<figure><img src="assets/ios-dev-swift-basics/playground.jpg" alt="Xcode 的 Playground 畫面" loading="lazy"></figure>
+<p><strong>怎麼寫、怎麼跑？</strong> 新版 Xcode 的 Playground 會給你一個 <code>#Playground { }</code> 區塊，你的程式碼寫在<strong>大括號裡面</strong>。最基本的例子，用 <code>print(...)</code> 把東西印出來：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">#Playground {
+    print(&quot;Hello, Playground!&quot;)
+}</code></pre></div>
+<p>寫好之後，Playground 會<strong>自動執行</strong>——不用按任何按鍵，你貼上或改動程式碼，它就會自己跑、右邊即時更新結果 <code>Hello, Playground!</code>。有時會<strong>等一兩秒</strong>（它在背景編譯），正常現象。</p>
+<p>如果右邊沒反應，先確認一件事：<strong>程式有沒有紅色錯誤標記</strong>？有語法錯就不會執行，先把錯改掉。</p>
+<p><strong>想手動重跑一次？</strong> 結果正確出來後其實不需要特別重跑——你只要<strong>改動任何一個字</strong>，Playground 就會自動再跑一次，這是最簡單的方法。如果程式真的卡住不動，<strong>關掉 Playground 再重新打開</strong>最乾脆。</p>
+<blockquote>小提醒：你可能會不小心點到<strong>行號旁邊出現的藍色箭頭</strong>，那是「只執行到某一行」的進階功能，新手用不到、也容易誤觸。想清掉它，一樣是<strong>關掉 Playground 再開</strong>就會消失。</blockquote>
+<p><code>print()</code> 是你最好的朋友——<strong>想看任何東西的值，就把它丟進 <code>print()</code></strong>。這篇後面的範例，你都可以包在 <code>#Playground { }</code> 裡、用 <code>print()</code> 印出來看結果。例如：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">#Playground {
+    let name = &quot;智慧喵&quot;
+    print(&quot;哈囉，\(name)&quot;)   // 印出：哈囉，智慧喵
+    print(1 + 2)            // 印出：3
+}</code></pre></div>
+<p>跟著打、改改數值再看結果變化，是學語言最快的方法。</p>
+<blockquote>小提醒：Playground 是「練功房」，適合試語法、驗證觀念；等到要做真正的 App，才會用上一篇那種完整專案。兩者用途不同，別搞混。</blockquote>
+<p>&gt;</p>
+<blockquote>下面各段的範例，為了聚焦在語法本身，我只寫核心那幾行。你自己練習時，把它們放進 <code>#Playground { }</code> 裡、想看結果就用 <code>print()</code> 包起來即可。</blockquote>
+<h2>一、變數與常數：存放資料的容器</h2>
+<p>程式要處理資料，就需要地方存放。Swift 用兩個關鍵字：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">var score = 100      // var：變數，之後可以改
+let name = &quot;智慧喵&quot;   // let：常數，設定後不能改
+
+score = 120          // ✅ 可以，score 是 var
+// name = &quot;喵喵&quot;     // ❌ 會報錯，name 是 let</code></pre></div>
+<ul>
+<li><code>var</code>（variable）：<strong>變數</strong>，值之後可以變動。</li>
+<li><code>let</code>（constant）：<strong>常數</strong>，一旦設定就不能改。</li>
+</ul>
+<p><strong>實務習慣</strong>：能用 <code>let</code> 就用 <code>let</code>。這不是龜毛——把不該變的東西鎖成常數，可以讓編譯器幫你擋掉「不小心改到」的 bug，程式更安全。先預設用 <code>let</code>，真的需要改再換成 <code>var</code>。</p>
+<h2>二、資料型別：這個資料是什麼</h2>
+<p>每個資料都有「型別」，表示它是什麼種類。Swift 常見的幾個：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">let age: Int = 30           // 整數
+let height: Double = 175.5  // 小數
+let isStudent: Bool = false // 真／假
+let city: String = &quot;台北&quot;    // 文字</code></pre></div>
+<p>你可能注意到，前面的例子我沒有寫型別，Swift 也懂——因為它會<strong>型別推斷</strong>（type inference）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">let count = 5          // Swift 自動判斷這是 Int
+let price = 19.9       // 自動判斷是 Double
+let title = &quot;教學&quot;      // 自動判斷是 String</code></pre></div>
+<p>所以大部分時候你不用手動寫型別，Swift 會自己推斷。但重點是要<strong>心裡清楚每個變數是什麼型別</strong>，因為 Swift 對型別很嚴格——不同型別不能亂混用：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">let a = 5
+let b = 2.0
+// let c = a + b   // ❌ 報錯：Int 和 Double 不能直接相加
+let c = Double(a) + b   // ✅ 先把 a 轉成 Double</code></pre></div>
+<p>這種嚴格一開始會覺得囉唆，但它能在你寫錯的當下就攔下來，而不是等 App 上線才出包。</p>
+<h2>三、流程控制：讓程式做判斷與重複</h2>
+<h3>條件判斷 if / else</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">let temperature = 28
+
+if temperature &gt;= 30 {
+    print(&quot;好熱，開冷氣&quot;)
+} else if temperature &gt;= 20 {
+    print(&quot;天氣舒服&quot;)
+} else {
+    print(&quot;有點冷&quot;)
+}</code></pre></div>
+<h3>switch：多重條件更清楚</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">let grade = &quot;B&quot;
+
+switch grade {
+case &quot;A&quot;:
+    print(&quot;優秀&quot;)
+case &quot;B&quot;:
+    print(&quot;良好&quot;)
+case &quot;C&quot;:
+    print(&quot;及格&quot;)
+default:
+    print(&quot;要加油&quot;)
+}</code></pre></div>
+<p>Swift 的 <code>switch</code> 很強大，而且每個 case 不用手動寫 break（不會像某些語言那樣「掉下去」執行下一個 case）。</p>
+<h3>迴圈：重複做某件事</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">// for 迴圈：重複固定次數
+for i in 1...5 {
+    print(&quot;第 \(i) 次&quot;)   // \(i) 是字串內插，把變數塞進文字裡
+}
+
+// while 迴圈：條件成立就一直做
+var count = 3
+while count &gt; 0 {
+    print(&quot;倒數 \(count)&quot;)
+    count -= 1
+}</code></pre></div>
+<p><code>1...5</code> 是 Swift 的「範圍」寫法，代表 1 到 5。<code>\(變數)</code> 這種寫法叫<strong>字串內插</strong>，很常用，把變數的值嵌進文字裡。</p>
+<h2>四、函式：把一段功能包起來重複用</h2>
+<p>函式讓你把一段程式碼包成一個可重複呼叫的功能：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">// 定義一個函式：接收名字，回傳打招呼的句子
+func greet(name: String) -&gt; String {
+    return &quot;哈囉，\(name)！&quot;
+}
+
+// 呼叫它
+let message = greet(name: &quot;智慧喵&quot;)
+print(message)   // 印出：哈囉，智慧喵！</code></pre></div>
+<p>拆解一下：</p>
+<ul>
+<li><code>func</code>：宣告函式的關鍵字。</li>
+<li><code>greet</code>：函式名稱。</li>
+<li><code>(name: String)</code>：參數，這個函式需要一個 String 型別的 <code>name</code>。</li>
+<li><code>-&gt; String</code>：回傳型別，表示這個函式會吐回一個 String。</li>
+</ul>
+<p>函式是組織程式的基本單位。把重複的邏輯包成函式，程式會更好讀、好維護。</p>
+<h2>五、可選型別（Optional）：Swift 最有特色的觀念</h2>
+<p>這是 Swift 新手最容易卡、但也最重要的觀念，值得多花時間。</p>
+<p><strong>問題是這樣的</strong>：有時候一個變數「可能有值，也可能沒有值」。例如你去查一個使用者的暱稱，他可能設過、也可能沒設。這個「可能沒有」的狀態，Swift 用<strong>可選型別</strong>來表示。</p>
+<figure><img src="assets/ios-dev-swift-basics/optional-concept.jpg" alt="可選型別概念示意：盒子裡可能有值、也可能是空的" loading="lazy"></figure>
+<p>把可選型別想成一個<strong>盒子</strong>：盒子裡可能裝了東西，也可能是空的（空的狀態叫 <code>nil</code>）。</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">var nickname: String? = &quot;喵喵&quot;   // 型別後面加 ? 表示「可選」
+nickname = nil                   // 也可以是空的（沒有值）</code></pre></div>
+<p>那要怎麼安全地把盒子打開、拿出裡面的值？最常用、最安全的做法是 <strong><code>if let</code></strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">var nickname: String? = &quot;喵喵&quot;
+
+if let name = nickname {
+    // 盒子裡有值，name 就是取出來的值
+    print(&quot;暱稱是 \(name)&quot;)
+} else {
+    // 盒子是空的
+    print(&quot;還沒設定暱稱&quot;)
+}</code></pre></div>
+<p>還有一個很實用的 <code>??</code>（預設值運算子）：盒子空的時候給一個備用值：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">let displayName = nickname ?? &quot;訪客&quot;
+// nickname 有值就用它，是 nil 就用「訪客」</code></pre></div>
+<p><strong>為什麼 Swift 要搞這套？</strong> 因為「以為有值、結果是空的」是 App 當機最常見的原因之一。Swift 逼你在寫程式時就明確處理「可能沒有值」的情況，用一點前期的麻煩，換掉大量上線後的當機。一開始會不習慣，但寫久了你會感謝它。</p>
+<h2>動手做：把觀念串起來</h2>
+<p>講了這麼多，來個小練習把前面的變數、型別、流程控制、函式全用上。<strong>直接複製下面整段、貼進你的 Playground 就能跑</strong>，它會依分數印出對應等第：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">#Playground {
+    // 一個函式：輸入分數，回傳等第
+    func grade(for score: Int) -&gt; String {
+        switch score {
+        case 90...100:
+            return &quot;優秀&quot;
+        case 60..&lt;90:
+            return &quot;及格&quot;
+        default:
+            return &quot;要加油&quot;
+        }
+    }
+
+    // 準備幾個分數，用迴圈跑過每一個
+    let scores = [95, 72, 48]
+    for s in scores {
+        print(&quot;分數 \(s)：\(grade(for: s))&quot;)
+    }
+}</code></pre></div>
+<p>執行後，完整的輸出是三行：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code>分數 95：優秀
+分數 72：及格
+分數 48：要加油</code></pre></div>
+<blockquote><strong>咦，我的右邊只顯示「分數 48：要加油」一行？</strong> 別緊張，你的程式沒錯、三次也都有跑！這是 Playground 的顯示特性：右邊那個<strong>行內結果面板</strong>，同一行 <code>print</code> 執行多次時，只會顯示<strong>最後一次</strong>的值（所以你只看到 48 那行）。</blockquote>
+<p>&gt;</p>
+<blockquote>想看到完整三行，打開 Xcode 底部的<strong>主控台（Console）</strong>：點編輯區<strong>右下角的小方框圖示</strong>就能叫出／收起它（或用選單 <strong>View → Debug Area → Show Debug Area</strong>）。主控台會完整印出每一次 <code>print</code> 的結果。這個主控台之後 debug 時天天要用，現在就先認得它。</blockquote>
+<p>&gt;</p>
+<blockquote>（補充：這只是 Playground 面板的顯示方式；等你之後做成真正的 App 用模擬器跑，<code>print</code> 一樣會完整出現在主控台，不會有這現象。）</blockquote>
+<p>看懂了嗎？這一小段就用到了<strong>函式</strong>（<code>grade</code>）、<strong>參數與回傳型別</strong>（<code>Int → String</code>）、<strong>switch 判斷</strong>、<strong>陣列</strong>（<code>scores</code>）、<strong>for 迴圈</strong>、<strong>字串內插</strong>（<code>\(s)</code>）。<strong>建議你動手改改看</strong>：換掉分數、多加一個等第（例如 80 分以上算「良好」）、把 <code>90...100</code> 的範圍調一調，看結果怎麼變。改壞了不會怎樣，這就是 Playground 的用途。</p>
+<h2>這一步大約要花多久？</h2>
+<p>Swift 基礎建議抓 <strong>2~3 週</strong>，重點不是讀完，是<strong>真的動手打</strong>。給你一個實在的練法：</p>
+<ul>
+<li>每個觀念都在 Playground 親手打一遍，改改數值看結果變化。</li>
+<li>可選型別多練幾次，這是最容易忘、也最關鍵的。</li>
+<li>試著把前面幾個觀念組起來，寫一個小東西，例如「輸入分數、印出對應等第」的小程式。</li>
+</ul>
+<p>不用背，理解 + 手感最重要。這些觀念在你之後寫每一個 App 時都會反覆用到，現在打好底，後面會很順。</p>
+<h2>下一篇</h2>
+<p>語言基礎有了，下一篇就開始好玩的部分——用 <strong>SwiftUI 做出第一個看得到、點得到的 App</strong>。我們會把畫面刻出來，加上互動，讓它真的動起來。</p>
+<p>一步一步來，你已經走過最枯燥的地基了。下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="ios-dev-setup-tools.html" rel="noopener">iOS 開發第一步：環境準備</a></li>
+<li>➡️ 下一篇：<a href="ios-dev-swiftui-first-app.html" rel="noopener">用 SwiftUI 做第一個 App</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】iOS App 怎麼賺錢？內購、訂閱、廣告與定價策略 - 智慧喵</title>
+    <meta name="description" content="App 上架後，怎麼把它變成收入？這篇整理 iOS App 主要的變現方式——內購、訂閱、廣告、付費下載，說明各自的機制、抽成、適合的情境，並給實際的定價與選擇建議。">
+    <meta name="keywords" content="App 賺錢,App 內購,IAP,App 訂閱,App 廣告,StoreKit,App 變現,iOS 開發,App 定價">
+    <meta property="og:title" content="【App 開發指南】iOS App 怎麼賺錢？內購、訂閱、廣告與定價策略">
+    <meta property="og:description" content="App 上架後，怎麼把它變成收入？這篇整理 iOS App 主要的變現方式——內購、訂閱、廣告、付費下載，說明各自的機制、抽成、適合的情境，並給實際的定價與選擇建議。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/ios-dev-monetization.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/ios-dev-monetization/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/ios-dev-monetization.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】iOS App 怎麼賺錢？內購、訂閱、廣告與定價策略","description":"App 上架後，怎麼把它變成收入？這篇整理 iOS App 主要的變現方式——內購、訂閱、廣告、付費下載，說明各自的機制、抽成、適合的情境，並給實際的定價與選擇建議。","datePublished":"2026-09-20","dateModified":"2026-09-20","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/ios-dev-monetization.html"},"image":"https://neowise.com.tw/life/assets/ios-dev-monetization/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】iOS App 怎麼賺錢？內購、訂閱、廣告與定價策略</h1>
+            <p class="article-meta">智慧喵　•　2026-09-20</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/ios-dev-monetization/cover.jpg" alt="App 產生收入的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>歷經前五篇，你的 App 已經從零做到<a href="ios-dev-publish-app-store.html" rel="noopener">上架 App Store</a>了。這是 iOS 路徑的最後一篇，我們談最實際的問題：<strong>怎麼讓它變成收入。</strong></p>
+<p>先說一個心態：<strong>變現方式沒有最好，只有最適合你的 App</strong>。工具型、遊戲型、內容型，適合的模式都不同。這篇幫你把選項和判斷邏輯理清楚。</p>
+<h2>四種主要變現方式</h2>
+<figure><img src="assets/ios-dev-monetization/monetization-models.jpg" alt="四種變現方式對照：付費下載、內購、訂閱、廣告" loading="lazy"></figure>
+<h3>1. 付費下載（Paid App）</h3>
+<p>使用者付一次錢才能下載。</p>
+<ul>
+<li><strong>優點</strong>：最單純，下載即收入。</li>
+<li><strong>缺點</strong>：門檻高，現在多數人習慣「先免費試」，除非你的 App 很有特色或口碑，不然下載數會受影響。</li>
+<li><strong>適合</strong>：定位清楚、目標客群明確、有獨特價值的工具型 App。</li>
+</ul>
+<h3>2. App 內購買（In-App Purchase，IAP）</h3>
+<p>免費下載，App 裡面賣東西——解鎖功能、買道具、去廣告、買進階版。</p>
+<ul>
+<li><strong>優點</strong>：降低下載門檻，讓用戶先體驗再付費。彈性最高。</li>
+<li><strong>缺點</strong>：要設計好「哪些免費、哪些付費」的界線。</li>
+<li><strong>適合</strong>：手遊（買道具）、工具 App（解鎖進階功能）。</li>
+</ul>
+<h3>3. 訂閱制（Subscription）</h3>
+<p>按月或按年持續收費。</p>
+<ul>
+<li><strong>優點</strong>：<strong>收入穩定可預期</strong>，是現在最主流的模式，尤其工具型、內容型 App。</li>
+<li><strong>缺點</strong>：你要持續提供價值，讓用戶覺得「值得一直付」，否則會被取消。</li>
+<li><strong>適合</strong>：需要持續更新內容或服務的 App（新聞、健身、生產力工具、雲端服務）。</li>
+</ul>
+<h3>4. 廣告（Ads）</h3>
+<p>App 裡放廣告，靠曝光和點擊賺錢。</p>
+<ul>
+<li><strong>優點</strong>：用戶不用掏錢，門檻最低。</li>
+<li><strong>缺點</strong>：<strong>要夠大的用戶量才有意義</strong>，而且放太多會傷體驗。</li>
+<li><strong>適合</strong>：用戶量大、使用頻繁的免費 App。iOS 上常搭配 Google AdMob 等廣告平台。</li>
+</ul>
+<h2>技術上怎麼實作？認識 StoreKit</h2>
+<p>內購和訂閱在 iOS 上都是透過 Apple 的 <strong>StoreKit</strong> 框架實作。你不用自己處理刷卡金流——<strong>付款由 Apple 統一經手</strong>，你的程式只負責「提供商品、確認使用者買了沒、解鎖對應內容」。</p>
+<p>流程大致是：</p>
+<ol>
+<li>在 App Store Connect 後台<strong>設定你的商品</strong>（例如「進階版 NT$90」「月訂閱 NT$60」）。</li>
+<li>App 裡用 StoreKit <strong>顯示商品、發起購買</strong>。</li>
+<li>購買成功後，<strong>解鎖對應功能</strong>（例如把 <code>@AppStorage(&quot;isPro&quot;)</code> 設為 true）。</li>
+</ol>
+<p>現代的 StoreKit 已經簡化很多，SwiftUI 也有現成的購買介面元件可用。這系列先建立觀念，實作細節可以在你確定要做內購時再深入 Apple 的 StoreKit 文件。</p>
+<h2>別忘了：Apple 會抽成</h2>
+<p>透過 App 收到的錢，Apple 會抽一定比例的服務費：</p>
+<ul>
+<li>一般情況大致是 <strong>15%~30%</strong>。</li>
+<li><strong>小型開發者（年營收在一定門檻以下）通常適用較低的 15%</strong>——對剛起步的個人開發者是好消息。</li>
+<li>廣告收入則是跟廣告平台拆帳，規則不同。</li>
+</ul>
+<blockquote>抽成比例與方案 Apple 會調整，且各地區可能不同，實際請以 <a href="https://developer.apple.com/app-store/" rel="noopener">Apple 官方說明</a>與 App Store Connect 為準。</blockquote>
+<h2>定價與選擇建議</h2>
+<p>給你幾個實用的判斷方向：</p>
+<ul>
+<li><strong>先想清楚 App 的價值型態</strong>：一次性價值（買斷/內購）還是持續性價值（訂閱）？工具給答案就走內購，持續服務就走訂閱。</li>
+<li><strong>免費 + 內購/訂閱，通常比純付費下載好推</strong>：讓人先用、體驗到價值，再付費，轉換率較高。</li>
+<li><strong>廣告要留到有量再說</strong>：初期用戶少，廣告賺不到什麼，反而傷體驗，不划算。</li>
+<li><strong>定價別只看數字，看「感受到的價值」</strong>：一個幫用戶省時間、解決真痛點的工具，月費 NT$60 很多人願意付；反之再便宜也沒人要。</li>
+<li><strong>可以混合</strong>：免費版 + 內購解鎖 + 進階功能訂閱，很常見的組合。</li>
+</ul>
+<h2>不上架也能賺：別忽略這兩條路</h2>
+<p>變現不是只有商店這一條。這也呼應這個系列一開始的總覽篇：</p>
+<ul>
+<li><strong>接案</strong>：你會開發之後，幫別人做 App 是最快、最直接的收入，不用自己養用戶。</li>
+<li><strong>企業內部工具 / 自用</strong>：幫公司做內部 App、或把自己的工作流程自動化。像我自己就寫了<a href="../tools.html" rel="noopener">一些實用工具</a>來解決真實需求——技術的價值不一定要透過商店才能兌現。</li>
+</ul>
+<h2>這一步大約要花多久？</h2>
+<p>理解變現機制、在 App 裡接上內購或訂閱，抓 <strong>1~2 週</strong>。但要提醒：<strong>賺錢的關鍵從來不是技術，是你的 App 有沒有解決真問題</strong>。技術只是把價值變現的管道；先把 App 做得有人真的想用，變現才有意義。</p>
+<h2>iOS 路徑完成了！</h2>
+<p>恭喜你走完整條 iOS 學習路徑——從裝環境、學語言、做畫面、串資料、上架，到變現。你現在具備了獨立開發並發布一個 iPhone App 的完整能力。</p>
+<p>接下來這個系列還有：</p>
+<ul>
+<li><strong>Android 開發學習路徑</strong>（結構跟 iOS 對稱，學過 iOS 再學會快很多）。</li>
+<li><strong>跨平台方案總覽</strong>（Flutter、React Native、KMP，一次寫兩邊共用的選擇）。</li>
+</ul>
+<p>但更重要的是——<strong>去做一個你自己的 App 吧</strong>。看再多教學，都不如親手做完一個來得扎實。你已經有能力了。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="ios-dev-publish-app-store.html" rel="noopener">完整上架 App Store</a></li>
+<li>➡️ 下一篇：<a href="android-dev-setup-tools.html" rel="noopener">Android 開發第一步：環境準備</a>（進入 Android 路徑）</li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

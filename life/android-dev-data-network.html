@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】讓 Android App 記住資料、連上網路：DataStore、Room 與 API - 智慧喵</title>
+    <meta name="description" content="會做畫面之後，這篇讓你的 Android App 真正實用起來：用 DataStore 存小設定、用 Room 存結構化資料、用 Retrofit 串接網路 API，把靜態畫面變成會記憶、會連線的實用工具。">
+    <meta name="keywords" content="Android 資料儲存,Room,DataStore,Retrofit,Android API,Kotlin 網路,協程 coroutine,Android 開發">
+    <meta property="og:title" content="【App 開發指南】讓 Android App 記住資料、連上網路：DataStore、Room 與 API">
+    <meta property="og:description" content="會做畫面之後，這篇讓你的 Android App 真正實用起來：用 DataStore 存小設定、用 Room 存結構化資料、用 Retrofit 串接網路 API，把靜態畫面變成會記憶、會連線的實用工具。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/android-dev-data-network.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/android-dev-data-network/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/android-dev-data-network.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】讓 Android App 記住資料、連上網路：DataStore、Room 與 API","description":"會做畫面之後，這篇讓你的 Android App 真正實用起來：用 DataStore 存小設定、用 Room 存結構化資料、用 Retrofit 串接網路 API，把靜態畫面變成會記憶、會連線的實用工具。","datePublished":"2026-09-24","dateModified":"2026-09-24","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/android-dev-data-network.html"},"image":"https://neowise.com.tw/life/assets/android-dev-data-network/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】讓 Android App 記住資料、連上網路：DataStore、Room 與 API</h1>
+            <p class="article-meta">智慧喵　•　2026-09-24</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/android-dev-data-network/cover.jpg" alt="Android App 從網路雲端抓取資料的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>到目前為止，我們的 Android App 能<a href="android-dev-compose-first-app.html" rel="noopener">顯示畫面、能互動</a>了，但一樣有兩個問題：<strong>一關掉資料就不見</strong>，而且<strong>不會連網</strong>。這篇補這兩塊，讓 App 變成實用工具。</p>
+<p>（如果你走過 iOS 的 <a href="ios-dev-data-network.html" rel="noopener">資料與網路篇</a>，觀念完全共通，只是換工具。）分兩部分：本機記資料、網路抓資料。</p>
+<h2>第一部分：讓 App 記住資料</h2>
+<p>Android 存本機資料，依「量」和「複雜度」有不同工具，先認識兩個層級。</p>
+<h3>DataStore：存小設定最簡單</h3>
+<p>存少量、簡單的設定（暱稱、開關、偏好），用 <strong>DataStore</strong>（Google 現在推薦的做法，取代舊的 SharedPreferences）。概念就是「用一把鑰匙（key）存一個值」，會自動保存，App 關掉再開資料還在。</p>
+<blockquote>對應 iOS：這相當於 iOS 的 UserDefaults。用途一樣——只適合小資料，不是拿來當資料庫。</blockquote>
+<p><strong>先給你一個最輕量、能馬上跑的版本（SharedPreferences）。</strong> 正式的 DataStore 要加套件、用協程，前置設定不少；學習階段想先體驗「資料被記住」，用 Android 最基本的 <strong>SharedPreferences</strong> 幾行就夠，不用加任何套件。下面做一個「輸入暱稱 → 儲存 → 關掉 App 重開還在」的小畫面（整段可貼，紅字用 Alt + Enter 補 import）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">@Composable
+fun NicknameApp() {
+    val context = LocalContext.current
+    // 開啟一個叫 &quot;settings&quot; 的本機儲存空間
+    val prefs = context.getSharedPreferences(&quot;settings&quot;, Context.MODE_PRIVATE)
+
+    // 一開始把之前存的暱稱讀出來（沒存過就給空字串）
+    var nickname by remember { mutableStateOf(prefs.getString(&quot;nickname&quot;, &quot;&quot;) ?: &quot;&quot;) }
+
+    Column(modifier = Modifier.safeDrawingPadding().padding(16.dp)) {
+        Text(&quot;你好，${if (nickname.isEmpty()) &quot;訪客&quot; else nickname}&quot;, fontSize = 24.sp)
+
+        OutlinedTextField(
+            value = nickname,
+            onValueChange = { nickname = it },
+            label = { Text(&quot;輸入暱稱&quot;) }
+        )
+
+        Button(onClick = {
+            prefs.edit().putString(&quot;nickname&quot;, nickname).apply()   // 存進本機
+        }) {
+            Text(&quot;儲存&quot;)
+        }
+    }
+}</code></pre></div>
+<p><strong>驗證「真的記住了」</strong>：輸入暱稱 → 按儲存 → 把 App 從最近清單完全關掉 → 重開 → 暱稱還在。<code>SharedPreferences</code> 跟 iOS 的 UserDefaults 一樣是「用 key 存值、存本機、沒加密、只適合小資料」。等你之後要更進階、型別更安全的做法，再換成官方推薦的 DataStore。</p>
+<h3>Room：存結構化資料（清單、記錄）</h3>
+<p>當你要存的是<strong>大量、有結構的資料</strong>——例如一份待辦清單、一堆筆記、交易記錄——就用 <strong>Room</strong>。它是 Android 官方的資料庫方案，底層是 SQLite，但幫你包成好用的介面。</p>
+<p>Room 的核心三塊（先建立概念，實作時再深入）：</p>
+<ul>
+<li><strong>Entity</strong>：一筆資料的樣子（例如一則「筆記」有標題、內容）。用 Kotlin 的 <code>data class</code> 加註解定義。</li>
+<li><strong>DAO</strong>：資料存取的方法（新增、查詢、刪除）。</li>
+<li><strong>Database</strong>：把上面兩者組起來的資料庫本體。</li>
+</ul>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">// Entity：定義「筆記」這種資料長怎樣
+@Entity
+data class Note(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,
+    val title: String,
+    val content: String
+)</code></pre></div>
+<p>Room 一開始配置比 UserDefaults 多幾個步驟，但一旦建好，存取結構化資料非常穩。這系列先讓你知道「小設定用 DataStore、清單記錄用 Room」這個分工，實作細節等你真的要做時再深入官方文件。</p>
+<h2>第二部分：從網路抓資料</h2>
+<p>大部分實用 App 都要連網。Android 這塊的主流做法是用 <strong>Retrofit</strong> 這個函式庫。</p>
+<h3>先懂幾個名詞</h3>
+<ul>
+<li><strong>API</strong>：網路上的資料窗口，你發請求、它回資料。</li>
+<li><strong>JSON</strong>：API 回傳最常用的資料格式，像一堆「鍵：值」。</li>
+<li><strong>Retrofit</strong>：Android 社群最常用的網路請求函式庫，把「呼叫 API」寫得很簡潔。</li>
+<li><strong>協程（Coroutine）</strong>：Kotlin 處理非同步（例如等待網路回應）的機制，用 <code>suspend</code> 標記。對應 iOS 的 async/await。</li>
+</ul>
+<figure><img src="assets/android-dev-data-network/data-flow.jpg" alt="Android 串接 API 的流程示意：發出請求、收到 JSON、解析、顯示" loading="lazy"></figure>
+<p>流程一樣是：<strong>發出請求 → 收到 JSON → 轉成 Kotlin 資料 → 顯示在畫面</strong>。</p>
+<h3>定義資料與 API 介面</h3>
+<p>先照 JSON 定義 <code>data class</code>（Kotlin 的資料類別，很像 iOS 的 Codable struct）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">// 假設 API 回傳：{&quot;city&quot;: &quot;台北&quot;, &quot;temp&quot;: 28}
+data class Weather(
+    val city: String,
+    val temp: Int
+)</code></pre></div>
+<p>再用 Retrofit 定義「這個 API 怎麼呼叫」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">interface WeatherApi {
+    @GET(&quot;weather&quot;)
+    suspend fun getWeather(): Weather   // suspend：這是非同步函式
+}</code></pre></div>
+<p><code>@GET(&quot;weather&quot;)</code> 告訴 Retrofit 去打哪個路徑，<code>suspend</code> 表示它是協程的非同步函式。Retrofit 會自動幫你發請求、把 JSON 轉成 <code>Weather</code>——不用手動解析。</p>
+<h3>實際呼叫</h3>
+<p>在協程裡呼叫，並處理錯誤：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">suspend fun loadWeather() {
+    try {
+        val weather = api.getWeather()   // 等它回來，但不卡住畫面
+        println(&quot;${weather.city} 溫度 ${weather.temp} 度&quot;)
+    } catch (e: Exception) {
+        // 網路很容易出錯，一定要處理
+        println(&quot;抓取失敗：$e&quot;)
+    }
+}</code></pre></div>
+<p>重點跟 iOS 一樣：<strong>網路一定會有出錯的時候</strong>（斷線、逾時、格式不符），務必用 <code>try / catch</code> 處理，別假設它一定成功。</p>
+<h3>在 Compose 裡顯示</h3>
+<p>把抓到的資料放進 state，畫面就自動更新（延續上一篇的狀態驅動）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">@Composable
+fun WeatherScreen() {
+    var cityName by remember { mutableStateOf(&quot;載入中…&quot;) }
+
+    LaunchedEffect(Unit) {
+        // 畫面出現時自動抓資料
+        // …抓成功後 cityName = weather.city，畫面自動更新
+    }
+
+    Text(cityName)
+}</code></pre></div>
+<p><code>LaunchedEffect</code> 是 Compose 提供的機制：畫面一出現就執行裡面的協程工作，很適合載入資料（對應 SwiftUI 的 <code>.task</code>）。</p>
+<h3>換成真的抓得到：輕量實作版（不用 Retrofit）</h3>
+<p>上面用 Retrofit 是正式做法，但要加套件、設定一堆。學習階段想<strong>先真的抓到資料看看</strong>，可以用 Kotlin 內建的 <code>URL().readText()</code> + <code>JSONObject</code> 手動解析，不用加任何套件。我們抓跟 iOS 篇同一個免費測試 API（JSONPlaceholder）。</p>
+<p><strong>第一步：加網路權限。</strong> 打開 <code>app/src/main/AndroidManifest.xml</code>，在 <code>&lt;manifest&gt;</code> 裡、<code>&lt;application&gt;</code> 上面加一行（沒加的話 Android 不准連網，會抓失敗）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-xml">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;</code></pre></div>
+<p><strong>第二步：這段整個可貼</strong>（紅字 Alt + Enter 補 import）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">@Composable
+fun TodoApp() {
+    var text by remember { mutableStateOf(&quot;載入中…&quot;) }
+
+    LaunchedEffect(Unit) {   // 畫面一出現就抓
+        text = try {
+            // 網路請求要丟到背景執行緒，不能卡主畫面
+            val json = withContext(Dispatchers.IO) {
+                URL(&quot;https://jsonplaceholder.typicode.com/todos/1&quot;).readText()
+            }
+            val obj = JSONObject(json)
+            &quot;第 ${obj.getInt(&quot;id&quot;)} 筆：${obj.getString(&quot;title&quot;)}&quot;
+        } catch (e: Exception) {
+            &quot;抓取失敗：$e&quot;
+        }
+    }
+
+    Column(modifier = Modifier.safeDrawingPadding().padding(16.dp)) {
+        Text(text = text, fontSize = 20.sp)
+    }
+}</code></pre></div>
+<p>跑起來會顯示「第 1 筆：delectus aut autem」（跟 iOS 篇抓到的同一筆）。</p>
+<blockquote><strong>跟 iOS 的差異</strong>：Android 多了 <code>withContext(Dispatchers.IO)</code>——Android 規定網路<strong>不能在主執行緒做</strong>，要丟到背景，否則會當掉。另外要「打開網址看結構」決定怎麼解析（這招跟 iOS 篇一樣：把 API 網址貼進瀏覽器就看得到有哪些欄位）。</blockquote>
+<p>&gt;</p>
+<blockquote><strong>抓取失敗（連不到）怎麼辦？</strong> 先確認 AndroidManifest 的 <code>INTERNET</code> 權限有加、模擬器有網路。這跟你 iOS 遇到的沙盒權限是類似的概念——都是「要先給 App 連網的許可」。</blockquote>
+<h2>這一步大約要花多久？</h2>
+<p>觀念較密，抓 <strong>2~3 週</strong>：</p>
+<ul>
+<li>先玩 DataStore：做一個「記住暱稱」的小畫面。</li>
+<li>認識 Room：試著存一份簡單清單。</li>
+<li>找一個<strong>免費、不用金鑰</strong>的公開 API，用 Retrofit 把「請求 → 解析 → 顯示」跑通一次。</li>
+<li>綜合練習：把前面做過的 App 加上「連網抓資料 + 記住設定」。</li>
+</ul>
+<p>網路這套「請求 → 解析 → 顯示」骨架學會後，抓任何 API 都是同一套。做過 iOS 的話，這篇會覺得特別熟悉。</p>
+<h2>下一篇</h2>
+<p>App 能記憶、能連網了，功能上像個真正的產品。下一篇進入 <strong>完整上架 Google Play</strong>——開發者帳號、建立 App、上傳、以及一個很多新手不知道、卻會卡住上架的關鍵規則（先劇透：新的個人帳號要先做封閉測試）。</p>
+<p>下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="android-dev-compose-first-app.html" rel="noopener">用 Jetpack Compose 做第一個 App</a></li>
+<li>➡️ 下一篇：<a href="android-dev-publish-google-play.html" rel="noopener">完整上架 Google Play</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

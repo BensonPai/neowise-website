@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】一套程式碼兩邊跑？Flutter、React Native、KMP 跨平台方案怎麼選 - 智慧喵</title>
+    <meta name="description" content="學原生要學兩套，有沒有『寫一次、iOS 和 Android 都能跑』的方法？這篇比較三大跨平台方案 Flutter、React Native、Kotlin Multiplatform 的特色、優缺點與適合對象，幫你判斷該不該走跨平台，以及怎麼選。">
+    <meta name="keywords" content="跨平台開發,Flutter,React Native,Kotlin Multiplatform,KMP,跨平台框架比較,App 開發,Dart">
+    <meta property="og:title" content="【App 開發指南】一套程式碼兩邊跑？Flutter、React Native、KMP 跨平台方案怎麼選">
+    <meta property="og:description" content="學原生要學兩套，有沒有『寫一次、iOS 和 Android 都能跑』的方法？這篇比較三大跨平台方案 Flutter、React Native、Kotlin Multiplatform 的特色、優缺點與適合對象，幫你判斷該不該走跨平台，以及怎麼選。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/cross-platform-app-dev-overview.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/cross-platform-app-dev-overview/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/cross-platform-app-dev-overview.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】一套程式碼兩邊跑？Flutter、React Native、KMP 跨平台方案怎麼選","description":"學原生要學兩套，有沒有『寫一次、iOS 和 Android 都能跑』的方法？這篇比較三大跨平台方案 Flutter、React Native、Kotlin Multiplatform 的特色、優缺點與適合對象，幫你判斷該不該走跨平台，以及怎麼選。","datePublished":"2026-09-27","dateModified":"2026-09-27","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/cross-platform-app-dev-overview.html"},"image":"https://neowise.com.tw/life/assets/cross-platform-app-dev-overview/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】一套程式碼兩邊跑？Flutter、React Native、KMP 跨平台方案怎麼選</h1>
+            <p class="article-meta">智慧喵　•　2026-09-27</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/cross-platform-app-dev-overview/cover.jpg" alt="一套程式碼同時產出 iOS 與 Android 兩個 App 的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>走完 <a href="ios-dev-monetization.html" rel="noopener">iOS</a> 和 <a href="android-dev-monetization.html" rel="noopener">Android</a> 兩條原生路徑，你可能會冒出一個念頭：<strong>iOS 學 Swift、Android 學 Kotlin，要學兩套、寫兩份程式碼，有沒有更省力的方法？</strong></p>
+<p>有。這條路叫<strong>跨平台開發</strong>——寫一套程式碼，同時產出 iOS 和 Android 兩個 App。這篇是整個系列的補充篇，幫你搞懂跨平台是什麼、三大方案怎麼選、以及你到底該不該走這條路。</p>
+<blockquote><strong>查證時間：2026-09-27</strong>。以下市佔、版本等資訊參考多個 2026 年的公開來源，技術演進快，實際數字請以最新官方與市場資料為準。內容已改寫以符合授權規範。</blockquote>
+<h2>原生 vs 跨平台：先搞懂差別</h2>
+<ul>
+<li><strong>原生開發</strong>（這系列教的）：iOS 用 Swift、Android 用 Kotlin，各寫一套。效能最好、最能用系統新功能、體驗最原生。代價是要學兩套、維護兩份。</li>
+<li><strong>跨平台開發</strong>：一套程式碼兩邊跑。省時、省維護、一個人也能顧兩個平台。代價是遇到深度系統功能仍要寫平台專屬程式碼、體驗偶爾要妥協、多一層框架要學。</li>
+</ul>
+<p>沒有絕對誰好，看你的目標。接著看三個主流方案。</p>
+<figure><img src="assets/cross-platform-app-dev-overview/frameworks-compare.jpg" alt="Flutter、React Native、KMP 三大跨平台方案對照" loading="lazy"></figure>
+<h2>方案一：Flutter（Google）</h2>
+<ul>
+<li><strong>語言</strong>：Dart。</li>
+<li><strong>特色</strong>：用自己的繪圖引擎，兩邊畫面長得一模一樣，<strong>視覺一致性最好</strong>。市佔在跨平台開發者中領先（2026 年約四成多）。</li>
+<li><strong>優點</strong>：畫面精緻、跨平台一致、開發速度快，很適合快速做出漂亮的 MVP。</li>
+<li><strong>要留意</strong>：得學 Dart 這個相對小眾的語言；因為自繪引擎，風格要特別調才會像各平台的原生外觀。</li>
+<li><strong>適合</strong>：想要一套程式碼、畫面完全統一、快速上線的人。</li>
+</ul>
+<h2>方案二：React Native（Meta）</h2>
+<ul>
+<li><strong>語言</strong>：JavaScript / TypeScript。</li>
+<li><strong>特色</strong>：用原生元件呈現，<strong>開發者人才庫最大</strong>，生態系套件最豐富。</li>
+<li><strong>優點</strong>：如果你本來就會網頁前端（JS / React），上手最快、資源最多。</li>
+<li><strong>要留意</strong>：有時需要處理原生模組的橋接；複雜場景的效能調校要花心思。</li>
+<li><strong>適合</strong>：已經會 JavaScript / 前端、想沿用既有技能的人。</li>
+</ul>
+<h2>方案三：Kotlin Multiplatform（KMP，JetBrains / Google）</h2>
+<ul>
+<li><strong>語言</strong>：Kotlin。</li>
+<li><strong>特色</strong>：主打<strong>共用商業邏輯、UI 各平台仍走原生</strong>（也可搭 Compose Multiplatform 連 UI 一起共用）。已在 Netflix、Cash App 等大型產品的正式環境使用，成長最快。</li>
+<li><strong>優點</strong>：保留各平台的原生體驗，同時把核心邏輯寫一次共用，妥協最少。</li>
+<li><strong>要留意</strong>：相對較新，UI 共用的成熟度視你採用的程度而定；學習曲線偏工程導向。</li>
+<li><strong>適合</strong>：重視原生體驗、又想減少邏輯重複的人；學過 Kotlin（Android）的人特別順。</li>
+</ul>
+<h2>快速對照</h2>
+<div class="table-wrap"><table><thead><tr><th></th><th>Flutter</th><th>React Native</th><th>KMP</th></tr></thead><tbody><tr><td>語言</td><td>Dart</td><td>JS / TS</td><td>Kotlin</td></tr><tr><td>畫面</td><td>自繪、兩邊一致</td><td>原生元件</td><td>各平台原生 UI</td></tr><tr><td>最大優勢</td><td>視覺一致、做 MVP 快</td><td>人才多、生態豐富</td><td>保留原生體驗</td></tr><tr><td>適合誰</td><td>想快速做雙平台</td><td>已會前端</td><td>想共用邏輯又要原生感</td></tr></tbody></table></div>
+<h2>那我到底該不該走跨平台？</h2>
+<p>給你幾個誠實的判斷：</p>
+<ul>
+<li><strong>如果你的目標是「一個人、同時做出 iOS + Android、省時省力」</strong> → 跨平台（尤其 Flutter）通常划算，不用學兩套語言。</li>
+<li><strong>如果你已經會前端（JS）</strong> → React Native 幾乎是最順的選擇。</li>
+<li><strong>如果你已經走完這系列的 Android（會 Kotlin）、又很在意原生體驗</strong> → KMP 值得看。</li>
+</ul>
+<p>但有個重要前提，我一定要講：<strong>學跨平台，不代表可以完全不懂原生。</strong></p>
+<p>跨平台框架幫不了你的部分，恰恰是這系列前面教的那些——<strong>上架商店、憑證、權限、平台規範</strong>，這些照樣得懂。而且遇到深度系統功能（相機、感測器、特定 API），還是得寫平台專屬程式碼。所以「完全跳過原生、只學跨平台」通常會在某個環節卡住不知道底層發生什麼事。</p>
+<p><strong>這也是為什麼這個系列先帶你走原生</strong>：原生是根，把根紮好，之後不管用哪個跨平台框架，你都清楚底層在做什麼、出問題查得到方向。反過來只學框架、不懂底層，走不遠。</p>
+<h2>學跨平台大約要花多久？</h2>
+<p>如果你已經走完這系列的原生路徑（懂語言、畫面、資料、上架的觀念），再學一個跨平台框架，抓 <strong>4~8 週</strong>能上手做出雙平台 App——因為觀念都通了，主要是熟悉新框架的寫法和工具鏈。從零直接學跨平台的人會久一些，因為上架、除錯那些基本功還是要補。</p>
+<h2>系列總結：你的下一步</h2>
+<p>到這裡，整個「App 開發指南」系列就完整了：</p>
+<ul>
+<li><strong>總覽篇</strong>：工具、流程、上架、費用、賺錢的全貌。</li>
+<li><strong>iOS 路徑 6 篇</strong>：Swift + SwiftUI，從環境到上架變現。</li>
+<li><strong>Android 路徑 6 篇</strong>：Kotlin + Compose，對稱的完整路徑。</li>
+<li><strong>跨平台總覽（本篇）</strong>：Flutter / RN / KMP，一套程式碼兩邊跑的選擇。</li>
+</ul>
+<p>如果之後大家對跨平台實作有興趣，我會考慮把這篇擴充成完整的 Flutter 實作系列——想看的話，歡迎留言或到 YouTube 告訴我。</p>
+<p>不過最重要的，永遠是那句話：<strong>看再多教學，都不如親手做完一個 App。</strong> 挑一個你自己想解決的小問題，動手做，你已經有全部需要的地圖了。祝你做出屬於自己的第一個 App。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="android-dev-monetization.html" rel="noopener">Android App 怎麼賺錢</a></li>
+<li>🎉 這是系列最後一篇。回目錄挑任何一篇複習，或去做一個屬於你自己的 App 吧！</li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

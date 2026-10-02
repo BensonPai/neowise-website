@@ -171,6 +171,19 @@ function markdownToHtml(md) {
   while (i < lines.length) {
     const line = lines[i], trimmed = line.trim();
     if (!trimmed) { closeList(); i++; continue; }
+    // 程式碼區塊（fenced code block）：``` 或 ```語言 開頭，到下一個 ``` 結束
+    const fence = trimmed.match(/^```+\s*([A-Za-z0-9+#-]*)\s*$/);
+    if (fence) {
+      closeList();
+      const lang = fence[1] || '';
+      const code = [];
+      i++;
+      while (i < lines.length && !/^```+\s*$/.test(lines[i].trim())) { code.push(lines[i]); i++; }
+      i++; // 跳過結尾的 ```
+      const cls = lang ? ` class="language-${lang}"` : '';
+      html.push(`<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code${cls}>${escapeHtml(code.join('\n'))}</code></pre></div>`);
+      continue;
+    }
     const heading = trimmed.match(/^(#{1,4})\s+(.*)$/);
     if (heading) { closeList(); const lv = Math.min(Math.max(heading[1].length, 2), 5); html.push(`<h${lv}>${inlineMarkdown(heading[2])}</h${lv}>`); i++; continue; }
     if (trimmed.startsWith('> ')) {
@@ -214,6 +227,7 @@ function navbar(active) {
         <ul class="nav-links">
             <li><a href="index.html"${on('home')}>首頁</a></li>
             <li><a href="invest.html"${on('invest')}>投資理財修煉</a></li>
+            <li><a href="appdev.html"${on('appdev')}>App 開發指南</a></li>
             <li><a href="tools.html"${on('tools')}>我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -227,6 +241,8 @@ function footer() {
             <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
             <div class="footer-links">
                 <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
                 <a href="tools.html">我的工具</a>
                 <a href="about.html">關於</a>
                 <a href="${YT_URL}" rel="noopener">YouTube</a>
@@ -326,6 +342,24 @@ ${videoHint}${markdownToHtml(body)}
     </div>
 </article>
 ${footer()}
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
 </body>
 </html>`;
 }
@@ -412,6 +446,8 @@ document.querySelectorAll('.filter-btn').forEach(function(btn){
 function renderSitemap(arts) {
   const today = new Date().toISOString().slice(0, 10);
   const urls = [`  <url><loc>${SITE_URL}/</loc><lastmod>${today}</lastmod></url>`,
+    `  <url><loc>${SITE_URL}/invest.html</loc><lastmod>${today}</lastmod></url>`,
+    `  <url><loc>${SITE_URL}/appdev.html</loc><lastmod>${today}</lastmod></url>`,
     `  <url><loc>${SITE_URL}/tools.html</loc><lastmod>${today}</lastmod></url>`,
     `  <url><loc>${SITE_URL}/about.html</loc><lastmod>${today}</lastmod></url>`];
   for (const a of arts) urls.push(`  <url><loc>${SITE_URL}/${a.slug}.html</loc><lastmod>${a.date || today}</lastmod></url>`);

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】完整上架 Google Play：帳號、封閉測試到送審全流程 - 智慧喵</title>
+    <meta name="description" content="Android App 做好了，怎麼放上 Google Play？這篇帶你走完整上架流程：註冊開發者帳號、打包 AAB、在 Play Console 建立 App，並特別說明新手最容易卡關的『12 位測試者、14 天封閉測試』規則。">
+    <meta name="keywords" content="Google Play 上架,Play Console,Android 上架流程,封閉測試,AAB,target API,Android 送審,Google Play 開發者">
+    <meta property="og:title" content="【App 開發指南】完整上架 Google Play：帳號、封閉測試到送審全流程">
+    <meta property="og:description" content="Android App 做好了，怎麼放上 Google Play？這篇帶你走完整上架流程：註冊開發者帳號、打包 AAB、在 Play Console 建立 App，並特別說明新手最容易卡關的『12 位測試者、14 天封閉測試』規則。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/android-dev-publish-google-play.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/android-dev-publish-google-play/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/android-dev-publish-google-play.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】完整上架 Google Play：帳號、封閉測試到送審全流程","description":"Android App 做好了，怎麼放上 Google Play？這篇帶你走完整上架流程：註冊開發者帳號、打包 AAB、在 Play Console 建立 App，並特別說明新手最容易卡關的『12 位測試者、14 天封閉測試』規則。","datePublished":"2026-09-25","dateModified":"2026-09-25","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/android-dev-publish-google-play.html"},"image":"https://neowise.com.tw/life/assets/android-dev-publish-google-play/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】完整上架 Google Play：帳號、封閉測試到送審全流程</h1>
+            <p class="article-meta">智慧喵　•　2026-09-25</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/android-dev-publish-google-play/cover.jpg" alt="App 上架到 Google Play 的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>Android App 能跑、能記憶、能連網了——<a href="android-dev-data-network.html" rel="noopener">前四篇</a>的努力，現在要讓它上架 <strong>Google Play</strong>。</p>
+<p>Android 上架整體比 iOS 快、也便宜（帳號一次性、審核相對寬鬆），但<strong>有一個新手極容易卡關的規則</strong>，我會特別點出來，讓你不會白等。</p>
+<blockquote><strong>查證時間：2026-09-27</strong>。以下流程與規則參考 Google 官方文件，Google 政策可能調整，實際請以 <a href="https://support.google.com/googleplay/android-developer" rel="noopener">Google Play 官方說明</a>與 Play Console 為準。</blockquote>
+<h2>上架的整體流程</h2>
+<figure><img src="assets/android-dev-publish-google-play/publish-steps.jpg" alt="Google Play 上架流程示意，含封閉測試步驟" loading="lazy"></figure>
+<p>大致是：<strong>註冊開發者帳號 → 在 Play Console 建立 App → 準備素材 → 打包上傳 → （新個人帳號）封閉測試 → 送審正式版</strong>。</p>
+<h2>步驟一：註冊 Google Play 開發者帳號</h2>
+<p>到 <a href="https://play.google.com/console" rel="noopener">Google Play Console</a> 註冊：</p>
+<ul>
+<li>費用：<strong>一次性 US$25</strong>（付一次終身有效，不用年繳，來源：<a href="https://support.google.com/googleplay/android-developer/answer/6112435" rel="noopener">Google Play 官方說明</a>）。</li>
+<li>可選「個人」或「組織」帳號。</li>
+<li>需要完成<strong>身分驗證</strong>，這步可能要花一點時間，建議越早開始越好。</li>
+</ul>
+<h2>步驟二：在 Play Console 建立 App</h2>
+<p>在 Play Console 建立一筆 App，填基本資訊：App 名稱、預設語言、是 App 還是遊戲、免費或付費。</p>
+<h2>步驟三：準備素材與必填資訊</h2>
+<p>跟 iOS 類似，這些少一樣就送不出去：</p>
+<ul>
+<li><strong>App 圖示、功能圖（feature graphic）、螢幕截圖</strong>。</li>
+<li><strong>簡短說明、完整說明</strong>（影響搜尋，好好寫）。</li>
+<li><strong>隱私權政策網址</strong>：<strong>必填</strong>。</li>
+<li><strong>內容分級</strong>：填一份問卷。</li>
+<li><strong>資料安全表單（Data Safety）</strong>：申報你的 App 收集、分享哪些資料（類似 iOS 的隱私標籤）。</li>
+<li><strong>目標對象與內容</strong>：宣告面向的年齡層等。</li>
+</ul>
+<h2>步驟四：打包並上傳 App</h2>
+<p>Android 上架用的格式是 <strong>AAB（Android App Bundle）</strong>，不是舊的 APK：</p>
+<ol>
+<li>在 Android Studio 選 <strong>Build → Generate Signed Bundle</strong>，產生簽署過的 <code>.aab</code>。</li>
+<li>上傳到 Play Console 對應的發布軌道。</li>
+</ol>
+<blockquote><strong>重要</strong>：Google Play 規定新 App 必須 <strong>target 夠新的 Android 版本（目前是 Android 16 / API level 36 以上）</strong>才能上架，且這個要求每年會往上調。在 Android Studio 專案裡設定好 <code>targetSdk</code> 再打包。</blockquote>
+<h2>步驟五（關鍵！）：新個人帳號的封閉測試門檻</h2>
+<p>這是<strong>最多新手卡關、卻很少人事先講</strong>的地方，一定要知道：</p>
+<p><strong>如果你的開發者帳號是「個人」帳號、且是在 2023 年 11 月 13 日之後建立的</strong>，那麼在能發布「正式版（production）」之前，Google 要求你先完成一輪<strong>封閉測試（closed testing）</strong>：</p>
+<ul>
+<li>需要<strong>至少 12 位測試者</strong>，</li>
+<li>持續<strong>至少 14 天</strong>，</li>
+<li>之後才能申請「正式版存取權」。</li>
+</ul>
+<p>換句話說，個人新帳號<strong>沒辦法一鍵直接上架</strong>，得先找到 12 個人幫你測兩週。這常讓不知情的人卡在最後一步乾等。</p>
+<p><strong>因應建議</strong>：</p>
+<ul>
+<li>及早<strong>號召親友、社群 12 位測試者</strong>（用 Google 帳號 email 加入測試），別等到最後才找人。</li>
+<li>這 14 天剛好拿來收集回饋、修 bug，把它當成正式的測試期，而不只是走流程。</li>
+<li>組織帳號的規則不同，但個人開發者最常見，務必留意這條。</li>
+</ul>
+<p>（來源：<a href="https://www.choicely.com/tutorials/how-to-publish-an-app-on-google-play" rel="noopener">Google Play 上架流程說明</a>。實際門檻請以 Play Console 顯示為準。）</p>
+<h2>步驟六：送審正式版</h2>
+<p>完成測試門檻、素材齊全後，就能提交正式版送審。</p>
+<ul>
+<li>Google 審核<strong>相對比 iOS 快、也較自動化</strong>，但新帳號、或涉及敏感權限的 App 可能審得久一些。</li>
+<li>通過後即可發布，選擇要不要分階段釋出（staged rollout，先開放給部分用戶）。</li>
+</ul>
+<h2>這一步大約要花多久？</h2>
+<ul>
+<li>準備素材、熟悉 Play Console：<strong>3~5 天</strong>。</li>
+<li>但如果是新個人帳號，要<strong>額外算上封閉測試的 14 天</strong>——這段是硬性等待期，記得提早啟動。</li>
+</ul>
+<p>所以務實的時程是：<strong>素材準備 3~5 天，加上（新帳號）14 天封閉測試</strong>。把測試者提早找齊，是這步最省時間的關鍵。</p>
+<h2>下一篇</h2>
+<p>App 上架了，最後一哩路——<strong>怎麼靠 Android App 賺錢</strong>。下一篇是 Android 路徑最後一篇，會講 Google Play 的內購、訂閱、AdMob 廣告，以及定價策略。</p>
+<p>你即將完成 Android 從零到上架的完整旅程。下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="android-dev-data-network.html" rel="noopener">讓 App 記住資料、連上網路</a></li>
+<li>➡️ 下一篇：<a href="android-dev-monetization.html" rel="noopener">Android App 怎麼賺錢</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

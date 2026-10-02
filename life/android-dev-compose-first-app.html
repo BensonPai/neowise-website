@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】用 Jetpack Compose 做第一個 Android App：畫面、狀態與互動 - 智慧喵</title>
+    <meta name="description" content="學完 Kotlin 基礎，這篇用 Jetpack Compose 動手做出第一個看得到、點得到的 Android App。從 Composable、常用元件、版面排列，到用 remember 與 state 做出會反應的互動，把畫面變活的。">
+    <meta name="keywords" content="Jetpack Compose,Compose 教學,Android 開發,Composable,Compose state,Column Row,Android 第一個 App,remember">
+    <meta property="og:title" content="【App 開發指南】用 Jetpack Compose 做第一個 Android App：畫面、狀態與互動">
+    <meta property="og:description" content="學完 Kotlin 基礎，這篇用 Jetpack Compose 動手做出第一個看得到、點得到的 Android App。從 Composable、常用元件、版面排列，到用 remember 與 state 做出會反應的互動，把畫面變活的。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/android-dev-compose-first-app.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/android-dev-compose-first-app/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/android-dev-compose-first-app.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】用 Jetpack Compose 做第一個 Android App：畫面、狀態與互動","description":"學完 Kotlin 基礎，這篇用 Jetpack Compose 動手做出第一個看得到、點得到的 Android App。從 Composable、常用元件、版面排列，到用 remember 與 state 做出會反應的互動，把畫面變活的。","datePublished":"2026-09-23","dateModified":"2026-09-23","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/android-dev-compose-first-app.html"},"image":"https://neowise.com.tw/life/assets/android-dev-compose-first-app/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】用 Jetpack Compose 做第一個 Android App：畫面、狀態與互動</h1>
+            <p class="article-meta">智慧喵　•　2026-09-23</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/android-dev-compose-first-app/cover.jpg" alt="Android 模擬器上顯示一個簡單 App 畫面的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>前兩篇<a href="android-dev-setup-tools.html" rel="noopener">裝好環境</a>、學了 <a href="android-dev-kotlin-basics.html" rel="noopener">Kotlin 基礎</a>，現在到最有成就感的一步——用 <strong>Jetpack Compose</strong> 做出第一個真的能看、能點的 Android App。</p>
+<p>如果你做過這系列的 <a href="ios-dev-swiftui-first-app.html" rel="noopener">SwiftUI 篇</a>，準備好迎接強烈既視感：Compose 跟 SwiftUI 的思路幾乎一模一樣，你會學得飛快。這篇一樣做一個計數器（按按鈕、數字加一）。</p>
+<h2>一、核心概念：Composable</h2>
+<p>在 Compose 裡，畫面上的每個東西都是一個 <strong>Composable 函式</strong>——一個標了 <code>@Composable</code> 的函式，用來描述「這塊畫面長怎樣」。</p>
+<p>新建 Compose 專案時，Android Studio 會給你類似這段：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">@Composable
+fun Greeting(name: String) {
+    Text(text = &quot;Hello $name!&quot;)
+}</code></pre></div>
+<p>拆解：</p>
+<ul>
+<li><code>@Composable</code>：標記這是一個可組合的 UI 函式。</li>
+<li><code>fun Greeting(...)</code>：就是個普通 Kotlin 函式，只是它畫的是畫面。</li>
+<li><code>Text(...)</code>：顯示文字的元件。</li>
+</ul>
+<p>右邊有 <strong>Preview（預覽）</strong>，改程式碼即時看畫面，跟 SwiftUI 的預覽一樣好用。</p>
+<blockquote>對照 SwiftUI：Composable 函式 ≈ SwiftUI 的 View。一個用 <code>@Composable</code> 標函式、一個用 <code>struct: View</code>，本質都是「描述畫面」。</blockquote>
+<h3>先講一件重要的事：import</h3>
+<p>下面的範例，如果你直接貼進去，很可能看到一堆紅字，像 <strong><code>Unresolved reference 'Button'</code></strong>、<strong><code>Unresolved reference 'Color'</code></strong>、<strong><code>'sp'</code></strong>、<strong><code>'Icon'</code></strong> 等等。<strong>這不是程式錯，是缺少 import</strong>——Compose 的元件（<code>Button</code>、<code>Icon</code>、<code>Color</code>、<code>.sp</code>…）分散在不同套件裡，用之前要先 <code>import</code> 進來。</p>
+<p><strong>你不用背要 import 什麼，讓 Android Studio 自動補</strong>（以下快捷鍵以 Windows 為主，Mac 括號附註）：</p>
+<ul>
+<li>把游標點在紅字上，按 <strong>Alt + Enter</strong>（Mac 是 Option + Enter），跳出建議後選 <strong>Import</strong>，它就自動加上對應的 import。一個一個補完，紅字就消失了。</li>
+<li><strong>一次補全部</strong>：貼上程式碼後，按 <strong>Ctrl + Alt + O</strong>（Optimize Imports），一次把能自動判斷的 import 補上，比一個一個點快。</li>
+<li><strong>開自動 import（一勞永逸）</strong>：<strong>Settings → Editor → General → Auto Import</strong>，勾選 <strong>Add unambiguous imports on the fly</strong> 和 <strong>Optimize imports on the fly</strong>，之後貼程式碼時它會自動補。</li>
+<li>⚠️ <strong>設定後若沒生效，做一次 <code>File → Invalidate Caches / Restart</code> 重啟</strong>，重啟後才會套用（這是常見的雷，很多人以為設定沒用，其實只是要重啟）。</li>
+<li>要注意：自動 import <strong>只會補「唯一、沒有歧義」的</strong>。像 Compose 很多元件（<code>Color</code>、<code>Alignment</code>…）在不同套件有同名，這種它不敢自動選，還是要你手動 Alt + Enter 選對的（選 <code>androidx.compose</code> 開頭那個）。</li>
+</ul>
+<p>（本文為了聚焦在畫面邏輯，範例只寫核心程式碼，import 就交給 Android Studio 自動補。文章最後的完整計數器範例會附上完整 import 供對照。）</p>
+<h2>二、常用元件</h2>
+<p>先認識三個最常用的元件（記得用 <strong>Alt + Enter</strong> 補 import）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">// 文字
+Text(
+    text = &quot;你好，智慧喵&quot;,
+    fontSize = 24.sp,
+    color = Color.Blue
+)
+
+// 按鈕
+Button(onClick = { println(&quot;按鈕被按了&quot;) }) {
+    Text(&quot;點我&quot;)
+}
+
+// 圖示
+Icon(
+    imageVector = Icons.Default.Star,
+    contentDescription = &quot;星星&quot;
+)</code></pre></div>
+<p>Compose 用<strong>參數</strong>來調整外觀（<code>fontSize</code>、<code>color</code>），SwiftUI 用 modifier（<code>.font</code>、<code>.foregroundColor</code>）——形式不同，目的一樣。Compose 也大量用 <code>Modifier</code> 參數調整間距、大小等。</p>
+<blockquote>⚠️ <strong>注意：這三個元件如果直接並排寫，會「疊在一起」！</strong> 因為 Compose 預設讓每個元件都從左上角同一個位置開始畫。要讓它們乖乖由上往下排，必須用<strong>容器</strong>包起來——也就是下一節要講的 <code>Column</code>。先記住：<strong>多個元件要排版，就包進 <code>Column { }</code></strong>（這也是你把下面範例貼進去時，記得整個包一層 <code>Column</code> 的原因）。</blockquote>
+<h3>順便學一個 Android 必備技能：加相依套件</h3>
+<p>你貼上面那段，<code>Text</code>、<code>Button</code>、<code>Color</code> 按 <strong>Alt + Enter</strong> 都補得了 import，但 <strong><code>Icon</code> 的 <code>Icons.Default.Star</code> 會一直補不出來</strong>（顯示 <code>Unresolved reference 'Icons'</code>）。這不是你錯——<strong>這個圖示放在一個預設沒安裝的套件裡，要自己加進專案</strong>。</p>
+<p>「加相依套件」是 Android 開發<strong>幾乎天天要做</strong>的事（Android 很多功能都靠加套件），趁現在學會：</p>
+<p><strong>第一步：打開 App 的 <code>build.gradle</code>。</strong> 左側檔案樹找到 <strong>Gradle Scripts → <code>build.gradle.kts (Module :app)</code></strong>（注意是 <strong>Module :app</strong> 那個，不是 Project 層級的）。</p>
+<p><strong>第二步：在 <code>dependencies { }</code> 區塊裡加一行。</strong> 找到裡面一堆 <code>implementation(...)</code> 的地方，加上：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">dependencies {
+    // …原本就有的那些 implementation 保留不動…
+
+    // 新增這行：擴充版圖示（Icons.Default.Star 等就在這）
+    implementation(&quot;androidx.compose.material:material-icons-extended&quot;)
+}</code></pre></div>
+<p><strong>第三步：按 Gradle Sync（同步）。</strong> 加完套件後，Android Studio 上方通常會跳出一條提示列，點 <strong>Sync Now</strong>（或右上角那個大象／Gradle 同步圖示）。它會下載套件，跑一下（要等一會兒）。</p>
+<p><strong>第四步：Sync 完成後</strong>，回到程式碼，<code>Icon</code> 和 <code>Icons.Default.Star</code> 就不再是紅字了，這時按 Alt + Enter 補上 import（<code>androidx.compose.material.icons.*</code> 之類）就能用。</p>
+<blockquote><strong>記住這個流程</strong>：遇到「某個功能的類別一直補不到 import」，多半是<strong>缺套件</strong>——去 <code>build.gradle.kts (Module :app)</code> 的 <code>dependencies</code> 加一行、Sync，就有了。這是 Android 開發最常用的操作之一。</blockquote>
+<blockquote>⚠️ <strong>另一個經典坑：import 到「同名但錯的類別」。</strong> 例如 <code>Color.Blue</code> 裡 <strong><code>Color</code> 不是紅字、但 <code>Blue</code> 是紅字</strong>——這代表 <code>Color</code> 有 import，只是<strong>匯錯了</strong>。Android 有好幾個叫 <code>Color</code> 的類別：Compose 要用的是 <code>androidx.compose.ui.graphics.Color</code>（有 <code>.Blue</code>），但你可能誤匯成舊的 <code>android.graphics.Color</code>（沒有 <code>.Blue</code>）。解法：到檔案最上方 import 區，<strong>刪掉 <code>android.graphics.Color</code>、留 <code>androidx.compose.ui.graphics.Color</code></strong>。遇到「類別本身不紅、但它的成員紅」，通常就是這種同名匯錯，檢查 import 選對套件即可。</blockquote>
+<p>&gt;</p>
+<blockquote><strong>Alt + Enter 跳出好幾個同名選項、該選哪個？</strong> 認一個原則：<strong>我們寫 Compose，就選套件名有 <code>androidx.compose</code> 開頭的那個</strong>。例如選 <code>Alignment</code> 時跳出四個，要選 <code>Alignment (androidx.compose.ui)</code>，排除 <code>android.text</code>、<code>android.widget</code> 那些（舊的 View／文字系統，Compose 用不到）。若有多個 compose 的，選路徑最短最通用的（例如 <code>androidx.compose.ui</code> 優先於 <code>androidx.compose.ui.text.style</code>）。</blockquote>
+<p>&gt;</p>
+<blockquote>（如果你只是想先把第一個 App 跑起來、還不想碰套件，那 Icon 這段可以先略過，用 <code>Text</code> + <code>Button</code> 就夠做出後面的計數器了。）</blockquote>
+<h2>三、版面排列</h2>
+<figure><img src="assets/android-dev-compose-first-app/layout-column-row.jpg" alt="Column 與 Row 排列示意：垂直堆疊與水平排列" loading="lazy"></figure>
+<p>Compose 用三個容器排版：</p>
+<ul>
+<li><strong>Column</strong>：垂直堆疊，由上往下（對應 SwiftUI 的 VStack）。</li>
+<li><strong>Row</strong>：水平排列，由左往右（對應 HStack）。</li>
+<li><strong>Box</strong>：疊在一起，前後重疊（對應 ZStack）。</li>
+</ul>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">Column {
+    Text(&quot;標題&quot;, fontSize = 24.sp)
+    Text(&quot;副標題&quot;, color = Color.Gray)
+    Button(onClick = { }) {
+        Text(&quot;開始&quot;)
+    }
+}</code></pre></div>
+<p>把 <code>Column</code> 換成 <code>Row</code>，就從上下排列變成左右排列。名字不同但邏輯跟 SwiftUI 完全一致。</p>
+<h3>內容蓋到最上面的時間（狀態列）怎麼辦？</h3>
+<p>你把畫面跑起來，可能會發現<strong>最上面的文字疊到了手機的時間、電池那條</strong>（叫「狀態列」）。這是因為現代 Android App 預設「全螢幕」，畫面會延伸到狀態列底下，不處理就會蓋住。</p>
+<p>解法是給最外層的 <code>Column</code> 加上<strong>安全邊距</strong>，用 <code>Modifier.safeDrawingPadding()</code>，它會自動避開狀態列、瀏海、底部導覽列（不用自己抓數字）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">Column(
+    modifier = Modifier
+        .safeDrawingPadding()   // 自動避開狀態列等系統區域
+        .padding(16.dp)         // 再加一點內距好看
+) {
+    // …你的元件…
+}</code></pre></div>
+<p>（<code>safeDrawingPadding</code>、<code>padding</code>、<code>dp</code> 都用 Alt + Enter 補 import。）這也帶出一個很常用的觀念：<strong><code>Modifier</code></strong> 是 Compose 用來調整元件的「外觀與行為」的工具——間距、大小、對齊、點擊等等都靠它，用 <code>.</code> 一個接一個串起來。你會在往後每個畫面都大量用到它。</p>
+<h2>四、加入互動：remember 與 mutableStateOf</h2>
+<p>跟 SwiftUI 的 <code>@State</code> 對應，Compose 用 <code>remember { mutableStateOf(...) }</code> 來管理會變動的狀態。做計數器：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">@Composable
+fun CounterApp() {
+    // 狀態：這個數字會變，且要在重繪間記住
+    var count by remember { mutableStateOf(0) }
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = &quot;目前數字：$count&quot;,
+            fontSize = 32.sp
+        )
+        Button(onClick = { count++ }) {   // 改變狀態
+            Text(&quot;加一&quot;)
+        }
+    }
+}</code></pre></div>
+<p>關鍵在 <code>var count by remember { mutableStateOf(0) }</code>：</p>
+<ul>
+<li><code>mutableStateOf(0)</code>：建立一個「可觀察的狀態」，初始值 0。</li>
+<li><code>remember { }</code>：讓這個狀態在畫面重繪時<strong>被記住</strong>，不會每次重畫都歸零。</li>
+<li><strong>當 <code>count</code> 改變，Compose 會自動重新繪製用到它的畫面</strong>——這叫「重組（recomposition）」。</li>
+</ul>
+<p>所以按下「加一」、<code>count</code> 變成 1，畫面數字自動更新，你不用手動改。這跟 SwiftUI「資料變、畫面自動跟著變」是完全相同的思想。</p>
+<p>把這段跑在模擬器上，按按鈕看數字跳——<strong>你的第一個 Android 互動 App 完成了。</strong></p>
+<h3>完整可貼版本（含 import）</h3>
+<p>上面的 <code>CounterApp</code> 只寫了核心邏輯，直接貼會因為缺 import 出現一堆紅字。下面是<strong>含完整 import 的版本</strong>，可以整段複製，或對照著看你缺哪些 import（也可以只貼 <code>CounterApp</code> 函式、其他讓 Android Studio 用 <strong>Alt + Enter</strong> 自動補，Mac 是 Option + Enter）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">import androidx.compose.foundation.layout.Column
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun CounterApp() {
+    var count by remember { mutableStateOf(0) }
+
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(text = &quot;目前數字：$count&quot;, fontSize = 32.sp)
+        Button(onClick = { count++ }) {
+            Text(&quot;加一&quot;)
+        }
+    }
+}</code></pre></div>
+<h3>App 顯示哪個畫面？由 setContent 決定</h3>
+<p>這是很重要、但新手常搞不清楚的觀念：<strong>App 一開起來顯示哪個畫面，是 <code>MainActivity.kt</code> 裡的 <code>setContent { }</code> 決定的</strong>。它裡面呼叫哪個 Composable 函式，螢幕就顯示那個：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-kotlin">setContent {
+    DemoTheme {
+        CounterApp()        // ← 這裡呼叫誰，就顯示誰
+    }
+}</code></pre></div>
+<ul>
+<li>想顯示計數器 → 這裡寫 <code>CounterApp()</code></li>
+<li>想顯示別的畫面（例如你另外寫的 <code>Greeting()</code>）→ 這裡改成 <code>Greeting(...)</code></li>
+</ul>
+<p><strong>所以「想試不同的畫面」，只要改 <code>setContent</code> 裡呼叫的函式名就好，一個地方。</strong></p>
+<p>幾個新手常卡的點，一次講清楚：</p>
+<ul>
+<li><strong>多個 Composable 函式可以同時存在</strong>。例如 <code>CounterApp</code> 和 <code>Greeting</code> 兩個函式可以都留在檔案裡、互不影響。沒被 <code>setContent</code> 呼叫到的那個，只是「存在但沒顯示」，<strong>不用刪掉</strong>。想看哪個就改 <code>setContent</code> 呼叫誰，隨時切換。</li>
+<li>⚠️ <strong>用 <code>//</code> 把函式註解掉 = 等於刪掉它</strong>。如果你把某個函式註解掉，但 <code>setContent</code>（或 <code>@Preview</code>）還在呼叫它，就會出現 <strong><code>Unresolved reference</code>（找不到）</strong>。要嘛別註解它、要嘛把呼叫處也一起改掉。</li>
+<li>新專案預設 <code>setContent</code> 裡放的是 <code>Greeting(...)</code>，還有一個 <code>@Preview</code> 的預覽函式也呼叫它。你要換成自己的函式時，<strong>這兩處（setContent 和 Preview）通常都要一起改</strong>，才不會有一處找不到。</li>
+</ul>
+<h2>五、動手改改看</h2>
+<ul>
+<li>加「減一」按鈕（<code>count--</code>）、「歸零」按鈕（<code>count = 0</code>）。</li>
+<li>改文字顏色、字體大小。</li>
+<li>用 <code>Row</code> 把「加一」「減一」排成左右並排。</li>
+</ul>
+<p>Compose 的即時預覽讓試錯成本很低，多改多試，手感長得最快。</p>
+<h2>六、把 App 裝到你自己的 Android 手機</h2>
+<p>在模擬器跑很方便，但裝到自己手上那支真手機、用手指點，感覺完全不同。好消息是——<strong>Android 裝實機比 iOS 簡單很多</strong>：不用付費帳號、不用設定簽署、不用「信任開發者」那一串，接上線、開個開關就能裝。</p>
+<p><strong>第一步：手機開啟「開發者選項」。</strong> 這是 Android 的隱藏開關：</p>
+<ul>
+<li>手機 <strong>設定 → 關於手機 → 版本號碼（Build number）</strong></li>
+<li>在「版本號碼」上<strong>連續點 7 下</strong>，會出現「你已成為開發者」。</li>
+</ul>
+<p><strong>第二步：開啟「USB 偵錯」。</strong></p>
+<ul>
+<li>回設定，會多出 <strong>開發者人員選項 / 開發者選項</strong>（通常在「系統」裡）。</li>
+<li>進去打開 <strong>USB 偵錯（USB debugging）</strong>。</li>
+</ul>
+<p><strong>第三步：用傳輸線接上電腦。</strong></p>
+<ul>
+<li>線接好後，手機會跳出「<strong>允許 USB 偵錯嗎？</strong>」→ 點<strong>允許</strong>（可勾「一律允許這台電腦」，之後不用再問）。</li>
+</ul>
+<p><strong>第四步：在 Android Studio 選你的手機、按 Run。</strong></p>
+<ul>
+<li>上方裝置下拉選單會出現你的<strong>手機名稱</strong>（不是模擬器），選它。</li>
+<li>按綠色 <strong>Run ▶</strong>，App 就裝到你手機上、直接跑起來了。</li>
+</ul>
+<blockquote><strong>跟 iOS 對照</strong>：iOS 裝實機要付費或處理免費帳號的簽署、憑證、信任開發者、7 天限制那一堆；<strong>Android 只要開 USB 偵錯、接線、允許</strong>就能裝，沒有數量和天數限制，簡單非常多。這也是 Android 開發對新手友善的地方之一。</blockquote>
+<p>&gt;</p>
+<blockquote>如果裝置下拉選單一直沒出現你的手機：確認 USB 偵錯有開、換一條<strong>支援傳輸的線</strong>（有些線只能充電）、手機上的「允許 USB 偵錯」有按允許。</blockquote>
+<p>&gt;</p>
+<blockquote><strong>可能遇到的錯誤 <code>INSTALL_FAILED_OLDER_SDK</code></strong>：意思是你 App 要求的最低 Android 版本（<code>minSdk</code>）比你手機的版本還新，裝不上去。解法：打開 <code>build.gradle.kts (Module :app)</code>，在 <code>defaultConfig { }</code> 裡找到 <code>minSdk = XX</code>，把數字<strong>改小</strong>（例如 <code>minSdk = 24</code>，約 Android 7.0，支援 99% 裝置），Sync 後重跑。（這跟 iOS 的「deployment target 太高」是同一類問題——App 最低版本不能高於你手機的版本。）</blockquote>
+<p>&gt;</p>
+<blockquote>⚠️ <strong>但手機太舊（例如 Android 4.x、5.x）就裝不了，這是正常的、不是你設定錯。</strong> 現代的 Jetpack Compose 和新版套件<strong>最低要求約 Android 5（API 21）起跳</strong>，很多元件甚至要更高，所以 <code>minSdk</code> 就算硬調到很低也會因為「套件不相容」而無法建置。遇到很舊的手機，別硬裝——<strong>改用模擬器測試</strong>（想測哪個版本都行），或借一支 Android 8 以上的手機。<code>minSdk</code> 設 24 是最通用的選擇，不用為了老機往下調。</blockquote>
+<p>&gt;</p>
+<blockquote><strong>手機跳出安裝確認、或被擋下</strong>：有些手機（尤其小米、OPPO 等）要在開發者選項裡額外打開 <strong>「透過 USB 安裝（Install via USB）」</strong>，安裝時手機螢幕也可能跳出確認框要你點「允許」。</blockquote>
+<h2>這一步大約要花多久？</h2>
+<p>抓 <strong>2~3 週</strong>；做過 SwiftUI 的話會快很多，因為概念直接對應。練法：</p>
+<ul>
+<li>先把計數器打出來、跑起來。</li>
+<li>照「動手改改看」逐項試。</li>
+<li>挑戰一個小專案，例如「BMI 計算機」，綜合用到文字、輸入、按鈕、狀態。</li>
+</ul>
+<p>目標是對「Composable + 狀態驅動」有手感。之後做任何 Android App，畫面這塊都是這一套。</p>
+<h2>下一篇</h2>
+<p>App 能顯示、能互動了，但資料一關就沒、也不會連網。下一篇進入 <strong>資料儲存（Room）與串接網路 API</strong>——讓 Android App 能記住東西、能從網路抓資料，變成實用工具。</p>
+<p>你已經做出第一個會動的 Android App 了，很棒。下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="android-dev-kotlin-basics.html" rel="noopener">Kotlin 語言基礎</a></li>
+<li>➡️ 下一篇：<a href="android-dev-data-network.html" rel="noopener">讓 App 記住資料、連上網路</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

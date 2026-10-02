@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】完整上架 App Store：帳號、送審到常見退件全流程 - 智慧喵</title>
+    <meta name="description" content="App 做好了，怎麼放上 App Store？這篇帶你走完整上架流程：加入開發者帳號、在 App Store Connect 建立 App、準備隱私與素材、用 Xcode 上傳送審，並整理最常見的退件原因與避開方法。">
+    <meta name="keywords" content="App Store 上架,App Store Connect,iOS 上架流程,App 送審,TestFlight,App 退件,隱私營養標籤,Apple Developer">
+    <meta property="og:title" content="【App 開發指南】完整上架 App Store：帳號、送審到常見退件全流程">
+    <meta property="og:description" content="App 做好了，怎麼放上 App Store？這篇帶你走完整上架流程：加入開發者帳號、在 App Store Connect 建立 App、準備隱私與素材、用 Xcode 上傳送審，並整理最常見的退件原因與避開方法。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/ios-dev-publish-app-store.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/ios-dev-publish-app-store/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/ios-dev-publish-app-store.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】完整上架 App Store：帳號、送審到常見退件全流程","description":"App 做好了，怎麼放上 App Store？這篇帶你走完整上架流程：加入開發者帳號、在 App Store Connect 建立 App、準備隱私與素材、用 Xcode 上傳送審，並整理最常見的退件原因與避開方法。","datePublished":"2026-09-19","dateModified":"2026-09-19","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/ios-dev-publish-app-store.html"},"image":"https://neowise.com.tw/life/assets/ios-dev-publish-app-store/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】完整上架 App Store：帳號、送審到常見退件全流程</h1>
+            <p class="article-meta">智慧喵　•　2026-09-19</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/ios-dev-publish-app-store/cover.jpg" alt="App 上架到 App Store 的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>App 能跑、能記憶、能連網了——<a href="ios-dev-data-network.html" rel="noopener">前四篇</a>的努力，現在要開花結果：把它放上 <strong>App Store</strong>，讓全世界都能下載。</p>
+<p>很多人到這一步會緊張，因為上架牽涉帳號、憑證、審核，看起來很複雜。別擔心，這篇把整個流程拆成清楚的步驟，並且告訴你最常見的退件地雷怎麼避開。</p>
+<blockquote><strong>查證時間：2026-09-27</strong>。以下流程與費用參考 Apple 官方文件，Apple 的介面與規則可能調整，實際請以 <a href="https://developer.apple.com/app-store/review/" rel="noopener">App Store 審核官方頁</a>與 App Store Connect 為準。</blockquote>
+<h2>上架的整體流程</h2>
+<figure><img src="assets/ios-dev-publish-app-store/publish-steps.jpg" alt="App Store 上架五步驟流程示意" loading="lazy"></figure>
+<p>大致是五步：<strong>加入開發者帳號 → 在 App Store Connect 建立 App → 準備素材與資訊 → 用 Xcode 上傳 → 送審</strong>。一個一個來。</p>
+<h2>步驟一：加入 Apple Developer Program</h2>
+<p>要上架，必須是付費會員。到 <a href="https://developer.apple.com/programs/" rel="noopener">Apple Developer</a> 註冊：</p>
+<ul>
+<li>費用：<strong>每年 US$99</strong>（來源：<a href="https://developer.apple.com/support/compare-memberships/" rel="noopener">Apple 官方會員比較頁</a>）。</li>
+<li>可選「<strong>個人</strong>」或「<strong>組織</strong>」身分，兩者費用一樣（US$99/年），但差別不小：</li>
+</ul>
+<div class="table-wrap"><table><thead><tr><th></th><th>個人</th><th>組織</th></tr></thead><tbody><tr><td>App 上顯示的名稱</td><td><strong>你的本名</strong></td><td><strong>公司／團體名稱</strong></td></tr><tr><td>註冊速度</td><td>快</td><td>慢（要驗證公司）</td></tr><tr><td>需要文件</td><td>Apple ID + 身分</td><td><strong>D-U-N-S 鄧白氏編號</strong>（見下方說明）+ 需為合法登記公司</td></tr><tr><td>多人協作</td><td>只有你</td><td>可加團隊成員、分權限</td></tr><tr><td>適合</td><td>個人、學習、自己的作品</td><td>公司、品牌、團隊</td></tr></tbody></table></div>
+<ul>
+<li><strong>新手學習、做自己的 App → 選「個人」</strong> 就好，快又簡單（代價是 App Store 會公開顯示你的本名）。</li>
+<li>要用公司／品牌名義發布、或想團隊協作，才需要「組織」，並先去辦鄧白氏編號。</li>
+<li>⚠️ 個人與組織帳號<strong>事後互轉很麻煩</strong>，註冊前先想清楚。</li>
+</ul>
+<blockquote><strong>鄧白氏編號（D-U-N-S）是什麼？是統編嗎？</strong> 不是。它是美國鄧白氏公司發的<strong>全球通用企業識別碼</strong>（9 碼），可以想成「國際版的公司身分證」；台灣統編（8 碼）是政府發的本地登記編號，兩者不同。Apple 是美國公司，要的是這個國際通用的鄧白氏編號。<strong>沒有的話可以免費申請</strong>（組織註冊流程裡有引導），但審核可能等數天到數週——這就是組織帳號較慢的原因。（選「個人」帳號完全用不到這個。）</blockquote>
+<h2>步驟二：在 App Store Connect 建立 App</h2>
+<p><a href="https://appstoreconnect.apple.com" rel="noopener">App Store Connect</a> 是你管理 App 上架的後台。在這裡：</p>
+<ul>
+<li>建立一筆新的 App 紀錄。</li>
+<li>設定 <strong>Bundle ID</strong>（App 的唯一識別碼，像身分證，要跟你 Xcode 專案裡的一致）。</li>
+<li>填 App 名稱、主要語言、分類。</li>
+</ul>
+<h2>步驟三：準備素材與必填資訊</h2>
+<p>這步最瑣碎，但少一樣就送不出去。清單：</p>
+<ul>
+<li><strong>App 圖示（App Icon）</strong>：高解析度的方形圖示。</li>
+<li><strong>螢幕截圖</strong>：不同尺寸 iPhone 的截圖，展示 App 主要畫面（可用模擬器截圖）。</li>
+<li><strong>App 描述、關鍵字、宣傳文字</strong>：影響搜尋曝光，好好寫。</li>
+<li><strong>隱私政策網址</strong>：<strong>必填</strong>。就算你的 App 很單純，也需要一個公開的隱私政策頁面。</li>
+<li><strong>隱私營養標籤（Privacy Nutrition Label）</strong>：Apple 要求你誠實申報「App 收集哪些資料、怎麼用」，顯示在下載頁讓用戶一目了然（參考 <a href="https://developer.apple.com/app-store/app-privacy-details/" rel="noopener">Apple 隱私詳情頁</a>）。</li>
+<li><strong>年齡分級</strong>：回答一份問卷，系統幫你定分級。</li>
+</ul>
+<h2>步驟四：用 Xcode 上傳你的 App</h2>
+<p>回到 Xcode：</p>
+<ol>
+<li>把專案的建置目標設為「Any iOS Device」（不是模擬器）。</li>
+<li>選單 <strong>Product → Archive</strong>，打包你的 App。</li>
+<li>打包完成後，在跳出的 Organizer 視窗選 <strong>Distribute App</strong>，依指示上傳到 App Store Connect。</li>
+</ol>
+<blockquote>Apple 有規定「送審的 App 必須用夠新的 Xcode／SDK 建置」，且會不定期更新這個最低要求。上傳前把 Xcode 更新到新版最保險。</blockquote>
+<p>上傳後，這個「建置版本（build）」會出現在 App Store Connect 對應的 App 底下，可能要等幾分鐘處理。</p>
+<h2>步驟五（強烈建議）：先用 TestFlight 測試</h2>
+<p>正式送審前，建議先透過 <strong>TestFlight</strong> 找人試用：</p>
+<ul>
+<li>可以邀請自己人（內部測試）或用 email／公開連結邀外部測試者。</li>
+<li>測試者用 TestFlight App 下載你的 App、回報問題、甚至附上截圖與當機資訊。</li>
+<li>這能在正式上架前抓出真實裝置上的 bug，很值得。</li>
+</ul>
+<h2>步驟六：送審</h2>
+<p>素材齊、build 選好，就可以 <strong>Submit for Review</strong> 送審。</p>
+<ul>
+<li>Apple 以人工審核為主，但速度不慢——<strong>多數送審在 24 小時內就有結果</strong>。</li>
+<li>通過後，你可以選「自動上架」或「指定日期上架」。</li>
+<li>沒過也別慌，Apple 會告訴你原因，改好再送即可。</li>
+</ul>
+<h2>最常見的退件原因（先避開這些）</h2>
+<p>第一次上架被退很正常，這幾個是高頻地雷：</p>
+<ol>
+<li><strong>功能不完整或像半成品</strong>：有明顯 bug、按鈕點了沒反應、佔位內容還在。送審前務必自己完整走一遍。</li>
+<li><strong>隱私資訊不齊</strong>：沒填隱私政策、隱私標籤申報跟實際行為不符。</li>
+<li><strong>登入功能問題</strong>：如果需要登入，要提供可用的測試帳號給審核員，否則他們進不去。</li>
+<li><strong>描述誇大或誤導</strong>：描述講的功能 App 裡沒有。</li>
+<li><strong>只是個包起來的網站</strong>：純粹把網頁包成 App、沒有原生價值，容易被退。</li>
+</ol>
+<p>一句話總結：<strong>把 App 做完整、資訊誠實填、需要登入就給測試帳號</strong>，就能避開大部分退件。</p>
+<h2>這一步大約要花多久？</h2>
+<p>流程本身不難，第一次因為東西多，抓 <strong>3~5 天</strong>準備素材和熟悉 App Store Connect。之後你再上架第二個 App 會快很多。真正的變數是審核——如果被退，改完重送要再等一輪，所以<strong>素材和功能一次到位最省時間</strong>。</p>
+<h2>下一篇</h2>
+<p>App 上架了，最後一哩路：<strong>怎麼靠它賺錢</strong>。下一篇是 iOS 路徑的最後一篇，會講內購、訂閱、廣告這些變現機制怎麼實作，還有定價策略。</p>
+<p>你已經完成從零到上架的完整旅程了，這非常了不起。最後一篇，我們談談讓努力變成收入。下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="ios-dev-data-network.html" rel="noopener">讓 App 記住資料、連上網路</a></li>
+<li>➡️ 下一篇：<a href="ios-dev-monetization.html" rel="noopener">iOS App 怎麼賺錢</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】讓 App 記住資料、連上網路：UserDefaults 與 API 串接 - 智慧喵</title>
+    <meta name="description" content="會做畫面之後，這篇讓你的 App 真正實用起來：用 UserDefaults 儲存小資料、認識 Codable 處理 JSON、用 URLSession 從網路 API 抓資料，把靜態畫面變成會記憶、會連線的實用工具。">
+    <meta name="keywords" content="iOS 資料儲存,UserDefaults,URLSession,Swift API,Codable,JSON 解析,SwiftUI 網路,iOS 開發">
+    <meta property="og:title" content="【App 開發指南】讓 App 記住資料、連上網路：UserDefaults 與 API 串接">
+    <meta property="og:description" content="會做畫面之後，這篇讓你的 App 真正實用起來：用 UserDefaults 儲存小資料、認識 Codable 處理 JSON、用 URLSession 從網路 API 抓資料，把靜態畫面變成會記憶、會連線的實用工具。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/ios-dev-data-network.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/ios-dev-data-network/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/ios-dev-data-network.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】讓 App 記住資料、連上網路：UserDefaults 與 API 串接","description":"會做畫面之後，這篇讓你的 App 真正實用起來：用 UserDefaults 儲存小資料、認識 Codable 處理 JSON、用 URLSession 從網路 API 抓資料，把靜態畫面變成會記憶、會連線的實用工具。","datePublished":"2026-09-18","dateModified":"2026-09-18","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/ios-dev-data-network.html"},"image":"https://neowise.com.tw/life/assets/ios-dev-data-network/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】讓 App 記住資料、連上網路：UserDefaults 與 API 串接</h1>
+            <p class="article-meta">智慧喵　•　2026-09-18</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/ios-dev-data-network/cover.jpg" alt="App 從網路雲端抓取資料的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>到目前為止，我們的 App 能<a href="ios-dev-swiftui-first-app.html" rel="noopener">顯示畫面、能互動</a>了，但有兩個致命問題：<strong>一關掉資料就不見</strong>，而且<strong>不會跟外界溝通</strong>。這篇就來補這兩塊，讓 App 從「玩具」變成「實用工具」。</p>
+<p>會分兩部分：先學怎麼在本機記住資料，再學怎麼從網路抓資料。</p>
+<h2>第一部分：讓 App 記住資料</h2>
+<h3>UserDefaults：存小東西最簡單</h3>
+<p>App 常常需要記住一些小設定，例如「使用者的暱稱」「深色模式開了沒」「上次看到第幾頁」。這種小資料，用 <strong>UserDefaults</strong> 最簡單：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">// 存資料
+UserDefaults.standard.set(&quot;智慧喵&quot;, forKey: &quot;userName&quot;)
+UserDefaults.standard.set(true, forKey: &quot;isDarkMode&quot;)
+
+// 讀資料
+let name = UserDefaults.standard.string(forKey: &quot;userName&quot;)   // &quot;智慧喵&quot;
+let isDark = UserDefaults.standard.bool(forKey: &quot;isDarkMode&quot;)  // true</code></pre></div>
+<p>概念很像「用一把鑰匙（key）存一個值」，下次用同一把鑰匙就能拿回來。而且它會<strong>自動保存</strong>，App 關掉再開，資料還在。</p>
+<p><strong>適用範圍要注意</strong>：UserDefaults 只適合存<strong>少量、簡單</strong>的資料（設定、開關、小字串）。它不是資料庫，別拿來存大量清單或複雜資料——那是後面 CoreData / SwiftData 的工作（這系列先不深入，先把觀念建立起來）。</p>
+<p><strong>資料存在哪？安全嗎？</strong> 這是新手常有的疑問，講清楚：</p>
+<ul>
+<li><strong>存在使用者自己的裝置本機</strong>（不是雲端、不是你的伺服器），而且只有你這個 App 讀得到，別的 App 看不到。</li>
+<li>App 關掉、手機重開資料都還在；只有<strong>把 App 整個刪掉</strong>才會連資料一起清除。</li>
+<li>因為存在本機，所以<strong>換手機、重灌不會自動帶過去</strong>（除非你另外做 iCloud 同步）。</li>
+<li>⚠️ <strong>重點：UserDefaults 沒有加密</strong>。所以<strong>別拿它存機密資料</strong>（密碼、金鑰、Token）——那類東西要用 <strong>Keychain（鑰匙圈）</strong>，它才有加密保護。UserDefaults 存「暱稱、深色模式開關」這種不敏感的設定就好。</li>
+</ul>
+<p>（<code>@AppStorage</code> 底層就是 UserDefaults，所以上面這些特性完全一樣。）</p>
+<h3>在 SwiftUI 裡更順手：@AppStorage</h3>
+<p>SwiftUI 有個貼心的寫法 <code>@AppStorage</code>，直接把 UserDefaults 綁到畫面上：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">struct SettingsView: View {
+    @AppStorage(&quot;userName&quot;) var userName = &quot;訪客&quot;
+
+    var body: some View {
+        VStack {
+            Text(&quot;你好，\(userName)&quot;)
+            TextField(&quot;輸入暱稱&quot;, text: $userName)
+        }
+    }
+}</code></pre></div>
+<p>使用者在輸入框改了名字，<code>userName</code> 會<strong>自動存進 UserDefaults、畫面也自動更新</strong>，App 重開名字還在。一行搞定存取，很好用。</p>
+<h2>第二部分：從網路抓資料</h2>
+<p>大部分實用的 App 都要連網——查天氣、看新聞、抓匯率。這一段是關鍵。</p>
+<h3>先懂三個名詞</h3>
+<ul>
+<li><strong>API</strong>：可以想成「網路上的一個資料窗口」。你按照它的規則發出請求，它回你資料。例如天氣 API，你問它某城市天氣，它回你溫度、濕度。</li>
+<li><strong>JSON</strong>：API 回傳資料最常用的格式，長得像一堆「鍵：值」的組合，例如 <code>{&quot;city&quot;: &quot;台北&quot;, &quot;temp&quot;: 28}</code>。</li>
+<li><strong>URLSession</strong>：Swift 內建、用來發網路請求的工具。</li>
+</ul>
+<figure><img src="assets/ios-dev-data-network/data-flow.jpg" alt="App 串接 API 的流程示意：發出請求、收到 JSON、解析、顯示" loading="lazy"></figure>
+<p>整個流程是：<strong>App 發出請求 → 伺服器回傳 JSON → 我們把 JSON 轉成 Swift 資料 → 顯示在畫面上</strong>。</p>
+<h3>Codable：把 JSON 變成 Swift 資料</h3>
+<p>Swift 有個很優雅的機制 <strong>Codable</strong>，能自動把 JSON 對應到你定義的資料結構。你只要照 JSON 的欄位定義一個 struct：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">// 假設 API 回傳：{&quot;city&quot;: &quot;台北&quot;, &quot;temp&quot;: 28}
+struct Weather: Codable {
+    let city: String
+    let temp: Int
+}</code></pre></div>
+<p>欄位名稱對得上，Swift 就能自動轉換，不用自己一個個手動解析。</p>
+<h3>URLSession：實際抓資料</h3>
+<p>先單獨看「抓資料」這段邏輯怎麼寫（這是零件教學，<strong>等一下會把它放進 View 裡</strong>，你先看懂結構就好）。用現代 Swift 的 <code>async/await</code> 寫法（比舊的 callback 好讀很多）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">func fetchWeather() async {
+    // 1. 準備網址
+    guard let url = URL(string: &quot;https://example.com/api/weather&quot;) else { return }
+
+    do {
+        // 2. 發出請求，等待回應
+        let (data, _) = try await URLSession.shared.data(from: url)
+
+        // 3. 把回傳的 JSON 解析成 Weather
+        let weather = try JSONDecoder().decode(Weather.self, from: data)
+
+        // 4. 拿到資料了
+        print(&quot;\(weather.city) 溫度 \(weather.temp) 度&quot;)
+    } catch {
+        // 出錯就處理（網路斷了、格式不對等）
+        print(&quot;抓取失敗：\(error)&quot;)
+    }
+}</code></pre></div>
+<p>幾個重點：</p>
+<ul>
+<li><strong><code>async</code> / <code>await</code></strong>：網路請求需要時間，<code>await</code> 表示「在這裡等它回來，但不卡住整個 App」。</li>
+<li><strong><code>do / catch</code></strong>：網路很容易出錯（斷線、逾時、格式不符），一定要處理錯誤，不能假設它一定成功。</li>
+<li><strong><code>guard let</code></strong>：先確認網址有效，無效就提早結束（這也用到了上一篇學過的可選型別觀念）。</li>
+</ul>
+<h3>在 SwiftUI 畫面裡呼叫（完整範例）</h3>
+<p>那個抓資料的函式<strong>要放進 View（<code>struct ... : View</code>）裡面當一個方法</strong>——不是丟在外面。把它、<code>@State</code>、<code>.task</code> 串起來，就是一個完整、可以直接跑的畫面。下面這段可以整段用（記得前面 <code>Weather</code> 那個 <code>struct</code> 也要有）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">struct WeatherView: View {
+    // 狀態：抓到的資料放這，一變畫面就自動更新
+    @State private var cityName = &quot;載入中…&quot;
+
+    var body: some View {
+        Text(cityName)
+            .task {
+                // 畫面一出現就自動抓資料
+                await loadWeather()
+            }
+    }
+
+    // 抓資料的方法，放在 View 裡面
+    func loadWeather() async {
+        guard let url = URL(string: &quot;https://example.com/api/weather&quot;) else { return }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let weather = try JSONDecoder().decode(Weather.self, from: data)
+            cityName = weather.city   // 改 @State → 畫面自動更新
+        } catch {
+            cityName = &quot;抓取失敗&quot;
+        }
+    }
+}</code></pre></div>
+<p>看出來了嗎？前面那個獨立的 <code>fetchWeather()</code> 其實就是這裡的 <code>loadWeather()</code>——<strong>同一段邏輯，只是這次放進 View 裡、成功後把結果存進 <code>@State</code></strong>（所以畫面會自動更新，這就是上一篇學的狀態驅動）。</p>
+<p><strong>所以回答「函式放哪」</strong>：抓資料的 <code>func</code> 放在 View 的 <code>struct</code> 裡面（跟 <code>body</code> 平行），在 <code>.task</code> 裡呼叫它。<code>.task { }</code> 是 SwiftUI 的好用修飾符——畫面一出現就執行裡面的非同步工作，很適合拿來載入資料。</p>
+<h3>完整可貼版本（避免「找不到 Weather」）</h3>
+<p>上面為了講解拆成好幾段，如果你只貼 <code>WeatherView</code> 會出現 <strong><code>cannot find 'Weather' in scope</code></strong>（找不到 Weather）——因為 <code>Weather</code> 是前面分開定義的，你漏貼了。把兩段<strong>一起貼</strong>就沒事。這是完整版，可以整段複製：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">import SwiftUI
+
+// ① 對應 API 回傳的資料結構
+struct Weather: Codable {
+    let city: String
+    let temp: Int
+}
+
+// ② 畫面 + 抓資料
+struct WeatherView: View {
+    @State private var cityName = &quot;載入中…&quot;
+
+    var body: some View {
+        Text(cityName)
+            .task { await loadWeather() }
+    }
+
+    func loadWeather() async {
+        guard let url = URL(string: &quot;https://example.com/api/weather&quot;) else { return }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let weather = try JSONDecoder().decode(Weather.self, from: data)
+            cityName = weather.city
+        } catch {
+            cityName = &quot;抓取失敗&quot;
+        }
+    }
+}</code></pre></div>
+<blockquote><strong>提醒：這裡的網址 <code>https://example.com/api/weather</code> 是假的</strong>，所以就算編譯通過、實際跑也抓不到真資料，畫面會顯示「抓取失敗」——這是正常的。這段是教你「怎麼把抓資料組進 View」的<strong>結構</strong>。下面就換成一個真的抓得到的 API。</blockquote>
+<h3>換成真的抓得到：實戰練習</h3>
+<p>要抓真資料，需要一個<strong>真實、免費、不用金鑰</strong>的公開 API。這裡用大家最常拿來練手的 <strong>JSONPlaceholder</strong>（穩定、免費、免註冊）。</p>
+<p><strong>第一步：先知道資料長怎樣。</strong> 這也回答一個常見問題——「我怎麼知道有哪些欄位可以抓？」最簡單的方法：<strong>把 API 網址直接貼到瀏覽器打開</strong>，看它回傳什麼。打開 <code>https://jsonplaceholder.typicode.com/todos/1</code>，你會看到：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code>{
+  &quot;userId&quot;: 1,
+  &quot;id&quot;: 1,
+  &quot;title&quot;: &quot;delectus aut autem&quot;,
+  &quot;completed&quot;: false
+}</code></pre></div>
+<p>一目了然——有 <code>userId</code>、<code>id</code>、<code>title</code>、<code>completed</code> 四個欄位，型別分別是數字、數字、文字、true/false。<strong>你的 struct 就照這個抄</strong>：欄位名稱和型別對上，Codable 就能自動轉換。</p>
+<p><strong>第二步：照著寫，就抓得到了。</strong> 完整可跑版本（整段複製）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-swift">import SwiftUI
+
+// 照 API 回傳的欄位定義（打開網址就看得到）
+struct Todo: Codable {
+    let userId: Int
+    let id: Int
+    let title: String
+    let completed: Bool
+}
+
+struct TodoView: View {
+    @State private var text = &quot;載入中…&quot;
+
+    var body: some View {
+        Text(text)
+            .padding()
+            .task { await loadTodo() }
+    }
+
+    func loadTodo() async {
+        guard let url = URL(string: &quot;https://jsonplaceholder.typicode.com/todos/1&quot;) else { return }
+        do {
+            let (data, _) = try await URLSession.shared.data(from: url)
+            let todo = try JSONDecoder().decode(Todo.self, from: data)
+            text = &quot;第 \(todo.id) 筆：\(todo.title)&quot;
+        } catch {
+            text = &quot;抓取失敗：\(error)&quot;
+        }
+    }
+}</code></pre></div>
+<p>這個<strong>真的會抓到資料</strong>，畫面會顯示「第 1 筆：delectus aut autem」。試著把網址結尾的 <code>todos/1</code> 改成 <code>todos/2</code>、<code>todos/3</code>，看內容跟著變——你已經在真的串 API 了。</p>
+<blockquote><strong>如果顯示「抓取失敗」、錯誤裡有 <code>Code=-1003</code>（找不到伺服器）怎麼辦？</strong> 這通常不是程式錯，是<strong>連不到網路</strong>。最常見的原因有兩個：</blockquote>
+<p>&gt;</p>
+<blockquote>1. <strong>你跑在「My Mac」上，被沙盒擋住了。</strong> macOS 的 App 預設不准連外網，要手動開權限：點左側<strong>藍色專案圖示 → TARGETS → Signing &amp; Capabilities → App Sandbox</strong>，勾選 <strong>Outgoing Connections (Client)</strong>（對外連線），再重跑。（只要勾這個就好；旁邊的 <strong>Incoming Connections (Server)</strong> 是「讓 App 當伺服器被連入」用的，抓 API 用不到、<strong>不用勾</strong>。） 2. <strong>改用 iPhone 模擬器跑最省事。</strong> 把上方執行目標從「My Mac」改成 iPhone 模擬器——模擬器沒有這個沙盒網路限制，通常直接就成功了。學習階段建議都用模擬器跑。</blockquote>
+<p>&gt;</p>
+<blockquote>（也順手確認一下網路正常：用瀏覽器打得開那個 API 網址嗎？打不開就是你的網路/防火牆/VPN 問題。）</blockquote>
+<blockquote><strong>重點觀念：struct 要對得上 JSON。</strong> 欄位名稱要一樣、型別要對（數字用 <code>Int</code>、文字用 <code>String</code>、true/false 用 <code>Bool</code>）。如果 JSON 有 10 個欄位、你只想用其中 2 個，那 struct 也可以只寫那 2 個，Codable 會自動忽略其他的——很方便。你也不用每個 API 都背，永遠是「先打開網址看結構 → 照著寫 struct」這個流程。</blockquote>
+<h2>這一步大約要花多久？</h2>
+<p>這篇觀念比較密，抓 <strong>2~3 週</strong>扎實練：</p>
+<ul>
+<li>先玩 UserDefaults / @AppStorage：做一個「記住暱稱」的小畫面。</li>
+<li>找一個<strong>免費、不用金鑰</strong>的公開 API 練手（網路上有很多練習用的假資料 API），把「發請求 → 解析 → 顯示」跑通一次。</li>
+<li>最實用的練習：把前面做過的小 App 加上「連網抓資料 + 記住設定」，它立刻升級成像樣的工具。</li>
+</ul>
+<p>網路這塊一開始會覺得步驟多，但「請求 → 解析 → 顯示」這套骨架學會後，抓任何 API 都是同一套，非常好複製。</p>
+<h2>下一篇</h2>
+<p>你的 App 現在能記憶、能連網，功能上已經像個真正的產品了。下一篇進入很多人最期待也最緊張的一步——<strong>完整上架 App Store</strong>：開發者帳號、憑證、App Store Connect、送審、以及最常見的退件原因怎麼避開。</p>
+<p>從能跑到能上架，就差這臨門一腳了。下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="ios-dev-swiftui-first-app.html" rel="noopener">用 SwiftUI 做第一個 App</a></li>
+<li>➡️ 下一篇：<a href="ios-dev-publish-app-store.html" rel="noopener">完整上架 App Store</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

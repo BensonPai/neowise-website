@@ -1,22 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://neowise.com.tw/life/</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://neowise.com.tw/life/tools.html</loc><lastmod>2026-09-27</lastmod></url>
-  <url><loc>https://neowise.com.tw/life/about.html</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/invest.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/appdev.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/tools.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/about.html</loc><lastmod>2026-10-02</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/cross-platform-app-dev-overview.html</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-ai-tools.html</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-global-markets.html</loc><lastmod>2026-09-27</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-passive-income.html</loc><lastmod>2026-09-27</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/android-dev-monetization.html</loc><lastmod>2026-09-26</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-chips-financial-analysis.html</loc><lastmod>2026-09-26</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/android-dev-publish-google-play.html</loc><lastmod>2026-09-25</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-technical-analysis.html</loc><lastmod>2026-09-25</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/android-dev-data-network.html</loc><lastmod>2026-09-24</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-fundamental-analysis.html</loc><lastmod>2026-09-24</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/android-dev-compose-first-app.html</loc><lastmod>2026-09-23</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-leverage-warrants-futures.html</loc><lastmod>2026-09-23</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/android-dev-kotlin-basics.html</loc><lastmod>2026-09-22</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-bonds-intro.html</loc><lastmod>2026-09-22</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/android-dev-setup-tools.html</loc><lastmod>2026-09-21</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/ios-dev-monetization.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-etf-guide.html</loc><lastmod>2026-09-20</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-tools-overview.html</loc><lastmod>2026-09-20</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/ios-dev-publish-app-store.html</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-book-rich-dad-poor-dad.html</loc><lastmod>2026-09-19</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-mindset-long-vs-short.html</loc><lastmod>2026-09-19</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/ios-dev-data-network.html</loc><lastmod>2026-09-18</lastmod></url>
   <url><loc>https://neowise.com.tw/life/invest-basics-asset-allocation.html</loc><lastmod>2026-09-18</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/ios-dev-swiftui-first-app.html</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://neowise.com.tw/life/start-personal-finance.html</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://neowise.com.tw/life/manage-life-tasks.html</loc><lastmod>2026-09-17</lastmod></url>
   <url><loc>https://neowise.com.tw/life/sendai-3day-trip.html</loc><lastmod>2026-09-17</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/ios-dev-swift-basics.html</loc><lastmod>2026-09-16</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/ios-dev-setup-tools.html</loc><lastmod>2026-09-15</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/app-dev-complete-guide-overview.html</loc><lastmod>2026-09-14</lastmod></url>
 </urlset>

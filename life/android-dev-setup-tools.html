@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】Android 開發第一步：Android Studio、SDK、模擬器完整準備 - 智慧喵</title>
+    <meta name="description" content="想學 Android App 開發？好消息是任何電腦都能開始。這篇帶你安裝 Android Studio、認識 SDK 與模擬器、準備 Google 帳號，並認識 Kotlin 與 Jetpack Compose，踏出 Android 開發扎實的第一步。">
+    <meta name="keywords" content="Android 開發,Android Studio,Android SDK,Kotlin,Jetpack Compose,Android 模擬器,Android App 開發,開發環境">
+    <meta property="og:title" content="【App 開發指南】Android 開發第一步：Android Studio、SDK、模擬器完整準備">
+    <meta property="og:description" content="想學 Android App 開發？好消息是任何電腦都能開始。這篇帶你安裝 Android Studio、認識 SDK 與模擬器、準備 Google 帳號，並認識 Kotlin 與 Jetpack Compose，踏出 Android 開發扎實的第一步。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/android-dev-setup-tools.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/android-dev-setup-tools/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/android-dev-setup-tools.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】Android 開發第一步：Android Studio、SDK、模擬器完整準備","description":"想學 Android App 開發？好消息是任何電腦都能開始。這篇帶你安裝 Android Studio、認識 SDK 與模擬器、準備 Google 帳號，並認識 Kotlin 與 Jetpack Compose，踏出 Android 開發扎實的第一步。","datePublished":"2026-09-21","dateModified":"2026-09-21","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/android-dev-setup-tools.html"},"image":"https://neowise.com.tw/life/assets/android-dev-setup-tools/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】Android 開發第一步：Android Studio、SDK、模擬器完整準備</h1>
+            <p class="article-meta">智慧喵　•　2026-09-21</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/android-dev-setup-tools/cover.jpg" alt="電腦上開著 Android Studio 開發環境的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>iOS 學習路徑走完了，現在換 <strong>Android</strong>。如果你是先學過 iOS 再看到這裡，會很有感——很多觀念是共通的，這條路徑你會走得比第一次快。如果你是直接從 Android 開始，也完全沒問題，這篇會從零帶你準備好。</p>
+<p>跟 iOS 比，Android 開發第一步就親切很多：<strong>任何一台電腦都能開始</strong>，Windows、Mac、Linux 都行，不用像 iOS 那樣非得買 Mac。這也是很多人選擇先做 Android 入門的原因。</p>
+<p>這篇帶你完成：安裝 Android Studio、認識 SDK 與模擬器、準備 Google 帳號、認識 Kotlin 與 Jetpack Compose。</p>
+<h2>一、安裝 Android Studio</h2>
+<p><strong>Android Studio</strong> 是 Google 官方的開發工具，<strong>完全免費</strong>，是你寫 Android App 的主場。</p>
+<p>安裝步驟：</p>
+<ol>
+<li>到 <a href="https://developer.android.com/studio" rel="noopener">Android 開發者官網</a> 下載 Android Studio。</li>
+<li>選對應你作業系統的版本（Windows / Mac / Linux）。</li>
+<li>執行安裝程式，一路照預設點下去即可。</li>
+</ol>
+<p>第一次啟動時，它會透過一個設定精靈幫你<strong>下載必要的元件</strong>（包含 SDK、模擬器等），這步需要一點時間和網路流量，接好電源、耐心等它跑完。</p>
+<blockquote>硬體建議：Android Studio 蠻吃資源的。記憶體建議 <strong>16GB 以上</strong>會比較順（8GB 也能跑但會比較喘），硬碟也要留足夠空間給 SDK 和模擬器。</blockquote>
+<h2>二、認識 SDK 與模擬器</h2>
+<p>第一次啟動時裝的那些元件，你會反覆用到，先認識兩個：</p>
+<ul>
+<li><strong>Android SDK（Software Development Kit）</strong>：開發 Android App 需要的工具和函式庫的總稱。它包含編譯工具、各個 Android 版本的 API 等。Android Studio 會幫你管理，你透過它的 SDK Manager 就能下載/更新不同 Android 版本。</li>
+<li><strong>模擬器（Emulator / AVD）</strong>：在電腦上模擬出一支 Android 手機，讓你不用真機也能測試 App。你可以建立不同機型、不同 Android 版本的虛擬裝置（AVD）來測。</li>
+</ul>
+<p>第一次可以先用設定精靈裝好的預設模擬器。之後想測不同螢幕尺寸或版本，再用 <strong>Device Manager</strong> 新增。</p>
+<h2>三、準備 Google 帳號</h2>
+<p>寫程式、用模擬器測試，用你平常的 <strong>Google 帳號</strong>就行，不用花錢。</p>
+<p>只有當你要<strong>把 App 上架到 Google Play</strong> 時，才需要註冊 <strong>Google Play 開發者帳號</strong>——這是一次性的 <strong>US$25</strong>（付一次終身有效，不像 iOS 要年繳）。</p>
+<p><strong>建議節奏</strong>：現在學習階段先不用急著付費，等到系列後面的上架專篇，真的要發布時再註冊。而且要提醒你，Google Play 上架有一些新手不知道的規則（例如新個人帳號要先做封閉測試），這些我會在上架那篇完整說明。</p>
+<h2>四、認識你的工具：Kotlin 與 Jetpack Compose</h2>
+<p>環境好了，認識接下來要用的兩個核心工具：</p>
+<figure><img src="assets/android-dev-setup-tools/toolchain.jpg" alt="Android 開發工具鏈關係圖：電腦、Android Studio、Kotlin、Compose" loading="lazy"></figure>
+<ul>
+<li><strong>Kotlin</strong>：<strong>程式語言</strong>，是你用來寫邏輯的工具。它是 Google 現在主推的 Android 官方語言，語法現代、簡潔、安全。（你可能聽過 Java 也能寫 Android，那是比較舊的選擇；新手直接學 Kotlin 就好。）</li>
+<li><strong>Jetpack Compose</strong>：<strong>畫面框架</strong>，用來刻使用者介面。它是「宣告式」寫法——描述畫面長怎樣，它幫你畫出來，程式碼精簡。</li>
+</ul>
+<p>如果你學過 iOS，這裡會有超強既視感：<strong>Kotlin 對應 Swift、Jetpack Compose 對應 SwiftUI</strong>，設計理念幾乎一模一樣。這也是為什麼學過一個平台再學另一個會快很多。</p>
+<p>它們的堆疊關係是：<strong>電腦（硬體）→ Android Studio（開發工具）→ Kotlin（語言）→ Jetpack Compose（畫面框架）</strong>。</p>
+<h2>五、建立第一個專案</h2>
+<p>環境裝好了，來新建一個專案看看（先建起來、跑得動就好，寫程式是後面的事）。</p>
+<p><strong>第一步：歡迎畫面點 New Project。</strong> 打開 Android Studio 會看到歡迎畫面，點左邊 <strong>Projects → New Project</strong>（中間那個藍色「＋」）。</p>
+<figure><img src="assets/android-dev-setup-tools/as-welcome.jpg" alt="Android Studio 歡迎畫面" loading="lazy"></figure>
+<p><strong>第二步：選範本，挑 Empty Activity。</strong> 左側先選 <strong>Phone and large screens</strong>（手機），然後在範本裡選 <strong>Empty Activity</strong>（上排中間那個藍綠色方塊圖示）——這是 <strong>Jetpack Compose</strong> 的空白範本，也是這系列後面要用的。按 <strong>Next</strong>。</p>
+<figure><img src="assets/android-dev-setup-tools/as-template.jpg" alt="選 Empty Activity 範本" loading="lazy"></figure>
+<blockquote>⚠️ <strong>別選錯範本</strong>：清單裡的 <strong>Basic Views Activity</strong>、<strong>Empty Views Activity</strong> 是舊的 Views／XML 寫法，<strong>不是 Compose</strong>。我們這系列用 Compose，要選 <strong>Empty Activity</strong>（不含 Views 字樣的那個）。選錯的話後面 Compose 篇會對不上。</blockquote>
+<p><strong>第三步：填專案設定。</strong> 這頁填幾個欄位：</p>
+<ul>
+<li><strong>Name</strong>：App 名稱，例如 <code>MyFirstApp</code>。</li>
+<li><strong>Package name</strong>：套件名稱（App 的唯一識別，類似 iOS 的 Bundle ID），用預設 <code>com.example.xxx</code> 也行。</li>
+<li><strong>Save location</strong>：專案存哪，用預設即可。</li>
+<li><strong>Language</strong>：選 <strong>Kotlin</strong>（這系列用它）。</li>
+<li><strong>Minimum SDK</strong>：App 最低支援的 Android 版本。選預設的（例如 API 24）就好，畫面會告訴你「你的 App 能支援約 XX% 的裝置」——選越低支援越多舊機。</li>
+<li><strong>Build configuration language</strong>：用預設 <strong>Kotlin DSL</strong> 即可。</li>
+</ul>
+<p>填好按 <strong>Finish</strong>。</p>
+<figure><img src="assets/android-dev-setup-tools/as-options.jpg" alt="填專案設定" loading="lazy"></figure>
+<p><strong>第四步：等它建好。</strong> 按 Finish 後，Android Studio 會開始建立專案、下載相依套件（第一次會跑一個叫 <strong>Gradle</strong> 的建置工具，可能要等幾分鐘，右下角有進度）。跑完就會進到主畫面——左邊是檔案清單、中間是程式碼、之後執行鈕在上方。</p>
+<figure><img src="assets/android-dev-setup-tools/as-main.jpg" alt="建好後的主畫面" loading="lazy"></figure>
+<p>看到主畫面就代表專案建好了。接下來（下一篇開始）就是學 Kotlin、用 Compose 把畫面做出來。</p>
+<h2>六、建立模擬器，把 App 跑起來</h2>
+<p>專案建好後，你可能會想按上方的綠色 <strong>Run ▶</strong> 跑跑看——但很可能<strong>沒反應</strong>。這是 Android 跟 iOS 很不一樣的地方：<strong>iOS 裝好就有模擬器可選，Android 要自己先建一台</strong>。沒有可跑的裝置，Run 就沒地方執行。</p>
+<p><strong>先確認：</strong> Run 按鈕旁邊有個<strong>裝置下拉選單</strong>，如果顯示「No devices」或空的，就是還沒有模擬器，照下面建一台。（另外，如果專案剛建好、底部還有進度條在跑 Gradle，先等它跑完再按 Run。）</p>
+<p><strong>建立模擬器（AVD，Android Virtual Device）：</strong></p>
+<ol>
+<li>點裝置下拉選單旁的 <strong>Device Manager</strong>（或選單 <strong>Tools → Device Manager</strong>）。</li>
+<li>按 <strong>＋ / Create Virtual Device</strong>。</li>
+<li>選一支手機機型（例如 <strong>Pixel</strong> 系列）→ Next。</li>
+<li>選一個系統映像檔（挑標示 Recommended 的；若旁邊有下載圖示，先點下載，要等一下）→ Next → Finish。</li>
+</ol>
+<p><strong>跑起來：</strong></p>
+<ol>
+<li>上方裝置下拉選單，選你剛建好的模擬器。</li>
+<li>按綠色 <strong>Run ▶</strong>。</li>
+<li>模擬器會開機（第一次較久，一兩分鐘正常），然後你的 App 就會出現在模擬的 Android 手機上。</li>
+</ol>
+<p>看到 App 在模擬器裡跑起來，你的 Android 環境就完全打通了。（也可以接實體 Android 手機跑，但要先在手機開「開發者選項 + USB 偵錯」，這個之後真的要用再說，學習階段用模擬器最方便。）</p>
+<h2>這一步大約要花多久？</h2>
+<ul>
+<li>下載安裝 Android Studio + 設定精靈裝元件：半天內（主要在等下載）。</li>
+<li>準備 Google 帳號：幾分鐘。</li>
+<li>熟悉 Android Studio 介面、建個空專案、跑模擬器：抓 <strong>3~5 天</strong>。</li>
+</ul>
+<p>如果你已經學過 iOS，這階段可能一兩天就熟了，因為 IDE 的邏輯類似。這步目標很單純：<strong>能打開 Android Studio、新建一個空專案、在模擬器把它跑起來</strong>。看到空白 App 在模擬的 Android 手機上出現，就成功了。</p>
+<h2>下一篇</h2>
+<p>環境備妥後，下一篇進入 <strong>Kotlin 語言基礎</strong>。如果你學過 Swift，會發現 Kotlin 很多概念似曾相識（變數、函式、還有對應「可選型別」的 nullable），學起來會很順。</p>
+<p>一步一步來，Android 這條路你會走得比想像中快。下篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="ios-dev-monetization.html" rel="noopener">iOS App 怎麼賺錢</a>（iOS 路徑最後一篇）</li>
+<li>➡️ 下一篇：<a href="android-dev-kotlin-basics.html" rel="noopener">Kotlin 語言基礎</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

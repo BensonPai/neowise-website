@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】iPhone 與 Android 開發完整地圖：工具、流程、上架、費用、賺錢一次看懂 - 智慧喵</title>
+    <meta name="description" content="想做 App 卻不知道從何開始？這篇一次講清楚 iOS 與 Android 的開發工具、開發流程、上架商店、實際費用與賺錢方式，並給你一張『該先學哪個平台』的決策建議，當作整個學習系列的入口地圖。">
+    <meta name="keywords" content="App 開發,iOS 開發,Android 開發,iPhone App 教學,App 上架,App 開發費用,App 賺錢,Swift,Kotlin">
+    <meta property="og:title" content="【App 開發指南】iPhone 與 Android 開發完整地圖：工具、流程、上架、費用、賺錢一次看懂">
+    <meta property="og:description" content="想做 App 卻不知道從何開始？這篇一次講清楚 iOS 與 Android 的開發工具、開發流程、上架商店、實際費用與賺錢方式，並給你一張『該先學哪個平台』的決策建議，當作整個學習系列的入口地圖。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/app-dev-complete-guide-overview.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/app-dev-complete-guide-overview/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/app-dev-complete-guide-overview.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】iPhone 與 Android 開發完整地圖：工具、流程、上架、費用、賺錢一次看懂","description":"想做 App 卻不知道從何開始？這篇一次講清楚 iOS 與 Android 的開發工具、開發流程、上架商店、實際費用與賺錢方式，並給你一張『該先學哪個平台』的決策建議，當作整個學習系列的入口地圖。","datePublished":"2026-09-14","dateModified":"2026-09-14","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/app-dev-complete-guide-overview.html"},"image":"https://neowise.com.tw/life/assets/app-dev-complete-guide-overview/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】iPhone 與 Android 開發完整地圖：工具、流程、上架、費用、賺錢一次看懂</h1>
+            <p class="article-meta">智慧喵　•　2026-09-14</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/app-dev-complete-guide-overview/cover.jpg" alt="一台筆電同時顯示 iPhone 與 Android App 開發畫面的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>「我想做一個 App，可是……到底要從哪裡開始？」</p>
+<p>這大概是每個想踏進 App 開發的人，心裡的第一個問題。網路上資料很多，但東一塊西一塊：這篇教你裝工具、那篇教你寫程式、又有一篇在講上架，看完反而更亂。到底要學什麼、要花多少錢、學了能不能賺錢？</p>
+<p>這篇文章就是要幫你把整張地圖攤開來看。我會把做一個 App 會碰到的五件事——<strong>開發工具、開發流程、上架商店、費用、賺錢方式</strong>——iOS 和 Android 並排講清楚。看完這篇，你會知道自己接下來該往哪走，也是我這個「App 開發完整指南」系列的入口。</p>
+<p>先講一句實話：做 App 不難入門，難的是「持續做完」。所以我後面規劃的是一條<strong>扎實的系統學習路徑</strong>，不是速成班。速成能讓你抄出一個 Demo，但要能自己獨立開發、上架、維護，還是得一步一步打底。</p>
+<h2>一、開發工具：兩個平台的門檻不一樣</h2>
+<p>這是很多人第一個踩坑的地方，因為 iOS 有一個硬性前提。</p>
+<p><strong>iOS（iPhone）開發需要的東西：</strong></p>
+<ul>
+<li><strong>一台 Mac</strong>（這是硬條件，沒得商量）。Xcode 只能裝在 macOS 上，Windows 和 Linux 都不行。</li>
+<li><strong>Xcode</strong>：Apple 官方的開發工具，免費，從 Mac App Store 下載。</li>
+<li><strong>Swift / SwiftUI</strong>：Swift 是程式語言，SwiftUI 是拿來刻畫面的框架，都是 Apple 主推的現代做法。</li>
+<li>一支 iPhone（選配，模擬器也能測，但真機測試更準）。</li>
+</ul>
+<p><strong>Android 開發需要的東西：</strong></p>
+<ul>
+<li><strong>任何一台電腦</strong>都行（Windows、Mac、Linux 都可以），門檻低很多。</li>
+<li><strong>Android Studio</strong>：Google 官方開發工具，免費。</li>
+<li><strong>Kotlin</strong>：Android 現在主推的語言（舊的 Java 也還能用，但新專案建議直接學 Kotlin）。</li>
+<li><strong>Jetpack Compose</strong>：Android 版的現代刻畫面框架，概念跟 SwiftUI 很像。</li>
+<li>一支 Android 手機（選配，同樣有模擬器）。</li>
+</ul>
+<figure><img src="assets/app-dev-complete-guide-overview/ios-vs-android.jpg" alt="iOS 與 Android 開發環境的並排比較示意" loading="lazy"></figure>
+<p><strong>一句話結論</strong>：如果你手上只有 Windows 電腦，想做 iOS 就得先買 Mac；想省錢先動起來，可以先從 Android 入門。這點後面的決策建議會再講。</p>
+<h2>二、開發流程：兩個平台其實長得一樣</h2>
+<p>不管做 iOS 還是 Android，一個 App 從無到有的骨架都是同一套：</p>
+<figure><img src="assets/app-dev-complete-guide-overview/dev-flow.jpg" alt="App 開發五階段流程圖：需求、設計、開發、測試、上架" loading="lazy"></figure>
+<ol>
+<li><strong>需求</strong>：想清楚這個 App 要解決什麼問題、給誰用。這步最常被跳過，也最重要。</li>
+<li><strong>設計</strong>：畫出畫面流程（wireframe），先在紙上或工具裡把每個頁面長怎樣、怎麼跳轉想過一遍。</li>
+<li><strong>開發</strong>：寫程式，把畫面和功能做出來、串上資料和網路。</li>
+<li><strong>測試</strong>：在模擬器和真機上跑，抓 bug，找朋友試用（iOS 用 TestFlight、Android 用內部測試）。</li>
+<li><strong>上架</strong>：準備素材、送審、發布到商店。</li>
+</ol>
+<p>好消息是：一旦你在其中一個平台走過完整一輪，換到另一個平台時，<strong>流程觀念是共通的</strong>，只需要換語言和工具。這也是我建議「先專心學透一個平台，再學第二個」的原因——第二個會快很多。</p>
+<h3>等等，有沒有「寫一次、兩邊共用」的方法？</h3>
+<p>看到這裡你可能會想：iOS 要學 Swift、Android 要學 Kotlin，難道得學兩套、寫兩份程式碼嗎？</p>
+<p>有一條省力的路，叫<strong>跨平台開發</strong>——寫一套程式碼，同時打包成 iOS 和 Android 兩個 App。目前主流有三個方案：</p>
+<ul>
+<li><strong>Flutter</strong>（Google，用 Dart 語言）：市佔最高，畫面兩邊完全一致，做 UI 精緻的 App 很強。</li>
+<li><strong>React Native</strong>（Meta，用 JavaScript）：如果你本來就會網頁前端，上手最快，套件生態最豐富。</li>
+<li><strong>Kotlin Multiplatform（KMP）</strong>：共用核心邏輯、畫面各平台仍走原生，適合想保留原生體驗的人。</li>
+</ul>
+<p>跨平台的好處是省時、省維護，一個人也能顧兩個平台；代價是遇到深度系統功能還是得寫平台專屬程式碼，體驗偶爾要妥協。</p>
+<p>那初學者該走原生還是跨平台？我的建議是<strong>先把原生學起來打底</strong>。原生是根，懂了原生再用跨平台，你會清楚底層在做什麼、出問題也知道怎麼查；反過來只學跨平台，常常一卡住就不知道發生什麼事。而且跨平台框架幫不了你上架、權限、憑證這些平台基本功——這些還是得懂。所以這個系列會先帶你走原生路徑，另外我也會單獨寫一篇<strong>跨平台方案總覽</strong>，專門講這三個怎麼選、適合誰。</p>
+<h2>三、上架商店：App Store vs Google Play</h2>
+<p>做完 App 要上架，兩邊的規矩差蠻多的：</p>
+<div class="table-wrap"><table><thead><tr><th>項目</th><th>App Store（iOS）</th><th>Google Play（Android）</th></tr></thead><tbody><tr><td>審核嚴格度</td><td>較嚴，人工審核為主</td><td>相對寬鬆，自動化較多</td></tr><tr><td>審核時間</td><td>通常 1~3 天</td><td>通常數小時到 1~2 天，但新帳號可能更久</td></tr><tr><td>常見退件原因</td><td>功能不完整、隱私說明不清、山寨感</td><td>政策違規、權限說明不足、資料安全宣告</td></tr><tr><td>帳號驗證</td><td>需要 Apple ID + 雙重認證</td><td>需要 Google 帳號 + 身分驗證</td></tr></tbody></table></div>
+<p>簡單說：<strong>iOS 審核比較龜毛但規則清楚，Android 上架比較快但政策也要顧好</strong>。第一次上架都會緊張，這很正常，後面的上架專篇我會把每個步驟和常見退件拆開講。</p>
+<h2>四、費用：到底要花多少錢？</h2>
+<p>這是大家最關心的。我把錢分成「一定要花」和「可能要花」兩種。</p>
+<blockquote><strong>查證時間：2026-09-27</strong>。以下開發者帳號費用為當日查詢官方頁面的結果，Apple 與 Google 未來可能調整，實際請以官方為準。</blockquote>
+<p><strong>一定要花的（開發者帳號）：</strong></p>
+<ul>
+<li><strong>Apple Developer Program：每年 US$99</strong>（約新台幣 3,200 元／年，需持續續約才能維持上架）。來源：<a href="https://developer.apple.com/support/compare-memberships/" rel="noopener">Apple 官方會員比較頁</a>。</li>
+<li><strong>Google Play 開發者帳號：一次性 US$25</strong>（約新台幣 800 元，付一次終身有效，不用年繳）。來源：<a href="https://support.google.com/googleplay/android-developer/answer/6112435" rel="noopener">Google Play 官方說明</a>。</li>
+</ul>
+<p>光看帳號費，Android 便宜非常多。</p>
+<p><strong>可能要花的（依你的情況）：</strong></p>
+<ul>
+<li><strong>一台 Mac</strong>（做 iOS 才需要）：二手 Mac mini 或 MacBook Air 都能開發，這是 iOS 最大的一筆隱形成本。</li>
+<li>一支測試用的實機手機（選配）。</li>
+<li>上架後如果要賺錢，平台會抽成：<strong>兩邊大致都是 15%~30%</strong>（小型開發者通常適用較低的 15%）。</li>
+</ul>
+<p><strong>開發工具本身（Xcode、Android Studio）都是免費的</strong>，別擔心軟體要錢。</p>
+<h2>五、賺錢方式：App 怎麼變現</h2>
+<p>學會做 App 之後，變現的路其實不少：</p>
+<ul>
+<li><strong>付費下載</strong>：使用者付一次錢才能下載。現在較少見，除非很有特色。</li>
+<li><strong>App 內購買（IAP）</strong>：免費下載，裡面賣道具、功能、進階版。手遊最典型。</li>
+<li><strong>訂閱制</strong>：按月或按年收費，適合工具型、內容型 App，是現在最主流的穩定收入模式。</li>
+<li><strong>廣告</strong>：App 裡放廣告，用戶量夠大才有意義（iOS 常用內建機制、Android 常用 Google AdMob）。</li>
+<li><strong>接案</strong>：幫別人做 App。你會開發之後，這是最快變現的方式，不用自己養用戶。</li>
+<li><strong>企業內部工具</strong>：幫公司做內部使用的 App，或把自己工作流程自動化——不一定要上架，但價值很實在。</li>
+</ul>
+<p>我自己就開發過一個 <a href="../tools.html" rel="noopener">iPhone 相片備份 App</a>，深知從「學會」到「做出真正有人用的東西」是一段路。但只要打底扎實，這條路完全走得通。</p>
+<h2>那，該先學 iOS 還是 Android？</h2>
+<p>給你一個簡單的判斷：</p>
+<ul>
+<li><strong>手上只有 Windows 電腦、想先省錢入門</strong> → 先學 <strong>Android</strong>（不用買 Mac，帳號只要 US$25）。</li>
+<li><strong>已經有 Mac、或目標用戶多用 iPhone（例如台灣、日本市場）</strong> → 先學 <strong>iOS</strong>。</li>
+<li><strong>想接案、想兩個平台都吃</strong> → 挑一個先學透，第二個會快很多。實務上先學 iOS 的人轉 Android 通常較順，反之亦然。</li>
+</ul>
+<p>不管先學哪個，重點是<strong>專心走完一條路徑再開第二條</strong>，不要一開始就想兩個一起學，那只會兩邊都學不深。</p>
+<h2>接下來的學習路徑</h2>
+<p>這個系列我會先從 <strong>iOS 開發</strong>開始，拆成一條循序漸進的路徑：</p>
+<ol>
+<li>開發環境與工具（Mac、Xcode、Apple ID）</li>
+<li>Swift 語言基礎</li>
+<li>用 SwiftUI 做第一個 App</li>
+<li>資料儲存與串接網路 API</li>
+<li>完整上架 App Store 流程</li>
+<li>iOS 賺錢方式實戰</li>
+</ol>
+<p><strong>要花多久？</strong> 誠實地說：每天投入 1~2 小時，大約 <strong>3~4 個月</strong>能走完並做出一個可上架的 App；每天 3~4 小時的話約 6~8 週。這是「能獨立做出並上架中小型 App」的程度，不是精通——精通需要靠一個個真實專案慢慢累積。</p>
+<p>iOS 全部寫完後，我會再用對稱的結構寫 Android 開發路徑。學過 iOS 再學 Android 的人，因為觀念相通，時間通常可以減半。另外我也會單獨寫一篇<strong>跨平台方案總覽</strong>，把 Flutter、React Native、KMP 這三條「一次寫、兩邊共用」的路講清楚，讓你在原生打底之後，知道還有哪些選擇。</p>
+<p>想紮實學會做 App、而不是只抄一個 Demo 就停，跟著這個系列一步步走就對了。下一篇，我們從「準備開發環境」開始。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>➡️ 下一篇：<a href="ios-dev-setup-tools.html" rel="noopener">iOS 開發第一步：環境準備</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

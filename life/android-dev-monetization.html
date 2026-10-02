@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【App 開發指南】Android App 怎麼賺錢？內購、訂閱、AdMob 廣告與定價 - 智慧喵</title>
+    <meta name="description" content="App 上架 Google Play 後怎麼變現？這篇整理 Android App 主要賺錢方式——內購、訂閱、AdMob 廣告、付費下載，說明各自機制、Google 抽成、適合情境，並給實際定價與選擇建議。Android 路徑完結篇。">
+    <meta name="keywords" content="Android App 賺錢,Google Play 內購,Play Billing,App 訂閱,AdMob,App 變現,Android 開發,App 定價">
+    <meta property="og:title" content="【App 開發指南】Android App 怎麼賺錢？內購、訂閱、AdMob 廣告與定價">
+    <meta property="og:description" content="App 上架 Google Play 後怎麼變現？這篇整理 Android App 主要賺錢方式——內購、訂閱、AdMob 廣告、付費下載，說明各自機制、Google 抽成、適合情境，並給實際定價與選擇建議。Android 路徑完結篇。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/android-dev-monetization.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/android-dev-monetization/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/android-dev-monetization.html">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【App 開發指南】Android App 怎麼賺錢？內購、訂閱、AdMob 廣告與定價","description":"App 上架 Google Play 後怎麼變現？這篇整理 Android App 主要賺錢方式——內購、訂閱、AdMob 廣告、付費下載，說明各自機制、Google 抽成、適合情境，並給實際定價與選擇建議。Android 路徑完結篇。","datePublished":"2026-09-26","dateModified":"2026-09-26","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/android-dev-monetization.html"},"image":"https://neowise.com.tw/life/assets/android-dev-monetization/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【App 開發指南】Android App 怎麼賺錢？內購、訂閱、AdMob 廣告與定價</h1>
+            <p class="article-meta">智慧喵　•　2026-09-26</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/android-dev-monetization/cover.jpg" alt="Android App 產生收入的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>歷經前五篇，你的 Android App 已經從零做到<a href="android-dev-publish-google-play.html" rel="noopener">上架 Google Play</a> 了。這是 Android 路徑最後一篇，也是整個 App 開發系列 iOS + Android 兩條主線的收尾——我們談<strong>怎麼讓它變成收入</strong>。</p>
+<p>變現的大原則跟 iOS 一樣（做過 <a href="ios-dev-monetization.html" rel="noopener">iOS 賺錢篇</a>的話會很熟），機制對應、工具換成 Google 的。核心觀念不變：<strong>變現方式沒有最好，只有最適合你的 App</strong>。</p>
+<h2>四種主要變現方式</h2>
+<figure><img src="assets/android-dev-monetization/monetization-models.jpg" alt="四種變現方式對照：付費下載、內購、訂閱、廣告" loading="lazy"></figure>
+<h3>1. 付費下載</h3>
+<p>使用者付一次錢才能下載。單純，但門檻高——多數人習慣先免費試。適合定位清楚、有獨特價值的工具。</p>
+<h3>2. App 內購買（In-App Purchase）</h3>
+<p>免費下載，App 裡賣東西：解鎖功能、買道具、去廣告、進階版。降低下載門檻、彈性最高，手遊和工具 App 都常用。</p>
+<h3>3. 訂閱制</h3>
+<p>按月或按年持續收費。<strong>收入穩定可預期</strong>，是現在最主流的模式，適合需要持續提供內容或服務的 App。缺點是你要持續給價值，否則會被取消。</p>
+<h3>4. 廣告</h3>
+<p>App 裡放廣告賺錢。門檻最低（用戶不用掏錢），但<strong>要夠大的用戶量才有意義</strong>，放太多傷體驗。Android 上最常用 Google 自家的 <strong>AdMob</strong>。</p>
+<h2>技術上怎麼實作？</h2>
+<p><strong>內購與訂閱</strong>在 Android 是透過 <strong>Google Play Billing</strong> 實作。跟 iOS 的 StoreKit 一樣，<strong>金流由 Google 統一經手</strong>，你的程式只負責提供商品、確認買了沒、解鎖對應內容。流程：</p>
+<ol>
+<li>在 Play Console 後台<strong>設定商品</strong>（例如「進階版」「月訂閱」）。</li>
+<li>App 裡用 Play Billing <strong>顯示商品、發起購買</strong>。</li>
+<li>購買成功後<strong>解鎖對應功能</strong>。</li>
+</ol>
+<p><strong>廣告</strong>則是接 <strong>AdMob</strong>：註冊 AdMob 帳號、建立廣告版位、把 SDK 接進 App、在適當位置顯示廣告。橫幅、插頁、獎勵式廣告等類型可選。</p>
+<p>這系列先建立觀念，實作細節等你確定要做時再深入 Google 官方文件。</p>
+<h2>別忘了：Google 會抽成</h2>
+<p>透過 App 收到的錢，Google 會抽服務費：</p>
+<ul>
+<li>一般大致 <strong>15%~30%</strong>。</li>
+<li><strong>小型開發者（年營收在一定門檻以下）通常適用較低的 15%</strong>，對起步的個人開發者友善。</li>
+<li>廣告則跟 AdMob 拆分。</li>
+</ul>
+<blockquote>抽成比例與方案 Google 會調整，各地區也可能不同，實際請以 <a href="https://support.google.com/googleplay/android-developer/answer/112622" rel="noopener">Google Play 官方說明</a>與 Play Console 為準。</blockquote>
+<h2>定價與選擇建議</h2>
+<p>判斷方向跟 iOS 一致：</p>
+<ul>
+<li><strong>先想 App 的價值型態</strong>：一次性價值走內購、持續性價值走訂閱。</li>
+<li><strong>免費 + 內購/訂閱，通常比純付費下載好推</strong>：先體驗、後付費，轉換率高。</li>
+<li><strong>廣告留到有量再說</strong>：初期用戶少，廣告賺不到什麼還傷體驗。</li>
+<li><strong>定價看「感受到的價值」</strong>，不是看數字本身。</li>
+<li><strong>可以混合</strong>：免費版 + 內購解鎖 + 進階訂閱。</li>
+</ul>
+<blockquote>Android 的用戶付費習慣、市場結構跟 iOS 略有差異（不同地區差很多），廣告變現在 Android 上相對常見。實務上多測幾種組合、看數據調整。</blockquote>
+<h2>不上架也能賺</h2>
+<p>跟 iOS 篇一樣提醒——變現不是只有商店：</p>
+<ul>
+<li><strong>接案</strong>：會開發之後，幫別人做 App 是最快最直接的收入。</li>
+<li><strong>企業內部工具 / 自用</strong>：幫公司做內部 App、把自己工作流程自動化。我自己就寫了<a href="../tools.html" rel="noopener">一些實用工具</a>解決真實需求，技術的價值不一定要透過商店兌現。</li>
+</ul>
+<h2>這一步大約要花多久？</h2>
+<p>理解變現、接上內購或廣告，抓 <strong>1~2 週</strong>。但老話一句：<strong>賺錢的關鍵是 App 有沒有解決真問題</strong>，技術只是變現的管道。先把 App 做得有人真想用，變現才有意義。</p>
+<h2>整個系列，你走完了！</h2>
+<p>恭喜——你不只走完 Android 路徑，更完成了<strong>整個 App 開發系列的兩條主線（iOS + Android）</strong>。從裝環境、學語言、做畫面、串資料、上架、到變現，兩個平台你都摸過一輪了。</p>
+<p>你現在具備的能力，是很多人想要卻沒真正動手的：<strong>獨立開發並發布一個 App</strong>。</p>
+<p>這個系列還有一篇補充——<strong>跨平台方案總覽</strong>（Flutter、React Native、KMP），談「一套程式碼兩邊共用」的選擇，適合你思考下一步要不要走跨平台。</p>
+<p>但最重要的還是那句話：<strong>去做一個你自己的 App 吧。</strong> 你已經有能力了，剩下的就是動手。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="appdev.html" rel="noopener">App 開發完整指南 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="android-dev-publish-google-play.html" rel="noopener">完整上架 Google Play</a></li>
+<li>➡️ 下一篇：<a href="cross-platform-app-dev-overview.html" rel="noopener">跨平台方案怎麼選（補充篇）</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
