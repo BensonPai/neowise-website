@@ -160,6 +160,23 @@ a { text-decoration: none; color: inherit; }
 .sub-cta-text span { color: #64748b; font-size: 0.9rem; }
 .sub-cta .btn-yt { flex-shrink: 0; }
 
+/* 聯盟行銷廣告區塊 */
+.affiliate-box { max-width: 760px; margin: 36px auto; padding: 22px 24px; background: #fafafa; border: 1px solid #eef2f0; border-radius: 16px; text-align: center; }
+.affiliate-label { display: block; color: #94a3b8; font-size: 0.78rem; letter-spacing: 0.5px; margin-bottom: 12px; }
+.affiliate-box a { display: inline-block; }
+.affiliate-box img { max-width: 100%; height: auto; border-radius: 8px; }
+.affiliate-note { color: #94a3b8; font-size: 0.8rem; margin-top: 12px; margin-bottom: 0; }
+.affiliate-btn { display: inline-block; background: #14b8a6; color: #fff; font-weight: 600; padding: 12px 28px; border-radius: 10px; font-size: 1rem; transition: background 0.2s; }
+.affiliate-box a:hover .affiliate-btn { background: #0d9488; }
+/* 課程平台推薦卡片（Hahow 等）*/
+.affiliate-card { background: linear-gradient(135deg, #f0fdfa, #fef9f0); }
+.affiliate-card a { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.affiliate-card-title { color: #1e293b; font-size: 1.15rem; font-weight: 700; }
+.affiliate-card-desc { color: #64748b; font-size: 0.95rem; max-width: 480px; }
+.affiliate-card .affiliate-btn { margin-top: 6px; }
+/* KKday 動態商品廣告 */
+.affiliate-kkday .kkday-product-media { display: block; margin: 0 auto; min-height: 120px; }
+
 /* 頁尾 */
 .footer { background: #f8faf9; border-top: 1px solid #eef2f0; padding: 40px 0; margin-top: 30px; }
 .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }

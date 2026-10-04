@@ -153,6 +153,127 @@ function parseFrontMatter(raw) {
   return { data, body };
 }
 
+/* ---------- 聯盟行銷廣告 ---------- */
+// 博客來商品貼紙版型：high=直式高版(/0/7)、wide=橫式寬版(/1/3)
+const BOOKS_STICK = { high: '0/7', wide: '1/3' };
+const AP_ID = 'benson0618';   // 博客來 AP 推薦人代號（之後要換在這裡改）
+
+// Hahow 好學校聯盟連結（整個平台共用一條；換連結只改這裡）
+const HAHOW_URL = 'https://joymall.co/3Tker';
+
+// 聯盟揭露聲明（統一管理，改一次全站生效）
+const AFF_NOTE = {
+  books: '※ 本連結為博客來聯盟行銷連結，透過它購書我會獲得少許回饋，不影響你的售價。',
+  momo:  '※ 本連結為 momo 聯盟行銷連結，透過它購物我會獲得少許回饋，不影響你的售價。',
+  shopee:'※ 本連結為蝦皮聯盟行銷連結，透過它購物我會獲得少許回饋，不影響你的售價。',
+  hahow: '※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。',
+  kkday: '※ 以上為 KKday 聯盟行銷廣告，透過它訂購行程我會獲得少許回饋，不影響你的售價。',
+  link:  '※ 本連結為合作／聯盟連結，透過它購買我可能獲得少許回饋，不影響你的售價。',
+};
+
+// 從博客來商品網址或純編號取出 10 碼商品編號
+function booksProductId(input = '') {
+  const s = String(input).trim();
+  const m = s.match(/products\/(\d{10})/) || s.match(/^(\d{10})$/);
+  return m ? m[1] : '';
+}
+
+// 包成統一的廣告區塊 HTML
+function wrapAffiliate({ href, inner, note, label }) {
+  const heading = label ? `<span class="affiliate-label">${escapeHtml(label)}</span>` : '';
+  return `<div class="affiliate-box">
+    ${heading}
+    <a href="${href}" target="_blank" rel="noopener sponsored">${inner}</a>
+    <p class="affiliate-note">${escapeHtml(note)}</p>
+</div>`;
+}
+
+// 解析單一 ::aff ...:: 指令，回傳 HTML（解析失敗回傳提示註解，不中斷生成）
+function renderAffiliate(raw) {
+  const content = raw.trim();
+
+  // 情況 1：直接貼博客來商品連結（最簡單）→ 自動帶 AP 代號、預設高版
+  const bareBooksUrl = content.match(/^(https?:\/\/www\.books\.com\.tw\/\S+)(?:\s+(high|wide))?(?:\s+(.+))?$/i);
+  if (bareBooksUrl && /books\.com\.tw/.test(bareBooksUrl[1])) {
+    const pid = booksProductId(bareBooksUrl[1]);
+    if (pid) {
+      const variant = (bareBooksUrl[2] || 'high').toLowerCase();
+      const stick = BOOKS_STICK[variant] || BOOKS_STICK.high;
+      const label = bareBooksUrl[3] ? bareBooksUrl[3].trim() : '📖 想入手這本書';
+      const href = `https://www.books.com.tw/exep/assp.php/${AP_ID}/products/${pid}?utm_source=${AP_ID}&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-affiliate`;
+      const img = `<img src="https://ap.books.com.tw/web/apProductStick/${pid}/blue/${stick}" alt="博客來購書連結" loading="lazy">`;
+      return wrapAffiliate({ href, inner: img, note: AFF_NOTE.books, label });
+    }
+  }
+
+  // 情況 2：以空白分隔的參數式 → books / momo / shopee / link
+  const parts = content.split(/\s+/);
+  const platform = (parts[0] || '').toLowerCase();
+
+  if (platform === 'books') {
+    // 用法：books <商品編號或網址> [high|wide] [標題文字...]
+    const pid = booksProductId(parts[1] || '');
+    if (!pid) return `<!-- affiliate 解析失敗：books 缺少有效商品編號 -> ${escapeHtml(content)} -->`;
+    let rest = parts.slice(2);
+    let variant = 'high';
+    if (rest[0] && /^(high|wide)$/i.test(rest[0])) { variant = rest[0].toLowerCase(); rest = rest.slice(1); }
+    const stick = BOOKS_STICK[variant] || BOOKS_STICK.high;
+    const label = rest.length ? rest.join(' ') : '📖 想入手這本書';
+    const href = `https://www.books.com.tw/exep/assp.php/${AP_ID}/products/${pid}?utm_source=${AP_ID}&utm_medium=ap-books&utm_content=recommend&utm_campaign=ap-affiliate`;
+    const img = `<img src="https://ap.books.com.tw/web/apProductStick/${pid}/blue/${stick}" alt="博客來購書連結" loading="lazy">`;
+    return wrapAffiliate({ href, inner: img, note: AFF_NOTE.books, label });
+  }
+
+  // 情況 2.5：Hahow 好學校（整個平台共用一條聯盟連結，連結已內建）
+  // 用法：hahow [標題文字] | [說明文字] | [按鈕文字]
+  //   全部可省略，省略時用預設文案。連結固定用 HAHOW_URL。
+  if (platform === 'hahow') {
+    const afterPlatform = content.slice(platform.length).trim();
+    const segs = afterPlatform ? afterPlatform.split('|').map(s => s.trim()) : [];
+    const title = segs[0] || '想線上進修？來 Hahow 好學校看看';
+    const desc  = segs[1] || '程式、設計、理財、語言都有，挑一堂有興趣的課開始學。';
+    const btn   = segs[2] || '前往 Hahow 逛逛 →';
+    const inner = `<span class="affiliate-card-title">${escapeHtml(title)}</span>` +
+                  `<span class="affiliate-card-desc">${escapeHtml(desc)}</span>` +
+                  `<span class="affiliate-btn">${escapeHtml(btn)}</span>`;
+    return `<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="${HAHOW_URL}" target="_blank" rel="noopener sponsored">${inner}</a>
+    <p class="affiliate-note">${escapeHtml(AFF_NOTE.hahow)}</p>
+</div>`;
+  }
+
+  // 情況 2.6：KKday 動態商品廣告（靠外部 JS 動態渲染旅遊商品）
+  // 用法：kkday [顯示數量，預設 3]
+  //   腳本只需每頁載一次，實際的 <script> 由 renderArticle 統一注入頁尾。
+  if (platform === 'kkday') {
+    const amount = /^\d+$/.test(parts[1] || '') ? parts[1] : '3';
+    return `<div class="affiliate-box affiliate-kkday">
+    <span class="affiliate-label">✈️ 旅遊行程・體驗</span>
+    <ins class="kkday-product-media" data-oid="13787" data-amount="${amount}" data-origin="https://kkpartners.kkday.com"></ins>
+    <p class="affiliate-note">${escapeHtml(AFF_NOTE.kkday)}</p>
+</div>`;
+  }
+
+  // 情況 3：通用／momo／蝦皮連結 — 用 | 分隔：平台 連結 | 按鈕文字 | 自訂揭露
+  // 例：link https://xxx | 看看這個工具
+  //     momo https://xxx | 到 momo 購買
+  if (platform === 'link' || platform === 'momo' || platform === 'shopee') {
+    const afterPlatform = content.slice(platform.length).trim();
+    const segs = afterPlatform.split('|').map(s => s.trim());
+    const href = segs[0];
+    if (!href || !/^https?:\/\//.test(href)) {
+      return `<!-- affiliate 解析失敗：${escapeHtml(platform)} 缺少有效連結 -> ${escapeHtml(content)} -->`;
+    }
+    const btnText = segs[1] || '前往查看 →';
+    const note = segs[2] || AFF_NOTE[platform] || AFF_NOTE.link;
+    const inner = `<span class="affiliate-btn">${escapeHtml(btnText)}</span>`;
+    return wrapAffiliate({ href, inner, note, label: '' });
+  }
+
+  return `<!-- affiliate 解析失敗：無法辨識的語法 -> ${escapeHtml(content)} -->`;
+}
+
 /* ---------- Markdown ---------- */
 function inlineMarkdown(text) {
   let t = escapeHtml(text);
@@ -184,6 +305,9 @@ function markdownToHtml(md) {
       html.push(`<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code${cls}>${escapeHtml(code.join('\n'))}</code></pre></div>`);
       continue;
     }
+    // 聯盟行銷廣告：整行為 ::aff ...:: 時展開成廣告區塊
+    const affMatch = trimmed.match(/^::aff\s+([\s\S]+?)::$/i);
+    if (affMatch) { closeList(); html.push(renderAffiliate(affMatch[1])); i++; continue; }
     const heading = trimmed.match(/^(#{1,4})\s+(.*)$/);
     if (heading) { closeList(); const lv = Math.min(Math.max(heading[1].length, 2), 5); html.push(`<h${lv}>${inlineMarkdown(heading[2])}</h${lv}>`); i++; continue; }
     if (trimmed.startsWith('> ')) {
@@ -299,6 +423,11 @@ function renderArticle(a) {
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
   };
   if (coverUrl) jsonLd.image = coverUrl;
+  const bodyHtml = markdownToHtml(body);
+  // KKday 動態廣告需要的外部腳本：整頁只注入一次（不論放幾個廣告）
+  const kkdayScript = bodyHtml.includes('kkday-product-media')
+    ? '\n<script type="text/javascript" src="https://kkpartners.kkday.com/iframe.init.1.0.js"></script>'
+    : '';
   return `<!DOCTYPE html>
 <html lang="zh-TW">
 <head>
@@ -329,7 +458,7 @@ ${navbar(null)}
     ${cover ? `<div class="container article-container"><img class="article-cover" src="${cover}" alt="${escapeHtml(cover_alt || title)}" loading="lazy"></div>` : ''}
     <div class="container article-container">
         <div class="article-body">
-${videoHint}${markdownToHtml(body)}
+${videoHint}${bodyHtml}
         </div>${videoBlock}
         <div class="sub-cta">
             <div class="sub-cta-text">
@@ -359,7 +488,7 @@ document.querySelectorAll('.code-copy').forEach(function (btn) {
     });
   });
 });
-</script>
+</script>${kkdayScript}
 </body>
 </html>`;
 }
