@@ -26,6 +26,11 @@ const CONTENT_DIR = join(LIFE_ROOT, 'content');
 const ASSETS_DIR = join(LIFE_ROOT, 'assets');
 const SITE_URL = 'https://neowise.com.tw/life';
 const YT_URL = 'https://www.youtube.com/@智慧喵';
+const GA_ID = 'G-ECQ2F0L341';   // 智慧喵 Google Analytics 評量 ID（換帳號改這裡）
+
+// Google Analytics 追蹤碼片段（放每頁 <head>）
+const gaSnippet = () => `<script async src="https://www.googletagmanager.com/gtag/js?id=${GA_ID}"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');</script>`;
 
 // 縮圖設定：超過此寬度就等比縮小（考慮 2x 高解析螢幕，760px 版面用 1600 足夠）
 const MAX_IMG_WIDTH = 1600;
@@ -168,7 +173,15 @@ const AFF_NOTE = {
   shopee:'※ 本連結為蝦皮聯盟行銷連結，透過它購物我會獲得少許回饋，不影響你的售價。',
   hahow: '※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。',
   kkday: '※ 以上為 KKday 聯盟行銷廣告，透過它訂購行程我會獲得少許回饋，不影響你的售價。',
+  cjlink:   '※ 本連結為通路王（iChannels）聯盟行銷連結，透過它購買我會獲得少許回饋，不影響你的售價。',
+  pressplay:'※ 本連結為 PressPlay 聯盟行銷連結，透過它訂閱／購課我會獲得少許回饋，不影響你的售價。',
   link:  '※ 本連結為合作／聯盟連結，透過它購買我可能獲得少許回饋，不影響你的售價。',
+};
+
+// 按鈕式平台的預設標籤與按鈕文字（momo/蝦皮沿用舊行為不設標籤；通路王、PressPlay 給專屬標籤）
+const BTN_PLATFORM = {
+  cjlink:    { label: '🛒 通路王推薦', btn: '前往購買 →' },
+  pressplay: { label: '🎓 線上課程・訂閱', btn: '看看這堂課 →' },
 };
 
 // 從博客來商品網址或純編號取出 10 碼商品編號
@@ -255,20 +268,25 @@ function renderAffiliate(raw) {
 </div>`;
   }
 
-  // 情況 3：通用／momo／蝦皮連結 — 用 | 分隔：平台 連結 | 按鈕文字 | 自訂揭露
+  // 情況 3：按鈕式連結 — 用 | 分隔：平台 連結 | 按鈕文字 | 自訂揭露
+  // 支援 link / momo / shopee / cjlink（通路王）/ pressplay
   // 例：link https://xxx | 看看這個工具
   //     momo https://xxx | 到 momo 購買
-  if (platform === 'link' || platform === 'momo' || platform === 'shopee') {
+  //     cjlink https://ichannels... | 到通路王購買
+  //     pressplay https://pressplay... | 看看這堂課
+  if (platform === 'link' || platform === 'momo' || platform === 'shopee'
+      || platform === 'cjlink' || platform === 'pressplay') {
     const afterPlatform = content.slice(platform.length).trim();
     const segs = afterPlatform.split('|').map(s => s.trim());
     const href = segs[0];
     if (!href || !/^https?:\/\//.test(href)) {
       return `<!-- affiliate 解析失敗：${escapeHtml(platform)} 缺少有效連結 -> ${escapeHtml(content)} -->`;
     }
-    const btnText = segs[1] || '前往查看 →';
+    const preset = BTN_PLATFORM[platform] || {};
+    const btnText = segs[1] || preset.btn || '前往查看 →';
     const note = segs[2] || AFF_NOTE[platform] || AFF_NOTE.link;
     const inner = `<span class="affiliate-btn">${escapeHtml(btnText)}</span>`;
-    return wrapAffiliate({ href, inner, note, label: '' });
+    return wrapAffiliate({ href, inner, note, label: preset.label || '' });
   }
 
   return `<!-- affiliate 解析失敗：無法辨識的語法 -> ${escapeHtml(content)} -->`;
@@ -433,6 +451,7 @@ function renderArticle(a) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    ${gaSnippet()}
     <title>${escapeHtml(title)} - 智慧喵</title>
     <meta name="description" content="${escapeHtml(description)}">
     <meta name="keywords" content="${escapeHtml(kw)}">
@@ -519,6 +538,7 @@ function renderIndex(arts) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    ${gaSnippet()}
     <title>智慧喵 - 理財 · 旅遊 · 生活</title>
     <meta name="description" content="智慧喵的生活部落格：理財教學、旅遊工具與生活分享，順便介紹我自己開發的實用軟體。">
     <meta name="keywords" content="智慧喵,理財教學,旅遊工具,生活部落格,個人理財,投資">
@@ -589,7 +609,10 @@ ${urls.join('\n')}
 /* ---------- 主流程 ---------- */
 async function main() {
   console.log('🐾 智慧喵部落格產生器啟動…\n');
+  const t0 = Date.now();
+  const imgStart = Date.now();
   await optimizeImages();
+  const imgSec = ((Date.now() - imgStart) / 1000).toFixed(1);
   const all = loadArticles();
   const pub = all.filter(a => a.status === 'approved' || a.status === 'published')
     .sort((a, b) => {
@@ -612,6 +635,7 @@ async function main() {
   console.log('  ✔ 列表：life/index.html');
   writeFileSync(join(LIFE_ROOT, 'sitemap.xml'), renderSitemap(pub), 'utf8');
   console.log('  ✔ sitemap：life/sitemap.xml');
-  console.log('\n✅ 完成。');
+  const totalSec = ((Date.now() - t0) / 1000).toFixed(1);
+  console.log(`\n✅ 完成（共 ${totalSec} 秒，其中圖片優化 ${imgSec} 秒）。`);
 }
 main().catch(err => { console.error('❌ 產生失敗：', err); process.exit(1); });
