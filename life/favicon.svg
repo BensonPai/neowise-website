@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#14b8a6"/>
+  <!-- 貓掌：掌心 + 四個趾墊，白色 -->
+  <ellipse cx="16" cy="20" rx="6" ry="5" fill="#ffffff"/>
+  <circle cx="9.5" cy="14.5" r="2.1" fill="#ffffff"/>
+  <circle cx="14" cy="11.3" r="2.1" fill="#ffffff"/>
+  <circle cx="18" cy="11.3" r="2.1" fill="#ffffff"/>
+  <circle cx="22.5" cy="14.5" r="2.1" fill="#ffffff"/>
+</svg>

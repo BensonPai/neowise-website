@@ -11,8 +11,8 @@
  * 用法：node life/scripts/build-life-blog.mjs
  * ------------------------------------------------------------
  */
-import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, statSync } from 'node:fs';
-import { join, dirname, resolve } from 'node:path';
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, statSync, renameSync } from 'node:fs';
+import { join, dirname, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 // sharp 為選用相依：沒安裝也能照常產生 HTML，只是不縮圖。
@@ -62,11 +62,47 @@ function youtubeId(input = '') {
   return m ? m[1] : '';
 }
 
+/* ---------- 副檔名正規化 ---------- */
+// GitHub Pages 跑在 Linux、檔名大小寫敏感；但 Markdown 連結慣用小寫 .jpg。
+// 這裡把 assets 下所有圖檔的大寫副檔名（.JPG/.JPEG/.PNG/.WEBP…）統一改成小寫，
+// 避免「本機看得到、上線卻破圖」。Windows 檔名不分大小寫，故用兩段式改名避免同名衝突。
+function normalizeImageExtensions(dir) {
+  if (!existsSync(dir)) return 0;
+  let renamed = 0;
+  const walk = (d) => {
+    for (const e of readdirSync(d)) {
+      const full = join(d, e);
+      if (statSync(full).isDirectory()) { walk(full); continue; }
+      const ext = extname(e);                 // 含點，例：".JPG"
+      if (!ext || !IMG_EXT.test(e)) continue;
+      const lower = ext.toLowerCase();
+      if (ext === lower) continue;            // 已是小寫，不動
+      const base = e.slice(0, e.length - ext.length);
+      const tmp = join(d, base + ext + '.tmprename');
+      const dest = join(d, base + lower);
+      try {
+        renameSync(full, tmp);                // 第一段：改暫存名
+        renameSync(tmp, dest);                // 第二段：改成小寫副檔名
+        const rel = dest.slice(LIFE_ROOT.length + 1).replace(/\\/g, '/');
+        console.log(`  ↻ 副檔名正規化：${e} → ${rel.split('/').pop()}`);
+        renamed++;
+      } catch (err) {
+        console.warn(`  ⚠ 副檔名正規化失敗（略過）：${e} — ${err.message}`);
+      }
+    }
+  };
+  walk(dir);
+  return renamed;
+}
+
 /* ---------- 自動縮圖 ---------- */
 // 掃描 assets 下所有圖檔，寬度超過 MAX_IMG_WIDTH 就等比縮小並「覆寫原檔」。
 // 已在範圍內的圖不動，避免重複壓縮失真。
 async function optimizeImages() {
-  if (!sharp || !existsSync(ASSETS_DIR)) return;
+  if (!existsSync(ASSETS_DIR)) return;
+  // 先統一副檔名大小寫（即使沒裝 sharp 也要做，否則上線會破圖）
+  normalizeImageExtensions(ASSETS_DIR);
+  if (!sharp) return;
   const files = [];
   const walk = (dir) => {
     for (const e of readdirSync(dir)) {
@@ -173,6 +209,7 @@ const AFF_NOTE = {
   shopee:'※ 本連結為蝦皮聯盟行銷連結，透過它購物我會獲得少許回饋，不影響你的售價。',
   hahow: '※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。',
   kkday: '※ 以上為 KKday 聯盟行銷廣告，透過它訂購行程我會獲得少許回饋，不影響你的售價。',
+  kkdaylink: '※ 本連結為 KKday 聯盟行銷連結，透過它訂購行程我會獲得少許回饋，不影響你的售價。',
   cjlink:   '※ 本連結為通路王（iChannels）聯盟行銷連結，透過它購買我會獲得少許回饋，不影響你的售價。',
   pressplay:'※ 本連結為 PressPlay 聯盟行銷連結，透過它訂閱／購課我會獲得少許回饋，不影響你的售價。',
   link:  '※ 本連結為合作／聯盟連結，透過它購買我可能獲得少許回饋，不影響你的售價。',
@@ -182,6 +219,7 @@ const AFF_NOTE = {
 const BTN_PLATFORM = {
   cjlink:    { label: '🛒 通路王推薦', btn: '前往購買 →' },
   pressplay: { label: '🎓 線上課程・訂閱', btn: '看看這堂課 →' },
+  kkday:     { label: '✈️ 旅遊行程・體驗', btn: '到 KKday 看看 →' },
 };
 
 // 從博客來商品網址或純編號取出 10 碼商品編號
@@ -256,11 +294,26 @@ function renderAffiliate(raw) {
 </div>`;
   }
 
-  // 情況 2.6：KKday 動態商品廣告（靠外部 JS 動態渲染旅遊商品）
-  // 用法：kkday [顯示數量，預設 3]
-  //   腳本只需每頁載一次，實際的 <script> 由 renderArticle 統一注入頁尾。
+  // 情況 2.6：KKday
+  //   (a) 按鈕式單一行程：kkday <商品連結> | [按鈕文字] | [自訂揭露]
+  //       —— 第一個參數是 http(s) 連結時走此分支，導向你指定的單一行程頁。
+  //   (b) 動態商品廣告：kkday [顯示數量，預設 3]
+  //       —— 沒給連結（空或純數字）時維持原本行為，靠外部 JS 動態輪播旅遊商品，
+  //          腳本只需每頁載一次，實際的 <script> 由 renderArticle 統一注入頁尾。
   if (platform === 'kkday') {
-    const amount = /^\d+$/.test(parts[1] || '') ? parts[1] : '3';
+    const afterPlatform = content.slice(platform.length).trim();
+    // (a) 按鈕式：以連結開頭
+    if (/^https?:\/\//i.test(afterPlatform)) {
+      const segs = afterPlatform.split('|').map(s => s.trim());
+      const href = segs[0];
+      const preset = BTN_PLATFORM.kkday;
+      const btnText = segs[1] || preset.btn;
+      const note = segs[2] || AFF_NOTE.kkdaylink;
+      const inner = `<span class="affiliate-btn">${escapeHtml(btnText)}</span>`;
+      return wrapAffiliate({ href, inner, note, label: preset.label });
+    }
+    // (b) 動態廣告：空或純數字
+    const amount = /^\d+$/.test(afterPlatform) ? afterPlatform : '3';
     return `<div class="affiliate-box affiliate-kkday">
     <span class="affiliate-label">✈️ 旅遊行程・體驗</span>
     <ins class="kkday-product-media" data-oid="13787" data-amount="${amount}" data-origin="https://kkpartners.kkday.com"></ins>
@@ -460,7 +513,7 @@ function renderArticle(a) {
     <meta property="og:type" content="article">
     <meta property="og:url" content="${url}">${coverUrl ? `\n    <meta property="og:image" content="${coverUrl}">` : ''}
     <link rel="canonical" href="${url}">
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
     <script type="application/ld+json">${JSON.stringify(jsonLd)}</script>
 </head>
@@ -547,7 +600,7 @@ function renderIndex(arts) {
     <meta property="og:type" content="website">
     <meta property="og:url" content="${SITE_URL}/">
     <link rel="canonical" href="${SITE_URL}/">
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
