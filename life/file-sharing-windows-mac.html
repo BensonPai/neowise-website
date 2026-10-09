@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>Windows 跟 iMac 和 Windows 跟 Windows 怎麼互傳檔案？區網共享一次搞懂 - 智慧喵</title>
+    <meta name="description" content="家裡同時有 Windows 和 iMac，或兩台 Windows 想互傳檔案，不用再靠隨身碟或 LINE。這篇手把手教你用區域網路做檔案共享：Windows 開共享、Mac 連 Windows、Windows 連 Mac，常見連不上的問題也一次解。">
+    <meta name="keywords" content="檔案共享,Windows 共享資料夾,Mac 連 Windows,iMac 檔案傳輸,SMB,區域網路共享,Windows Mac 互傳,網路芳鄰">
+    <meta property="og:title" content="Windows 跟 iMac 和 Windows 跟 Windows 怎麼互傳檔案？區網共享一次搞懂">
+    <meta property="og:description" content="家裡同時有 Windows 和 iMac，或兩台 Windows 想互傳檔案，不用再靠隨身碟或 LINE。這篇手把手教你用區域網路做檔案共享：Windows 開共享、Mac 連 Windows、Windows 連 Mac，常見連不上的問題也一次解。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/file-sharing-windows-mac.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/file-sharing-windows-mac/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/file-sharing-windows-mac.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Windows 跟 iMac 和 Windows 跟 Windows 怎麼互傳檔案？區網共享一次搞懂","description":"家裡同時有 Windows 和 iMac，或兩台 Windows 想互傳檔案，不用再靠隨身碟或 LINE。這篇手把手教你用區域網路做檔案共享：Windows 開共享、Mac 連 Windows、Windows 連 Mac，常見連不上的問題也一次解。","datePublished":"2026-10-09","dateModified":"2026-10-09","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/file-sharing-windows-mac.html"},"image":"https://neowise.com.tw/life/assets/file-sharing-windows-mac/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li><a href="appdev.html">App 開發指南</a></li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>Windows 跟 iMac 和 Windows 跟 Windows 怎麼互傳檔案？區網共享一次搞懂</h1>
+            <p class="article-meta">智慧喵　•　2026-10-09</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/file-sharing-windows-mac/cover.jpg" alt="一台 Windows 筆電與一台 iMac 透過家用網路互相傳檔案的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>家裡裝置愈來愈多，情境也愈來愈常見：公司配的是 Windows 筆電，家裡擺的是 iMac；或者是爸媽一台 Windows、自己一台 Windows，想把照片、報告、影片互傳。很多人到現在還在用隨身碟拷來拷去，或是把檔案傳 LINE、傳 Email 給自己——小檔還好，一遇到幾 GB 的影片就卡住。</p>
+<p>其實只要兩台電腦連在<strong>同一個家用網路</strong>（接同一台 Wi-Fi 分享器就算），就能用「檔案共享」直接互傳，速度比隨身碟快、也不用一直插拔。這篇就把三種組合一次講清楚：<strong>Windows ↔ iMac</strong>、<strong>Windows ↔ Windows</strong>，還有連不上時怎麼排查。</p>
+<h2>先搞懂：它們其實講同一種語言</h2>
+<p>你可能聽過 Windows 的「網路芳鄰」、Mac 的「檔案共享」，聽起來像兩套東西，但背後用的其實是<strong>同一個協定：SMB</strong>（Server Message Block）。</p>
+<p>這代表什麼？代表 <strong>Windows 和 Mac 本來就能互相讀寫對方的共享資料夾</strong>，不用裝任何第三方軟體。你要做的只有兩件事：</p>
+<ol>
+<li>在「要分享檔案的那台」把某個資料夾設成<strong>共享</strong>。</li>
+<li>在「要拿檔案的那台」去<strong>連線</strong>那個共享資料夾。</li>
+</ol>
+<p>搞懂這個分工，後面就都是照步驟點而已。</p>
+<h2>第一步：記下每台電腦的 IP 位址</h2>
+<p>連線時最穩的方式是直接用對方的 <strong>IP 位址</strong>（像 <code>192.168.1.10</code> 這種）。先把要分享檔案那台的 IP 查出來備用。</p>
+<p><strong>Windows 查 IP</strong>：按 <code>Win + R</code>，輸入 <code>cmd</code> 按 Enter，打 <code>ipconfig</code>，找「IPv4 位址」那一行。</p>
+<p><strong>Mac 查 IP</strong>：點左上角蘋果 →「系統設定」→「網路」→ 點你用的那個連線（Wi-Fi 或乙太網路），裡面會顯示 IP 位址。</p>
+<blockquote>小提醒：IP 可能會隨著重開機變動，<strong>Windows 和 Mac 都一樣</strong>。如果你很常互傳，可以到分享器後台把電腦設成「固定 IP」，或直接用電腦名稱連（下面各情境都會教，名稱不會隨 IP 變）。</blockquote>
+<h2>情境一：Windows 分享、iMac 來拿</h2>
+<p>這是最常見的組合——Windows 當「倉庫」，iMac 去抓檔案。</p>
+<h3>在 Windows 上開啟共享</h3>
+<ol>
+<li>先打開網路探索：<strong>設定 →「網路和網際網路」→「進階網路設定」→「進階共用設定」</strong>。這裡會分「私人網路」「公用網路」「所有網路」三區——家用網路通常算私人網路，但保險起見直接在<strong>「所有網路」</strong>那區，把<strong>網路探索</strong>和<strong>檔案及印表機共用</strong>都打開（這樣不管系統把你家的連線歸在哪一區都涵蓋到）。</li>
+<li>在檔案總管裡<strong>對著想分享的資料夾按右鍵 →「內容」→「共用」分頁 →「共用」</strong>。</li>
+<li>在下拉選單選要給誰用：想簡單一點可以加 <code>Everyone</code>，權限看需求給「讀取」或「讀取/寫入」，按「共用」完成。</li>
+<li>完成後會顯示一行網路路徑，像 <code>\\DESKTOP-ABC123\分享資料夾</code>，記下來。</li>
+</ol>
+<figure><img src="assets/file-sharing-windows-mac/windows-share-settings.jpg" alt="Windows 檔案總管共享資料夾設定畫面示意圖" loading="lazy"></figure>
+<blockquote>關於「密碼保護的共用」：Windows 預設開著，所以 Mac 連過來時會要你輸入「這台 Windows 的使用者帳號和密碼」。這是正常的，輸入 Windows 的登入帳密即可。如果想免密碼（例如只在自己家、信任的網路），可以在「進階共用設定」把密碼保護關掉，但安全性會降低，公用環境不建議。</blockquote>
+<h3>在 iMac 上連進去</h3>
+<ol>
+<li>打開 Finder，上方選單點 <strong>「前往」→「連接伺服器」</strong>（快捷鍵 <code>Cmd + K</code>）。</li>
+<li>輸入 <code>smb://</code> 加上 Windows 的 IP，例如 <code>smb://192.168.1.10</code>，按「連接」。</li>
+<li>跳出登入視窗時，選「註冊使用者」，帳號密碼填<strong>那台 Windows 的登入帳密</strong>。</li>
+<li>選要掛載的共享資料夾，按「好」。資料夾就會出現在 Finder 側邊欄，像一顆外接硬碟一樣可以直接拖拉檔案。</li>
+</ol>
+<figure><img src="assets/file-sharing-windows-mac/mac-connect-smb.jpg" alt="Mac Finder 使用 smb 連線到 Windows 共享的畫面示意圖" loading="lazy"></figure>
+<h2>情境二：iMac 分享、Windows 來拿</h2>
+<p>反過來，把 iMac 當倉庫也可以。</p>
+<h3>在 iMac 上開啟檔案共享</h3>
+<ol>
+<li>蘋果 →「系統設定」→「一般」→「共享」，打開<strong>「檔案共享」</strong>。</li>
+<li>點「檔案共享」旁邊的 <strong>ⓘ</strong>，在「共享的檔案夾」加入你想分享的資料夾，並在「使用者」設定誰可以存取、權限給唯讀還是可讀寫。</li>
+<li>同一個視窗點「選項」，把 <strong>「使用 SMB 來共享檔案與檔案夾」</strong>勾起來，並勾選要用來分享的那個帳號（會要你再輸入一次該帳號密碼授權）。這一步很關鍵，不勾 Windows 會連不到。</li>
+</ol>
+<h3>在 Windows 上連進去</h3>
+<ol>
+<li>打開檔案總管，在最上面的網址列直接輸入 <code>\\</code> 加 Mac 的 IP，例如 <code>\\192.168.1.20</code>，按 Enter。</li>
+<li>跳出帳密視窗時，填 <strong>Mac 的使用者帳號和密碼</strong>。</li>
+<li>看到共享資料夾後，可以按右鍵「連線網路磁碟機」，把它變成一個固定的磁碟代號（像 <code>Z:</code>），以後開機就自動出現，不用每次重打。</li>
+</ol>
+<blockquote><strong>iMac 的 IP 也會變</strong>：和 Windows 一樣，Mac 的 IP 多半是分享器動態分配的，重開機或重連就可能換號。與其每次重查，不如改用<strong>電腦名稱</strong>連——Mac 開了檔案共享後會有一個區網名稱 <code>電腦名稱.local</code>，在 Windows 網址列打 <code>\\iMac.local</code> 這種就行，名稱不會隨 IP 變動。</blockquote>
+<p>&gt;</p>
+<blockquote><strong>怎麼看 Mac 的電腦名稱</strong>：蘋果 →「系統設定」→「一般」→「共享」，最上面那行就是電腦名稱，「檔案共享」欄位下方也會直接寫出 <code>smb://電腦名稱.local</code> 的位址。建議把名稱改成<strong>純英數、不含中文或空白</strong>（例如 <code>imac-home</code>），連線最不會出狀況，之後 Windows 連 <code>\\imac-home.local</code> 最穩。</blockquote>
+<p>&gt;</p>
+<blockquote>⚠️ 注意：Mac 畫面上那串是 <code>smb://…</code> 開頭，那是給 Mac 端的寫法。<strong>Windows 連過去時要改成反斜線的 <code>\\imac-home.local</code>，不要照抄 <code>smb://</code></strong>，否則會跳出要你去 Microsoft Store 找 App 的錯誤視窗。</blockquote>
+<h2>情境三：Windows 跟 Windows 互傳</h2>
+<p>兩台都是 Windows 反而最單純，因為它們「母語」相同。</p>
+<ol>
+<li><strong>兩台都先打開網路探索與檔案共用</strong>（情境一的第 1 步，兩台都做一次）。</li>
+<li>在「要分享」那台，照情境一的第 2～4 步把資料夾設成共享。</li>
+<li>在「要拿」那台，打開檔案總管，網址列輸入 <code>\\對方IP</code>（或 <code>\\對方電腦名稱</code>），按 Enter，輸入對方的 Windows 帳密即可。</li>
+<li>一樣可以用「連線網路磁碟機」固定成一個磁碟代號。</li>
+</ol>
+<blockquote>查電腦名稱：在「設定 →『系統』→『系統資訊』」最上面會看到裝置名稱。用名稱連（<code>\\DESKTOP-ABC123</code>）比用 IP 省事，因為 IP 會變、名稱不會。</blockquote>
+<h2>連不上？照這張清單排查</h2>
+<p>檔案共享最常卡在「設定都對了但就是連不到」，九成是下面這幾個原因：</p>
+<ul>
+<li><strong>Windows 誤用了 <code>smb://</code></strong>：這是最常見的誤會。<code>smb://</code> 是 Mac／Linux 的寫法，Windows 不認得，貼上去會跳出「取得應用程式以開啟此 smb 連結 / 到 Microsoft Store 尋找」的視窗。<strong>Windows 一律用反斜線的 <code>\\</code> 格式</strong>，而且要打在<strong>檔案總管的網址列</strong>，不是瀏覽器。把 <code>smb://192.168.1.20</code> 改成 <code>\\192.168.1.20</code>、<code>smb://imac.local</code> 改成 <code>\\imac.local</code> 就對了。（你在 Mac「共享」畫面看到的 <code>smb://…</code> 位址是給 Mac 端用的，Windows 連過去要自己換成 <code>\\…</code>。）</li>
+<li><strong>不在同一個網路</strong>：兩台要接同一台分享器。注意有些分享器的 2.4GHz 和 5GHz 會被隔開，或開了「訪客網路／AP 隔離」會擋住裝置互連，先確認兩台在同一個主網路。</li>
+<li><strong>防火牆擋住</strong>：Windows 防火牆要允許「檔案及印表機共用」。可到「Windows 安全性 → 防火牆 → 允許應用程式」勾選。</li>
+<li><strong>網路被設成「公用」</strong>：Windows 在「公用網路」下會關掉共享。到網路設定把家裡的連線改成<strong>「私人網路」</strong>；或照前面做法，在「進階共用設定」的<strong>「所有網路」</strong>那區把共享打開，就不受這個分類影響。</li>
+<li><strong>帳密打錯</strong>：連 Windows 要用 Windows 帳密、連 Mac 要用 Mac 帳密，別搞混。用 Microsoft 帳號登入的 Windows，帳號要填完整的信箱。</li>
+<li><strong>Mac 沒勾 SMB</strong>：情境二那個「使用 SMB 來共享」沒勾、或沒勾到對的帳號，Windows 就是連不到。</li>
+<li><strong>IP 變了</strong>：重開機後 IP 可能換號，重查一次，或改用電腦名稱連。</li>
+<li><strong>用 IP 連得到、用 <code>.local</code> 名稱連不到</strong>：這很常見。<code>.local</code> 名稱靠 Bonjour（mDNS）解析，Mac 內建、但 <strong>Windows 不一定裝了</strong>，沒裝就查不到名稱對應的 IP。可以裝 Apple 的 Bonjour 服務（裝過 iTunes 通常就有），但更實在的做法是<strong>乾脆把 iMac 設成固定 IP、以後都用 <code>\\IP</code> 連</strong>（見下一節）。既然 IP 連得通，固定住它就一勞永逸，不用再跟名稱解析糾纏。</li>
+</ul>
+<h2>名稱連不上？把 iMac 設成固定 IP 最一勞永逸</h2>
+<p>如果你已經確認「用 IP 連得到，但用 <code>imac.local</code> 名稱連不到」，又不想在 Windows 上另外裝 Bonjour，那最乾淨的解法就是<strong>讓 iMac 的 IP 不要變</strong>——固定住之後，以後永遠用 <code>\\固定IP</code> 連就好，不用再管名稱解析。</p>
+<p>在 <strong>iMac 上設固定 IP</strong> 的步驟：</p>
+<ol>
+<li>蘋果 →「系統設定」→「網路」。</li>
+<li>點你在用的那個連線（Wi-Fi 或乙太網路）→「詳細資訊…」。</li>
+<li>左邊切到 <strong>「TCP/IP」</strong>。</li>
+<li>把「設定 IPv4」從「使用 DHCP」改成 <strong>「手動」</strong>。</li>
+<li>填三個欄位：</li>
+</ol>
+<ul>
+<li><strong>IP 位址</strong>：建議填現在連得通的那個（例如 <code>192.168.1.20</code>），但要<strong>避開分享器自動分配的範圍</strong>以免跟別的裝置撞號。不確定範圍的話，挑個尾數大一點、冷門的，例如 <code>192.168.1.200</code>。</li>
+<li><strong>子網路遮罩</strong>：通常是 <code>255.255.255.0</code>。</li>
+<li><strong>路由器</strong>：填分享器的 IP（通常 <code>192.168.1.1</code> 或 <code>192.168.0.1</code>）。</li>
+</ul>
+<ol>
+<li>「DNS」那頁補一個 <code>8.8.8.8</code>（Google DNS），避免手動設定後上網的 DNS 出問題。</li>
+<li>按「好」→「套用」。</li>
+</ol>
+<p>設完驗證兩件事：<strong>iMac 自己還能正常上網</strong>（開個網頁試），以及<strong>回 Windows 用 <code>\\新的IP</code> 連得到共享</strong>。</p>
+<blockquote>兩個小提醒： - <strong>怕撞號</strong>：更乾淨的做法是改在<strong>分享器後台</strong>用「DHCP 保留 / IP 與 MAC 綁定」把 iMac 綁一個固定 IP，由分享器統一管理就不會跟別人撞。在 iMac 上手動設也行，記得挑冷門尾數。 - <strong>換地方用會失效</strong>：手動 IP 是綁死這組網段的。帶 iMac 去別處連 Wi-Fi 前，記得先改回「使用 DHCP」，否則會上不了網。固定在家用的話就不受影響。</blockquote>
+<h2>不想弄這麼複雜？幾個偷懶的替代方案</h2>
+<p>如果只是偶爾傳個幾張照片，架共享確實有點大費周章。幾個更輕量的選擇：</p>
+<ul>
+<li><strong>雲端硬碟</strong>：Google Drive、OneDrive、iCloud，上傳再下載，跨裝置最無腦，但受網速和容量限制。</li>
+<li><strong>區網傳檔 App</strong>：像 LocalSend 這類開源工具，Windows、Mac 都能裝，同網路下點一下就互傳，不用記 IP、不用設共享，臨時傳檔很方便。</li>
+<li><strong>隨身碟 / 行動硬碟</strong>：最原始但最可靠，大檔、沒網路時還是它最實在。</li>
+</ul>
+<p>但只要你<strong>經常</strong>在固定幾台電腦間搬檔案，花十分鐘把共享設好，之後就像多了一顆共用硬碟，長期下來最省事也最快。</p>
+<p>搞定一次，Windows 和 iMac 從此和平共處、檔案自由流動，隨身碟可以收進抽屜了 🐾</p>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
