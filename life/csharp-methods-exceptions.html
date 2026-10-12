@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】方法與例外處理：把程式切成好用的小塊，並優雅地處理錯誤 - 智慧喵</title>
+    <meta name="description" content="程式變長就該拆成方法。這篇帶你搞懂 C# 的方法：參數、回傳值、多載與預設參數，再學會用 try/catch/finally 處理例外，讓程式遇到錯誤也不會整個崩掉。">
+    <meta name="keywords" content="C# 方法,C# 函式,method,參數,回傳值,例外處理,try catch,C# 教學">
+    <meta property="og:title" content="【C# 教學】方法與例外處理：把程式切成好用的小塊，並優雅地處理錯誤">
+    <meta property="og:description" content="程式變長就該拆成方法。這篇帶你搞懂 C# 的方法：參數、回傳值、多載與預設參數，再學會用 try/catch/finally 處理例外，讓程式遇到錯誤也不會整個崩掉。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-methods-exceptions.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-methods-exceptions/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-methods-exceptions.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】方法與例外處理：把程式切成好用的小塊，並優雅地處理錯誤","description":"程式變長就該拆成方法。這篇帶你搞懂 C# 的方法：參數、回傳值、多載與預設參數，再學會用 try/catch/finally 處理例外，讓程式遇到錯誤也不會整個崩掉。","datePublished":"2026-10-11","dateModified":"2026-10-11","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-methods-exceptions.html"},"image":"https://neowise.com.tw/life/assets/csharp-methods-exceptions/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】方法與例外處理：把程式切成好用的小塊，並優雅地處理錯誤</h1>
+            <p class="article-meta">智慧喵　•　2026-10-11</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-methods-exceptions/cover.jpg" alt="示意程式被拆成多個方法區塊，並有一個錯誤被 try/catch 攔下的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="csharp-syntax-basics.html" rel="noopener">語法基礎</a>學完，你已經能寫出一段段會跑的程式了。但隨著程式變長，全部擠在一起會越來越難讀、難改。這篇要解決兩件事：</p>
+<ol>
+<li><strong>怎麼把程式切成一塊塊好用的「方法」</strong>——讓程式有條理、可重用。</li>
+<li><strong>程式出錯時怎麼優雅處理</strong>——用例外處理讓程式遇到問題也不會整個崩掉。</li>
+</ol>
+<p>這是基礎篇的最後一塊拼圖，學完就能進入物件導向了。</p>
+<h2>一、方法是什麼、為什麼要用</h2>
+<p><strong>方法（method）</strong>就是一段「打包好、取了名字、可以重複呼叫」的程式碼。你其實已經用過別人寫的方法了——<code>Console.WriteLine(...)</code> 就是一個方法。這篇要學的是<strong>自己寫方法</strong>。</p>
+<p>為什麼要拆方法？三個好處：</p>
+<ul>
+<li><strong>可讀</strong>：一段長程式拆成幾個命名清楚的方法，一看名字就知道在做什麼。</li>
+<li><strong>可重用</strong>：同樣的邏輯寫一次，到處呼叫，不用複製貼上。</li>
+<li><strong>好維護</strong>：邏輯要改時只改一個地方。</li>
+</ul>
+<p>來看一個最基本的方法：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 定義一個方法：接收名字，回傳打招呼的句子
+string Greet(string name)
+{
+    return $&quot;哈囉，{name}！&quot;;
+}
+
+// 呼叫它
+string message = Greet(&quot;智慧喵&quot;);
+Console.WriteLine(message);   // 印出：哈囉，智慧喵！</code></pre></div>
+<p>拆解這個方法：</p>
+<ul>
+<li><strong><code>string</code></strong>（最前面）：<strong>回傳型別</strong>，表示這個方法會吐回一個字串。</li>
+<li><strong><code>Greet</code></strong>：方法名稱，習慣用「動詞」開頭、字首大寫（C# 的方法命名慣例）。</li>
+<li><strong><code>(string name)</code></strong>：<strong>參數</strong>，呼叫時要給它的資料。</li>
+<li><strong><code>return</code></strong>：把結果吐回去。</li>
+</ul>
+<h2>二、回傳值與 void</h2>
+<p>方法可以「有回傳值」或「沒有回傳值」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 有回傳值：算完吐回結果
+int Add(int a, int b)
+{
+    return a + b;
+}
+
+// 沒有回傳值：只做事、不吐東西，回傳型別寫 void
+void SayHello()
+{
+    Console.WriteLine(&quot;哈囉！&quot;);
+}
+
+int sum = Add(3, 5);   // sum = 8
+SayHello();            // 印出：哈囉！（它不回傳東西，所以不用接）</code></pre></div>
+<ul>
+<li><strong>有回傳值</strong>：寫明回傳型別（<code>int</code>、<code>string</code>…），方法裡用 <code>return</code> 吐回。</li>
+<li><strong>沒有回傳值</strong>：回傳型別寫 <strong><code>void</code></strong>，表示「我只做事，不給你東西」。</li>
+</ul>
+<h2>三、進階參數技巧</h2>
+<p>方法的參數還有幾個實用寫法，分成「多載」和「預設參數值」兩個，各自認識一下。</p>
+<h3>多載（overloading）</h3>
+<p><strong>多載</strong>指的是：<strong>同一個方法名，可以有多個「參數不同」的版本</strong>，C# 會依你傳進去的參數，自動幫你選對的那個版本：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">int Add(int a, int b) =&gt; a + b;
+double Add(double a, double b) =&gt; a + b;
+
+Console.WriteLine(Add(3, 5));       // 參數是整數 → 用 int 版 → 8
+Console.WriteLine(Add(1.5, 2.5));   // 參數是小數 → 用 double 版 → 4</code></pre></div>
+<p>兩個方法都叫 <code>Add</code>，但一個收整數、一個收小數。你呼叫時給什麼型別，C# 就挑對應的版本執行。這就是<strong>多載</strong>——名字相同、參數不同。（之後在「類別與物件」篇，建構式也會用到多載，記住這個名詞。）</p>
+<blockquote>上面順便用了<strong>表達式主體方法</strong>：當方法只有一行 <code>return</code>，可以用 <code>=&gt; 結果</code> 的精簡寫法取代 <code>{ return ...; }</code>，少打幾個字。</blockquote>
+<h3>預設參數值</h3>
+<p><strong>預設參數值</strong>指的是：參數可以先給一個預設值，呼叫時沒傳就用預設：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">string Greet(string name, string greeting = &quot;哈囉&quot;)
+{
+    return $&quot;{greeting}，{name}！&quot;;
+}
+
+Console.WriteLine(Greet(&quot;智慧喵&quot;));          // 沒給第二個參數 → 用預設「哈囉」→ 哈囉，智慧喵！
+Console.WriteLine(Greet(&quot;智慧喵&quot;, &quot;早安&quot;));   // 有給就用給的 → 早安，智慧喵！</code></pre></div>
+<p>這兩個技巧（多載、預設參數值）現在知道有就好，等實際寫到會自然用上。</p>
+<h2>四、為什麼需要例外處理</h2>
+<p>接下來換另一個主題：<strong>錯誤處理</strong>。</p>
+<p>程式出錯分兩種：</p>
+<ul>
+<li><strong>你能預防的</strong>（例如忘了判斷、邏輯寫錯）→ 靠測試和細心避免。</li>
+<li><strong>執行時才會發生、你擋不住的</strong>（例如使用者亂輸入、檔案不存在、網路斷線）→ 這類叫<strong>例外（exception）</strong>，需要「例外處理」來接住。</li>
+</ul>
+<p>舉個最常見的例子，呼應上一篇講過的字串轉數字：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">string input = &quot;abc&quot;;          // 使用者亂打
+int number = int.Parse(input); // 💥 這裡會丟出例外，程式直接崩潰！
+Console.WriteLine(number);</code></pre></div>
+<p><code>int.Parse(&quot;abc&quot;)</code> 沒辦法把 <code>&quot;abc&quot;</code> 變成數字，就會丟出例外。如果不處理，程式會當場停住、跳出一堆錯誤訊息。這在正式程式裡是不能接受的——你不能因為使用者打錯字就整個崩潰。</p>
+<h2>五、try / catch / finally</h2>
+<p>C# 用 <code>try</code> / <code>catch</code> 來「試著執行、出錯就接住」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">string input = &quot;abc&quot;;
+
+try
+{
+    // try 區塊：放「可能會出錯」的程式
+    int number = int.Parse(input);
+    Console.WriteLine($&quot;轉換成功：{number}&quot;);
+}
+catch (FormatException)
+{
+    // catch 區塊：出錯時才會執行，程式不會崩
+    Console.WriteLine(&quot;輸入的不是有效數字，請重新輸入。&quot;);
+}</code></pre></div>
+<ul>
+<li><strong><code>try</code></strong>：把「可能出錯」的程式放進來。</li>
+<li><strong><code>catch</code></strong>：如果 <code>try</code> 裡出錯，就跳來這裡處理，程式繼續活著。</li>
+<li>括號裡的 <code>FormatException</code> 是<strong>例外的型別</strong>——這裡專門接「格式錯誤」。你也可以不指定型別、用 <code>catch (Exception ex)</code> 接住所有例外。</li>
+</ul>
+<p><strong>finally：不管有沒有錯都會執行</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">try
+{
+    Console.WriteLine(&quot;嘗試開啟檔案…&quot;);
+    // 假設這裡做了某件可能出錯的事
+}
+catch (Exception ex)
+{
+    Console.WriteLine($&quot;發生錯誤：{ex.Message}&quot;);  // ex.Message 是錯誤說明
+}
+finally
+{
+    Console.WriteLine(&quot;不管成功或失敗，這裡都會跑（例如收尾、關檔）。&quot;);
+}</code></pre></div>
+<p><code>finally</code> 常用來做「無論如何都要做的收尾」，例如關閉檔案、釋放資源。</p>
+<p><strong>主動丟出例外 throw</strong>：有時你自己想在不合理時主動報錯：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">int Divide(int a, int b)
+{
+    if (b == 0)
+    {
+        throw new DivideByZeroException(&quot;除數不能為 0&quot;);
+    }
+    return a / b;
+}</code></pre></div>
+<h2>六、動手綜合練習</h2>
+<p>把方法和例外處理合起來，做一個「安全把字串轉成數字」的方法。這裡用上一篇提過、更安全的 <code>int.TryParse</code>，再搭配例外觀念：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 讀使用者輸入，安全轉成數字；失敗就回傳 0 並提示
+int ReadNumber(string input)
+{
+    if (int.TryParse(input, out int result))
+    {
+        return result;          // 轉成功，result 就是數字
+    }
+    else
+    {
+        Console.WriteLine($&quot;「{input}」不是有效數字，當作 0 處理。&quot;);
+        return 0;
+    }
+}
+
+Console.WriteLine(ReadNumber(&quot;42&quot;));    // 42
+Console.WriteLine(ReadNumber(&quot;abc&quot;));   // 提示後回傳 0</code></pre></div>
+<blockquote>這裡出現了 <code>out</code>：<code>int.TryParse</code> 會回傳 true/false 代表「成功了沒」，同時把轉好的數字透過 <code>out</code> 參數「送出來」。<code>TryParse</code> 的好處是——它不會丟例外、不會崩，用回傳值告訴你成不成功。很多 C# 的 <code>TryXxx</code> 方法都是這個模式，比 <code>Parse</code> + try/catch 更俐落。</blockquote>
+<p>試著改改看：失敗時改成要求重新輸入？改成處理小數（<code>double.TryParse</code>）？動手改最有感。</p>
+<h2>這一步大約要花多久？</h2>
+<p>方法的觀念很快能懂（抓幾天）；例外處理則建議多練，因為「什麼時候該接、該接哪種例外」需要經驗累積。練法：</p>
+<ul>
+<li>把前面寫過的小程式，試著拆成幾個命名清楚的方法。</li>
+<li>故意輸入會出錯的資料，練習用 try/catch 接住。</li>
+<li>記住 <code>TryParse</code> 這種「不丟例外、用回傳值報成敗」的安全模式。</li>
+</ul>
+<h2>下一篇</h2>
+<p>基礎篇到這裡就完整了——你已經會變數、流程控制、方法、例外處理，能寫出像樣的小程式。接下來進入 C# 的核心精神：<strong>物件導向</strong>。下一篇從 <strong>類別與物件</strong> 開始，學會用「藍圖造物件」的方式組織程式。</p>
+<p>這是 C# 真正強大的地方，別錯過。下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 C# 基礎練得更扎實？</span><span class="affiliate-card-desc">方法與例外處理是寫出穩定程式的關鍵。Hahow 上有從 C# 到 .NET 實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-syntax-basics.html" rel="noopener">語法基礎：變數、型別、運算子與流程控制</a></li>
+<li>➡️ 下一篇：<a href="csharp-classes-objects.html" rel="noopener">類別與物件：物件導向的第一步</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

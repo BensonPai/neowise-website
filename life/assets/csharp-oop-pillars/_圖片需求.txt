@@ -1,0 +1,42 @@
+文章：【C# 教學】封裝、繼承、多型：物件導向的三大支柱
+slug：csharp-oop-pillars
+分類：科技　｜　系列：C# 教學（物件導向 5）
+
+======================================================================
+配圖清單（共 1 張，jpg，cover.jpg 會自動當封面）
+======================================================================
+
+1) cover.jpg（封面）
+   用途：文章封面
+   建議尺寸：橫向 16:9，約 1200x630 像素（勿超過 1600px 寬）
+   建議做法：AI 生圖（概念示意、不含文字）
+   生圖提示（中文）：
+   一張簡潔的概念示意圖，三根並排的柱子支撐著一個結構，象徵物件導向的
+   三大支柱，青藍與紫色調的現代科技氛圍，扁平簡潔風格，不要有任何文字，
+   橫向 16:9 構圖，輸出約 1200x630 像素、適合網頁使用的中等解析度
+   （勿超過 1600px 寬）
+
+   生圖提示（英文，給 Midjourney / DALL·E / Ideogram）：
+   A clean conceptual illustration. Three parallel pillars support a
+   structure, symbolizing the three pillars of object-oriented
+   programming. Modern tech atmosphere in teal-blue and purple tones,
+   flat and minimal style, no text, 16:9 horizontal composition. Mid
+   resolution for web, around 1200x630 px.
+
+   負面提示（可選）：no text, no watermark, not cluttered
+
+======================================================================
+各工具小抄
+======================================================================
+- Midjourney：英文提示 + --ar 16:9。
+- DALL·E / ChatGPT：中英文皆可，強調「橫向 16:9、概念示意、不要文字」。
+- Canva：搜 `three pillars`、`concept infographic`。
+
+配色參考：系列主題翠綠 #059669、科技青藍 #0891B2、點綴 .NET 紫 #7C3AED。
+
+======================================================================
+提醒
+======================================================================
+- 圖存成 cover.jpg 放進本目錄後，雙擊 life/build-life.bat 產生 HTML。
+- 本篇已發布（status: approved）。缺圖也能顯示，只是封面處留白。
+- 格式一律 jpg，勿改副檔名。圖太大產生器會自動壓縮。

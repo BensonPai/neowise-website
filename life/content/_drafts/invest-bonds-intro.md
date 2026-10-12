@@ -5,6 +5,9 @@ keywords: ["債券", "債券入門", "股債配置", "固定收益", "投資組�
 slug: "invest-bonds-intro"
 date: "2026-09-22"
 order: 6
+series: "invest"
+series_stage: "進階篇"
+series_order: "6"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

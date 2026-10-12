@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】非同步 async/await：讓程式不卡頓 - 智慧喵</title>
+    <meta name="description" content="下載檔案、呼叫 API 時程式會「卡住」等結果？這篇用白話帶你理解 C# 的非同步：為什麼需要 async/await、Task 是什麼、怎麼寫出不凍結、能同時做多件事的程式。">
+    <meta name="keywords" content="C# 非同步,async await,Task,非同步程式,async,C# 教學,C# 進階">
+    <meta property="og:title" content="【C# 教學】非同步 async/await：讓程式不卡頓">
+    <meta property="og:description" content="下載檔案、呼叫 API 時程式會「卡住」等結果？這篇用白話帶你理解 C# 的非同步：為什麼需要 async/await、Task 是什麼、怎麼寫出不凍結、能同時做多件事的程式。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-async.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-async/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-async.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】非同步 async/await：讓程式不卡頓","description":"下載檔案、呼叫 API 時程式會「卡住」等結果？這篇用白話帶你理解 C# 的非同步：為什麼需要 async/await、Task 是什麼、怎麼寫出不凍結、能同時做多件事的程式。","datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-async.html"},"image":"https://neowise.com.tw/life/assets/csharp-async/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】非同步 async/await：讓程式不卡頓</h1>
+            <p class="article-meta">智慧喵　•　2026-10-12</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-async/cover.jpg" alt="對比同步排隊等待與非同步同時進行多件事的概念示意圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="csharp-collections-linq.html" rel="noopener">上一篇</a>學會處理一堆資料。這篇講另一個現代程式幾乎必用的技能：<strong>非同步（async/await）</strong>——讓程式在「等待」的時候不會整個卡住。</p>
+<p>這主題聽起來很硬，但觀念其實很生活化。我用一個煮菜的比喻帶你進入。</p>
+<h2>一、為什麼需要非同步</h2>
+<p>想像你在煮晚餐，要「煮一鍋水」和「切菜」兩件事。有兩種做法：</p>
+<ul>
+<li><strong>同步（笨方法）</strong>：先盯著水煮開（站在那裡等 10 分鐘什麼都不做），水開了才去切菜。總共花很久。</li>
+<li><strong>非同步（聰明方法）</strong>：水放上爐子後，<strong>趁等水開的空檔去切菜</strong>。等待的時間被利用起來，整體快很多。</li>
+</ul>
+<p>程式也一樣。有些操作<strong>很慢、而且是在「等待」</strong>——例如：</p>
+<ul>
+<li>從網路下載檔案、呼叫 API。</li>
+<li>讀寫大檔案。</li>
+<li>查詢資料庫。</li>
+</ul>
+<p>如果用「同步」寫法，程式會<strong>卡在那裡等</strong>，什麼都做不了。在有畫面的 App 裡，這會讓整個介面「凍結」——使用者點什麼都沒反應，體驗很差。<strong>非同步</strong>就是要解決這個問題：等待時，讓程式能去做別的事。</p>
+<figure><img src="assets/csharp-async/async-compare.jpg" alt="同步排隊等待 vs 非同步同時進行的對比示意" loading="lazy"></figure>
+<h2>二、Task 與 async / await</h2>
+<p>C# 用三個關鍵字來寫非同步：<strong><code>Task</code></strong>、<strong><code>async</code></strong>、<strong><code>await</code></strong>。</p>
+<ul>
+<li><strong><code>Task</code></strong>：代表「一件正在進行、未來才會完成的工作」。可以想成餐廳的<strong>取餐號碼牌</strong>——你拿到號碼牌（Task），不用站在櫃台等，餐好了再憑號碼牌取。</li>
+<li><strong><code>async</code></strong>：標記一個方法「裡面會有非同步操作」。</li>
+<li><strong><code>await</code></strong>：等待某個 Task 完成、拿到結果，但<strong>等待時不卡住</strong>整個程式。</li>
+</ul>
+<p>看一個基本範例：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    // Main 也可以是 async，才能在裡面用 await
+    static async Task Main()
+    {
+        Console.WriteLine(&quot;開始煮水…&quot;);
+
+        await BoilWater();   // 等水開，但等待時不卡死
+
+        Console.WriteLine(&quot;水開了，可以泡茶！&quot;);
+    }
+
+    // async 方法：回傳 Task 代表「這是一件非同步工作」
+    static async Task BoilWater()
+    {
+        await Task.Delay(3000);   // 模擬等待 3 秒（Task.Delay 是非同步版的「等待」）
+        Console.WriteLine(&quot;（3 秒後）水滾了&quot;);
+    }
+}</code></pre></div>
+<p>拆解重點：</p>
+<ul>
+<li>方法前面加 <strong><code>async</code></strong>，裡面才能用 <code>await</code>。</li>
+<li><code>BoilWater</code> 回傳型別是 <strong><code>Task</code></strong>（代表「一件沒有回傳值的非同步工作」）。</li>
+<li><code>await BoilWater()</code> 的意思是「等它做完再往下」，但這個「等」不會凍結程式。</li>
+<li><strong><code>Task.Delay(3000)</code></strong> 是「非同步地等 3 秒」，常用來模擬耗時操作。（別跟 <code>Thread.Sleep</code> 搞混——那個是會卡死的同步等待。）</li>
+</ul>
+<p><strong>有回傳值的非同步</strong>：如果非同步工作要吐回結果，回傳型別用 <code>Task&lt;T&gt;</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static async Task&lt;int&gt; GetNumberAsync()
+{
+    await Task.Delay(1000);   // 模擬耗時
+    return 42;                // 回傳的是 int，所以型別寫 Task&lt;int&gt;
+}
+
+// 使用：await 會幫你把 Task&lt;int&gt; 裡的 int 取出來
+int result = await GetNumberAsync();   // result = 42</code></pre></div>
+<blockquote>命名慣例：非同步方法習慣以 <strong><code>Async</code> 結尾</strong>（例如 <code>GetNumberAsync</code>、<code>DownloadAsync</code>），讓呼叫者一看就知道「這要 await」。</blockquote>
+<h2>三、常見用法：呼叫網路 API</h2>
+<p>非同步最經典的場景就是抓網路資料。C# 用 <code>HttpClient</code>，它的方法大多是非同步的：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static async Task Main()
+    {
+        using HttpClient client = new HttpClient();
+
+        Console.WriteLine(&quot;開始下載…&quot;);
+
+        // GetStringAsync 回傳 Task&lt;string&gt;，await 取出網頁內容字串
+        string content = await client.GetStringAsync(&quot;https://example.com&quot;);
+
+        Console.WriteLine($&quot;下載完成，長度 {content.Length} 字&quot;);
+    }
+}</code></pre></div>
+<p>重點是 <code>await client.GetStringAsync(...)</code>——下載這種慢操作，用 <code>await</code> 等它、但不凍結程式。這跟我們在資料篇（下一篇）會深入的「從網路取資料」是同一套路。</p>
+<h2>四、同時做多件事：Task.WhenAll</h2>
+<p>非同步真正威力在於<strong>同時進行多件事</strong>。假設要下載三個網頁，與其一個等完再等下一個，不如<strong>同時發動、一起等</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static async Task Main()
+{
+    using HttpClient client = new HttpClient();
+
+    // 同時發動三個下載（先不 await，讓它們一起跑）
+    Task&lt;string&gt; t1 = client.GetStringAsync(&quot;https://example.com&quot;);
+    Task&lt;string&gt; t2 = client.GetStringAsync(&quot;https://example.org&quot;);
+    Task&lt;string&gt; t3 = client.GetStringAsync(&quot;https://example.net&quot;);
+
+    // 一次等三個都完成
+    string[] results = await Task.WhenAll(t1, t2, t3);
+
+    Console.WriteLine($&quot;三個都下載完了，共 {results.Length} 筆&quot;);
+}</code></pre></div>
+<p><code>Task.WhenAll</code> 讓三件事<strong>並行</strong>，總時間接近「最慢那一件」，而不是三件相加。這就是非同步省時間的關鍵。</p>
+<h2>五、兩個常見陷阱</h2>
+<p>非同步很好用，但有兩個新手雷區先知道：</p>
+<p><strong>1. 不要用 <code>async void</code></strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static async void DoSomething() { ... }   // ❌ 避免
+static async Task DoSomething() { ... }    // ✅ 用 Task</code></pre></div>
+<p><code>async void</code> 的方法沒辦法被 <code>await</code>，出錯時也很難處理。除了特定情況（例如事件處理），<strong>一律用 <code>Task</code> 而非 <code>void</code></strong>。</p>
+<p><strong>2. 不要用 <code>.Result</code> 或 <code>.Wait()</code> 硬等</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">int x = GetNumberAsync().Result;   // ❌ 可能造成死鎖、卡死
+int x = await GetNumberAsync();    // ✅ 老實用 await</code></pre></div>
+<p><code>.Result</code> 看起來像「直接拿結果」，但它會<strong>同步卡住</strong>，在某些環境甚至造成死鎖（程式永遠卡住）。<strong>要拿非同步的結果，就用 <code>await</code></strong>，別抄捷徑。</p>
+<h2>六、動手綜合練習</h2>
+<p>做一個「同時煮三道菜」的小程式，體會並行的威力：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static async Task Main()
+    {
+        Console.WriteLine(&quot;開始準備晚餐…&quot;);
+
+        // 三道菜同時開煮
+        Task soup = CookAsync(&quot;湯&quot;, 3000);
+        Task rice = CookAsync(&quot;飯&quot;, 2000);
+        Task veggie = CookAsync(&quot;青菜&quot;, 1000);
+
+        await Task.WhenAll(soup, rice, veggie);   // 等三道都好
+
+        Console.WriteLine(&quot;晚餐全部完成，開動！&quot;);
+    }
+
+    static async Task CookAsync(string dish, int ms)
+    {
+        Console.WriteLine($&quot;{dish} 開始煮…&quot;);
+        await Task.Delay(ms);               // 模擬烹煮時間
+        Console.WriteLine($&quot;{dish} 煮好了（花了 {ms / 1000} 秒）&quot;);
+    }
+}</code></pre></div>
+<p>跑跑看——三道菜「同時」在煮，總時間約等於最久的那道（3 秒），而不是 3+2+1=6 秒。試著改成「一道一道煮」（把每個 Cook 前面加 await），比較一下總時間差多少，就會對非同步很有感。</p>
+<h2>這一步大約要花多久？</h2>
+<p>非同步是觀念門檻，建議抓 <strong>1~2 週</strong>慢慢消化。重點不是記語法，而是理解「等待時不卡住」這件事。練法：</p>
+<ul>
+<li>先用 <code>Task.Delay</code> 模擬耗時操作，練 <code>async</code>/<code>await</code> 的基本流程。</li>
+<li>練 <code>Task.WhenAll</code> 的並行，體會它跟「一個個等」的時間差。</li>
+<li>記住兩個雷：不要 <code>async void</code>、不要 <code>.Result</code>。</li>
+</ul>
+<p>實務上你用到的套件（網路、資料庫、檔案）大多提供 <code>XxxAsync</code> 版本，學會這套就能正確使用它們。</p>
+<h2>下一篇</h2>
+<p>會非同步之後，下一篇是進階篇最後一塊：<strong>檔案讀寫與 JSON</strong>——讓你的程式能把資料存進檔案、再讀回來，程式才能真正「記住東西」。這也是下一步實戰專案的重要基礎。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 C# 進階技能練得更扎實？</span><span class="affiliate-card-desc">非同步是現代程式的必備功。Hahow 上有從 C# 到 .NET 實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-collections-linq.html" rel="noopener">集合與 LINQ：優雅地處理一堆資料</a></li>
+<li>➡️ 下一篇：<a href="csharp-files-data.html" rel="noopener">檔案讀寫與 JSON：讓程式能存資料、讀資料</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

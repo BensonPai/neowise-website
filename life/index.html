@@ -24,7 +24,13 @@
         <ul class="nav-links">
             <li><a href="index.html" class="active">首頁</a></li>
             <li><a href="invest.html">投資理財修煉</a></li>
-            <li><a href="appdev.html">App 開發指南</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
             <li><a href="tools.html">我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -47,6 +53,127 @@
             <button class="filter-btn" data-filter="生活">生活</button>
         </div>
         <div class="post-grid">
+            <a class="post-card" href="csharp-project-console-app.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-project-console-app/cover.jpg" alt="一個在終端機中執行的待辦清單主控台程式畫面示意" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】實戰專案：動手做一個主控台待辦清單 App</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">學了這麼多，這篇把全部串起來：用 C# 從零做一個可以新增、檢視、完成、刪除、並能存檔讀檔的主控台待辦清單程式，實際體會類別、集合、LINQ、檔案與例外處理怎麼協作。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-files-data.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-files-data/cover.jpg" alt="示意程式把資料寫入檔案、再從檔案讀回的雙向流程概念圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">程式關掉資料就不見？這篇帶你用 C# 做檔案讀寫，並認識怎麼把物件轉成 JSON 存檔、再讀回來，讓你的程式真正能記住東西，為實戰專案做準備。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-async.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-async/cover.jpg" alt="對比同步排隊等待與非同步同時進行多件事的概念示意圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】非同步 async/await：讓程式不卡頓</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">下載檔案、呼叫 API 時程式會「卡住」等結果？這篇用白話帶你理解 C# 的非同步：為什麼需要 async/await、Task 是什麼、怎麼寫出不凍結、能同時做多件事的程式。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-collections-linq.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-collections-linq/cover.jpg" alt="示意一堆雜亂資料經過 LINQ 篩選排序後變得整齊的概念圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】集合與 LINQ：優雅地處理一堆資料</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">實務上你常要處理「一堆資料」。這篇帶你認識 C# 常用集合 List、Dictionary，再學 LINQ：用接近自然語言的寫法做篩選、排序、投影與統計，讓資料處理又短又好讀。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-interfaces-generics.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-interfaces-generics/cover.jpg" alt="示意介面是一份契約、泛型是一個可套不同型別的模具的概念圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】介面與泛型：寫出更有彈性、可重用的程式</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">這篇帶你認識 C# 的介面（interface）與抽象類別：怎麼定義「一份契約」，以及泛型（generics）如何讓同一段程式適用多種型別，寫出又彈性又安全的程式碼。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-oop-pillars.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-oop-pillars/cover.jpg" alt="三根柱子分別標示封裝、繼承、多型，象徵物件導向三大支柱的概念圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】封裝、繼承、多型：物件導向的三大支柱</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">學會類別之後，這篇進入物件導向的核心三支柱：封裝（藏好細節）、繼承（複用與擴充）、多型（同一介面不同行為）。用好懂的範例帶你理解它們解決了什麼問題。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-classes-objects.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-classes-objects/cover.jpg" alt="用藍圖與成品比喻類別與物件關係的概念示意圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】類別與物件：物件導向的第一步</h3>
+                    <p class="post-date">2026-10-12</p>
+                    <p class="excerpt">C# 是物件導向語言，而類別是它的核心。這篇帶你從零認識類別與物件：欄位、屬性、方法、建構式，以及 new 一個物件到底發生了什麼事，為後面的封裝繼承多型打底。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-methods-exceptions.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-methods-exceptions/cover.jpg" alt="示意程式被拆成多個方法區塊，並有一個錯誤被 try/catch 攔下的概念圖" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】方法與例外處理：把程式切成好用的小塊，並優雅地處理錯誤</h3>
+                    <p class="post-date">2026-10-11</p>
+                    <p class="excerpt">程式變長就該拆成方法。這篇帶你搞懂 C# 的方法：參數、回傳值、多載與預設參數，再學會用 try/catch/finally 處理例外，讓程式遇到錯誤也不會整個崩掉。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-syntax-basics.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-syntax-basics/cover.jpg" alt="程式編輯器中一段 C# 變數宣告與 for 迴圈的程式碼示意" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】語法基礎：變數、型別、運算子與流程控制</h3>
+                    <p class="post-date">2026-10-11</p>
+                    <p class="excerpt">環境裝好後，就從 C# 語法基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、常見資料型別、運算子，以及 if、switch、for、while 等流程控制，打好寫 C# 的地基。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-setup-tools.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-setup-tools/cover.jpg" alt="電腦螢幕上開著 Visual Studio，顯示一個新建的 C# 主控台專案" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】開發環境準備：安裝 .NET SDK 與 Visual Studio，跑出第一支程式</h3>
+                    <p class="post-date">2026-10-11</p>
+                    <p class="excerpt">學 C# 的第一關是把環境裝好。這篇手把手帶你安裝 .NET SDK、選擇 Visual Studio 或 VS Code、建立第一個主控台專案，並跑出經典的 Hello World，踏出 C# 開發扎實的第一步。</p>
+                </div>
+            </a>
+            <a class="post-card" href="csharp-complete-guide-overview.html" data-category="科技">
+                <div class="post-card-cover-wrap">
+                <img class="post-card-cover" src="assets/csharp-complete-guide-overview/cover.jpg" alt="一台筆電螢幕上顯示 C# 程式碼與 .NET 標誌的示意" loading="lazy">
+                </div>
+                <div class="post-card-body">
+                    <span class="post-tag tech">科技</span>
+                    <h3>【C# 教學】C# 是什麼、能做什麼？從零開始的學習地圖</h3>
+                    <p class="post-date">2026-10-10</p>
+                    <p class="excerpt">想學 C# 卻不知道從何下手？這篇一次講清楚 C# 是什麼、能做哪些東西（桌面、Web、遊戲、後端）、要裝什麼工具，並給你一張從語法基礎到實戰專案的完整學習路徑，當作整個 C# 教學系列的入口。</p>
+                </div>
+            </a>
             <a class="post-card" href="file-sharing-windows-mac.html" data-category="科技">
                 <div class="post-card-cover-wrap">
                 <img class="post-card-cover" src="assets/file-sharing-windows-mac/cover.jpg" alt="一台 Windows 筆電與一台 iMac 透過家用網路互相傳檔案的示意" loading="lazy">
@@ -433,7 +560,7 @@
                 </div>
             </a>
         </div>
-        
+        <nav class="pagination" aria-label="文章分頁"></nav>
     </div>
 </section>
 <footer class="footer">
@@ -444,6 +571,7 @@
                 <a href="index.html">首頁</a>
                 <a href="invest.html">投資理財修煉</a>
                 <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
                 <a href="tools.html">我的工具</a>
                 <a href="about.html">關於</a>
                 <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
@@ -452,18 +580,101 @@
         <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
     </div>
 </footer>
-<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
 <script>
-document.querySelectorAll('.filter-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-        document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-        btn.classList.add('active');
-        var f = btn.getAttribute('data-filter');
-        document.querySelectorAll('.post-card').forEach(function(c){
-            c.style.display = (f === 'all' || c.getAttribute('data-category') === f) ? '' : 'none';
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+(function(){
+    var PER_PAGE = 12;
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.post-card'));
+    var pagination = document.querySelector('.pagination');
+    var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+    var currentFilter = 'all';
+    var currentPage = 1;
+
+    // 取得符合目前分類的文章卡片
+    function matched(){
+        return cards.filter(function(c){
+            return currentFilter === 'all' || c.getAttribute('data-category') === currentFilter;
+        });
+    }
+
+    // 依目前分類與頁碼，決定每張卡片顯示與否
+    function applyView(){
+        var list = matched();
+        var totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+        if (currentPage > totalPages) currentPage = totalPages;
+        var start = (currentPage - 1) * PER_PAGE;
+        var end = start + PER_PAGE;
+        cards.forEach(function(c){ c.style.display = 'none'; });
+        list.slice(start, end).forEach(function(c){ c.style.display = ''; });
+        renderPagination(totalPages);
+    }
+
+    // 產生分頁列（含省略號），單頁時隱藏
+    function renderPagination(totalPages){
+        if (!pagination) return;
+        pagination.innerHTML = '';
+        if (totalPages <= 1) return;
+
+        var frag = document.createDocumentFragment();
+        var addBtn = function(label, page, opts){
+            opts = opts || {};
+            var b = document.createElement('button');
+            b.className = 'page-btn' + (opts.active ? ' active' : '');
+            b.textContent = label;
+            if (opts.disabled) { b.disabled = true; }
+            else { b.addEventListener('click', function(){ goTo(page); }); }
+            frag.appendChild(b);
+        };
+        var addGap = function(){
+            var s = document.createElement('span');
+            s.className = 'page-gap';
+            s.textContent = '…';
+            frag.appendChild(s);
+        };
+
+        addBtn('‹', currentPage - 1, { disabled: currentPage === 1 });
+
+        // 頁碼顯示策略：永遠顯示首尾頁，當前頁前後各一頁，其餘用省略號
+        var pages = [];
+        for (var p = 1; p <= totalPages; p++){
+            if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) pages.push(p);
+        }
+        var prev = 0;
+        pages.forEach(function(p){
+            if (p - prev > 1) addGap();
+            addBtn(String(p), p, { active: p === currentPage });
+            prev = p;
+        });
+
+        addBtn('›', currentPage + 1, { disabled: currentPage === totalPages });
+        pagination.appendChild(frag);
+    }
+
+    // 切頁並捲回列表頂端
+    function goTo(page){
+        currentPage = page;
+        applyView();
+        var grid = document.querySelector('.post-grid');
+        if (grid) window.scrollTo({ top: grid.offsetTop - 80, behavior: 'smooth' });
+    }
+
+    filterBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            filterBtns.forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter');
+            currentPage = 1;      // 換分類時回到第一頁
+            applyView();
         });
     });
-});
+
+    applyView();
+})();
 </script>
 </body>
 </html>

@@ -5,6 +5,9 @@ keywords: ["投資心態", "長期投資", "短線交易", "投資心理", "複�
 slug: "invest-mindset-long-vs-short"
 date: "2026-09-19"
 order: 3
+series: "invest"
+series_stage: "入門篇"
+series_order: "3"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

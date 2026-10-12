@@ -7,6 +7,9 @@ date: "2026-09-26"
 order: 13
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "Android"
+series_order: "6"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "Android App 產生收入的示意"

@@ -5,6 +5,9 @@ keywords: ["籌碼面分析", "財務面分析", "法人買賣", "財報三表",
 slug: "invest-chips-financial-analysis"
 date: "2026-09-26"
 order: 10
+series: "invest"
+series_stage: "進階篇"
+series_order: "10"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

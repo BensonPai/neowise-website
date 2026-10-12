@@ -7,6 +7,9 @@ date: "2026-09-21"
 order: 8
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "Android"
+series_order: "1"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "電腦上開著 Android Studio 開發環境的示意"

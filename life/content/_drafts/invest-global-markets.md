@@ -5,6 +5,9 @@ keywords: ["全球投資", "分散投資", "資產配置", "海外市場", "匯�
 slug: "invest-global-markets"
 date: "2026-09-27"
 order: 12
+series: "invest"
+series_stage: "高手篇"
+series_order: "12"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

@@ -7,6 +7,9 @@ date: "2026-09-22"
 order: 9
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "Android"
+series_order: "2"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "Android Studio 中一段 Kotlin 程式碼的示意"

@@ -35,6 +35,9 @@ const ASSETS_DIR = join(BLOG_OUT_DIR, 'assets');       // blog/assets/
 const SITE_URL = 'https://neowise.com.tw';
 const GA_ID = 'G-QVQJDMZYRH';
 
+// 列表頁每頁顯示幾篇文章（文章變多時由前端分頁，不會一次全載）
+const POSTS_PER_PAGE = 12;
+
 // 縮圖設定：超過此寬度就等比縮小（考慮 2x 高解析螢幕，1600 足夠）
 const MAX_IMG_WIDTH = 1600;
 // 檔案超過此大小就重新壓縮品質（加速網頁載入的主因）
@@ -509,11 +512,80 @@ ${navbar('../')}
         <div class="blog-grid">
 ${articles.length ? cards : ''}
         </div>
-        ${articles.length ? '' : empty}
+        ${articles.length ? '<nav class="pagination" aria-label="文章分頁"></nav>' : empty}
     </div>
 </section>
 
 ${footer('../')}
+<script>
+(function(){
+    var PER_PAGE = ${POSTS_PER_PAGE};
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.blog-card'));
+    var pagination = document.querySelector('.pagination');
+    var currentPage = 1;
+    var totalPages = Math.max(1, Math.ceil(cards.length / PER_PAGE));
+
+    // 依目前頁碼決定每張卡片顯示與否
+    function applyView(){
+        if (currentPage > totalPages) currentPage = totalPages;
+        var start = (currentPage - 1) * PER_PAGE;
+        var end = start + PER_PAGE;
+        cards.forEach(function(c, i){ c.style.display = (i >= start && i < end) ? '' : 'none'; });
+        renderPagination();
+    }
+
+    // 產生分頁列（含省略號），單頁時隱藏
+    function renderPagination(){
+        if (!pagination) return;
+        pagination.innerHTML = '';
+        if (totalPages <= 1) return;
+
+        var frag = document.createDocumentFragment();
+        var addBtn = function(label, page, opts){
+            opts = opts || {};
+            var b = document.createElement('button');
+            b.className = 'page-btn' + (opts.active ? ' active' : '');
+            b.textContent = label;
+            if (opts.disabled) { b.disabled = true; }
+            else { b.addEventListener('click', function(){ goTo(page); }); }
+            frag.appendChild(b);
+        };
+        var addGap = function(){
+            var s = document.createElement('span');
+            s.className = 'page-gap';
+            s.textContent = '…';
+            frag.appendChild(s);
+        };
+
+        addBtn('‹', currentPage - 1, { disabled: currentPage === 1 });
+
+        // 頁碼顯示策略：永遠顯示首尾頁，當前頁前後各一頁，其餘用省略號
+        var pages = [];
+        for (var p = 1; p <= totalPages; p++){
+            if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) pages.push(p);
+        }
+        var prev = 0;
+        pages.forEach(function(p){
+            if (p - prev > 1) addGap();
+            addBtn(String(p), p, { active: p === currentPage });
+            prev = p;
+        });
+
+        addBtn('›', currentPage + 1, { disabled: currentPage === totalPages });
+        pagination.appendChild(frag);
+    }
+
+    // 切頁並捲回列表頂端
+    function goTo(page){
+        currentPage = page;
+        applyView();
+        var grid = document.querySelector('.blog-grid');
+        if (grid) window.scrollTo({ top: grid.offsetTop - 80, behavior: 'smooth' });
+    }
+
+    applyView();
+})();
+</script>
 </body>
 </html>`;
 }

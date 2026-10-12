@@ -7,6 +7,9 @@ date: "2026-09-17"
 order: 1
 author: "智慧喵"
 category: "投資理財"
+series: "invest"
+series_stage: "入門篇"
+series_order: "1"
 status: "approved"
 cover_alt: "記帳與個人理財示意"
 images:

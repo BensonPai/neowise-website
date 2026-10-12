@@ -5,6 +5,9 @@ keywords: ["富爸爸窮爸爸", "理財書推薦", "資產與負債", "財務�
 slug: "invest-book-rich-dad-poor-dad"
 date: "2026-09-19"
 order: 3.5
+series: "invest"
+series_stage: "入門篇"
+series_order: "延"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

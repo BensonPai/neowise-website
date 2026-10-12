@@ -9,7 +9,7 @@
     <meta name="description" content="智慧喵的 App 開發完整指南系列目錄：從 iPhone（iOS）到 Android，涵蓋開發工具、開發流程、上架商店、費用與賺錢方式，一條扎實的系統學習路徑，帶你從零做出並上架自己的 App。">
     <meta name="keywords" content="App 開發,iOS 開發,Android 開發,iPhone App 教學,Swift,Kotlin,SwiftUI,Jetpack Compose,App 上架,跨平台開發,智慧喵">
     <meta property="og:title" content="App 開發完整指南 全系列目錄 - 智慧喵">
-    <meta property="og:description" content="從 iOS 到 Android 的完整 App 開發學習地圖。">
+    <meta property="og:description" content="從 iPhone 到 Android，一條扎實的系統學習路徑，帶你從零做出並上架自己的 App">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://neowise.com.tw/life/appdev.html">
     <link rel="canonical" href="https://neowise.com.tw/life/appdev.html">
@@ -24,7 +24,13 @@
         <ul class="nav-links">
             <li><a href="index.html">首頁</a></li>
             <li><a href="invest.html">投資理財修煉</a></li>
-            <li><a href="appdev.html" class="active">App 開發指南</a></li>
+            <li class="has-dropdown open">
+                <a href="#" class="dropdown-toggle active" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html" class="active">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
             <li><a href="tools.html">我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -41,7 +47,7 @@
         <div class="series-intro">
             <p>想做一個 App，卻不知道從哪裡開始？這個系列把整條路攤開來：先用一篇總覽建立全貌（工具、流程、上架、費用、賺錢），再分成 iOS 與 Android 兩條對稱的學習路徑，一步步從裝環境、學語言、做畫面、串資料，走到上架與變現。</p>
             <p>走的是「扎實系統學習」路線，不是速成班。建議先看總覽篇，再挑一個平台（iOS 或 Android）從頭走完；學過一個平台再學另一個會快很多。每篇文章底部都有系列導覽連結。</p>
-            <p style="color:#94a3b8;font-size:0.86rem;margin-bottom:0;">※ 文中費用、版本、上架規則等均標註查證時間，技術演進快，實際請以各官方文件為準。</p>
+            <p><span style="color:#94a3b8;font-size:0.86rem;">※ 文中費用、版本、上架規則等均標註查證時間，技術演進快，實際請以各官方文件為準。</span></p>
         </div>
 
         <div class="series-stage">
@@ -51,8 +57,8 @@
                 <li class="toc-item">
                     <span class="toc-num toc-num-extra">總</span>
                     <div class="toc-body">
-                        <h3><a href="app-dev-complete-guide-overview.html">iPhone 與 Android 開發完整地圖</a></h3>
-                        <p>工具、流程、上架、費用、賺錢一次看懂，並附「該先學 iOS 還是 Android」的決策建議。</p>
+                        <h3><a href="app-dev-complete-guide-overview.html">iPhone 與 Android 開發完整地圖：工具、流程、上架、費用、賺錢一次看懂</a></h3>
+                        <p>想做 App 卻不知道從何開始？這篇一次講清楚 iOS 與 Android 的開發工具、開發流程、上架商店、實際費用與賺錢方式，並給你一張『該先學哪個平台』的決策建議，當作整個學習系列的入口地圖。</p>
                     </div>
                 </li>
             </ol>
@@ -65,43 +71,43 @@
                 <li class="toc-item">
                     <span class="toc-num">1</span>
                     <div class="toc-body">
-                        <h3><a href="ios-dev-setup-tools.html">開發第一步：Mac、Xcode、Apple ID 環境準備</a></h3>
-                        <p>為什麼需要 Mac、如何安裝 Xcode、準備 Apple ID，並認識 Swift 與 SwiftUI。</p>
+                        <h3><a href="ios-dev-setup-tools.html">iOS 開發第一步：Mac、Xcode、Apple ID 環境完整準備</a></h3>
+                        <p>想學 iPhone App 開發，第一關就是把開發環境準備好。這篇帶你搞懂為什麼需要 Mac、如何安裝 Xcode、註冊 Apple ID 與開發者帳號，並認識 Swift 與 SwiftUI，讓你踏出扎實的第一步。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">2</span>
                     <div class="toc-body">
-                        <h3><a href="ios-dev-swift-basics.html">Swift 語言基礎</a></h3>
-                        <p>變數、型別、流程控制、函式，以及 Swift 最有特色的可選型別。</p>
+                        <h3><a href="ios-dev-swift-basics.html">Swift 語言基礎：變數、型別、流程控制、函式與可選型別</a></h3>
+                        <p>環境裝好後，就從 Swift 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Swift 最有特色的『可選型別』，打好 iOS 開發的地基。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">3</span>
                     <div class="toc-body">
-                        <h3><a href="ios-dev-swiftui-first-app.html">用 SwiftUI 做第一個 App</a></h3>
-                        <p>View、常用元件、版面排列，用 @State 做出會反應的互動計數器。</p>
+                        <h3><a href="ios-dev-swiftui-first-app.html">用 SwiftUI 做第一個 App：畫面、狀態與互動</a></h3>
+                        <p>學完 Swift 基礎，這篇帶你用 SwiftUI 動手做出第一個看得到、點得到的 App。從 View、常用元件、版面排列，到用 @State 做出會反應的互動，一步步把畫面變活的。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">4</span>
                     <div class="toc-body">
-                        <h3><a href="ios-dev-data-network.html">讓 App 記住資料、連上網路</a></h3>
-                        <p>UserDefaults 存資料、Codable + URLSession 從網路 API 抓資料。</p>
+                        <h3><a href="ios-dev-data-network.html">讓 App 記住資料、連上網路：UserDefaults 與 API 串接</a></h3>
+                        <p>會做畫面之後，這篇讓你的 App 真正實用起來：用 UserDefaults 儲存小資料、認識 Codable 處理 JSON、用 URLSession 從網路 API 抓資料，把靜態畫面變成會記憶、會連線的實用工具。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">5</span>
                     <div class="toc-body">
-                        <h3><a href="ios-dev-publish-app-store.html">完整上架 App Store</a></h3>
-                        <p>帳號、素材、隱私、Xcode 上傳、TestFlight、送審，以及常見退件怎麼避開。</p>
+                        <h3><a href="ios-dev-publish-app-store.html">完整上架 App Store：帳號、送審到常見退件全流程</a></h3>
+                        <p>App 做好了，怎麼放上 App Store？這篇帶你走完整上架流程：加入開發者帳號、在 App Store Connect 建立 App、準備隱私與素材、用 Xcode 上傳送審，並整理最常見的退件原因與避開方法。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">6</span>
                     <div class="toc-body">
-                        <h3><a href="ios-dev-monetization.html">iOS App 怎麼賺錢</a></h3>
-                        <p>內購、訂閱、廣告、付費下載，StoreKit 觀念與定價策略。</p>
+                        <h3><a href="ios-dev-monetization.html">iOS App 怎麼賺錢？內購、訂閱、廣告與定價策略</a></h3>
+                        <p>App 上架後，怎麼把它變成收入？這篇整理 iOS App 主要的變現方式——內購、訂閱、廣告、付費下載，說明各自的機制、抽成、適合的情境，並給實際的定價與選擇建議。</p>
                     </div>
                 </li>
             </ol>
@@ -114,43 +120,43 @@
                 <li class="toc-item">
                     <span class="toc-num">1</span>
                     <div class="toc-body">
-                        <h3><a href="android-dev-setup-tools.html">開發第一步：Android Studio、SDK、模擬器</a></h3>
-                        <p>任何電腦都能開始。安裝 Android Studio，認識 SDK、模擬器與 Kotlin、Compose。</p>
+                        <h3><a href="android-dev-setup-tools.html">Android 開發第一步：Android Studio、SDK、模擬器完整準備</a></h3>
+                        <p>想學 Android App 開發？好消息是任何電腦都能開始。這篇帶你安裝 Android Studio、認識 SDK 與模擬器、準備 Google 帳號，並認識 Kotlin 與 Jetpack Compose，踏出 Android 開發扎實的第一步。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">2</span>
                     <div class="toc-body">
-                        <h3><a href="android-dev-kotlin-basics.html">Kotlin 語言基礎</a></h3>
-                        <p>變數、型別、流程控制、函式與 null 安全。學過 Swift 會特別有感。</p>
+                        <h3><a href="android-dev-kotlin-basics.html">Kotlin 語言基礎：變數、型別、流程控制、函式與 null 安全</a></h3>
+                        <p>環境裝好後，就從 Kotlin 語言基礎開始動手寫。這篇用實際範例帶你搞懂變數與常數、資料型別、if 與迴圈、函式，以及 Kotlin 的 null 安全機制，打好 Android 開發的地基。學過 Swift 會特別有感。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">3</span>
                     <div class="toc-body">
-                        <h3><a href="android-dev-compose-first-app.html">用 Jetpack Compose 做第一個 App</a></h3>
-                        <p>Composable、常用元件、版面排列，用 remember + state 做互動計數器。</p>
+                        <h3><a href="android-dev-compose-first-app.html">用 Jetpack Compose 做第一個 Android App：畫面、狀態與互動</a></h3>
+                        <p>學完 Kotlin 基礎，這篇用 Jetpack Compose 動手做出第一個看得到、點得到的 Android App。從 Composable、常用元件、版面排列，到用 remember 與 state 做出會反應的互動，把畫面變活的。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">4</span>
                     <div class="toc-body">
-                        <h3><a href="android-dev-data-network.html">讓 App 記住資料、連上網路</a></h3>
-                        <p>DataStore 存設定、Room 存結構化資料、Retrofit 串接網路 API。</p>
+                        <h3><a href="android-dev-data-network.html">讓 Android App 記住資料、連上網路：DataStore、Room 與 API</a></h3>
+                        <p>會做畫面之後，這篇讓你的 Android App 真正實用起來：用 DataStore 存小設定、用 Room 存結構化資料、用 Retrofit 串接網路 API，把靜態畫面變成會記憶、會連線的實用工具。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">5</span>
                     <div class="toc-body">
-                        <h3><a href="android-dev-publish-google-play.html">完整上架 Google Play</a></h3>
-                        <p>帳號、素材、打包 AAB，以及新手最易卡關的「12 位測試者、14 天封閉測試」規則。</p>
+                        <h3><a href="android-dev-publish-google-play.html">完整上架 Google Play：帳號、封閉測試到送審全流程</a></h3>
+                        <p>Android App 做好了，怎麼放上 Google Play？這篇帶你走完整上架流程：註冊開發者帳號、打包 AAB、在 Play Console 建立 App，並特別說明新手最容易卡關的『12 位測試者、14 天封閉測試』規則。</p>
                     </div>
                 </li>
                 <li class="toc-item">
                     <span class="toc-num">6</span>
                     <div class="toc-body">
-                        <h3><a href="android-dev-monetization.html">Android App 怎麼賺錢</a></h3>
-                        <p>內購、訂閱、AdMob 廣告，Play Billing 觀念與定價策略。</p>
+                        <h3><a href="android-dev-monetization.html">Android App 怎麼賺錢？內購、訂閱、AdMob 廣告與定價</a></h3>
+                        <p>App 上架 Google Play 後怎麼變現？這篇整理 Android App 主要賺錢方式——內購、訂閱、AdMob 廣告、付費下載，說明各自機制、Google 抽成、適合情境，並給實際定價與選擇建議。Android 路徑完結篇。</p>
                     </div>
                 </li>
             </ol>
@@ -163,8 +169,8 @@
                 <li class="toc-item">
                     <span class="toc-num toc-num-extra">跨</span>
                     <div class="toc-body">
-                        <h3><a href="cross-platform-app-dev-overview.html">Flutter、React Native、KMP 跨平台方案怎麼選</a></h3>
-                        <p>比較三大跨平台方案的特色與適合對象，幫你判斷該不該走跨平台。</p>
+                        <h3><a href="cross-platform-app-dev-overview.html">一套程式碼兩邊跑？Flutter、React Native、KMP 跨平台方案怎麼選</a></h3>
+                        <p>學原生要學兩套，有沒有『寫一次、iOS 和 Android 都能跑』的方法？這篇比較三大跨平台方案 Flutter、React Native、Kotlin Multiplatform 的特色、優缺點與適合對象，幫你判斷該不該走跨平台，以及怎麼選。</p>
                     </div>
                 </li>
             </ol>
@@ -177,7 +183,6 @@
         <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱 YouTube 頻道</a>
     </div>
 </section>
-
 <footer class="footer">
     <div class="container">
         <div class="footer-inner">
@@ -186,6 +191,7 @@
                 <a href="index.html">首頁</a>
                 <a href="invest.html">投資理財修煉</a>
                 <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
                 <a href="tools.html">我的工具</a>
                 <a href="about.html">關於</a>
                 <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
@@ -194,6 +200,11 @@
         <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
     </div>
 </footer>
-<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
 </body>
 </html>

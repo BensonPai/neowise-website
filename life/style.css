@@ -19,6 +19,22 @@ a { text-decoration: none; color: inherit; }
 .btn-nav:hover { background: #0d9488; }
 .menu-toggle { display: none; background: none; border: none; color: #1e293b; font-size: 1.5rem; cursor: pointer; }
 
+/* 導覽列下拉選單（科技學院） */
+.has-dropdown { position: relative; }
+.has-dropdown > .dropdown-toggle { display: inline-flex; align-items: center; gap: 4px; cursor: pointer; }
+.has-dropdown > .dropdown-toggle .caret { font-size: 0.7rem; transition: transform 0.25s; }
+/* 透明橋接區：補滿父項與子選單之間的間隙，滑鼠移動時 hover 不中斷 */
+.has-dropdown::before { content: ''; position: absolute; top: 100%; left: 0; width: 100%; height: 18px; }
+.dropdown-menu { list-style: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(6px); margin-top: 10px; min-width: 180px; background: #fff; border: 1px solid #eef2f0; border-radius: 12px; box-shadow: 0 12px 30px rgba(0,0,0,0.08); padding: 8px; opacity: 0; visibility: hidden; transition: opacity 0.18s ease, transform 0.18s ease, visibility 0s linear 0.18s; z-index: 110; }
+.dropdown-menu li { margin: 0; }
+.dropdown-menu a { display: block; padding: 10px 14px; border-radius: 8px; color: #475569; font-size: 0.92rem; white-space: nowrap; }
+.dropdown-menu a:hover, .dropdown-menu a.active { background: #f0fdfa; color: #14b8a6; }
+/* 桌機：hover 展開（父項或子選單任一被 hover 都保持開啟） */
+.has-dropdown:hover > .dropdown-menu,
+.has-dropdown:focus-within > .dropdown-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); transition: opacity 0.18s ease, transform 0.18s ease; }
+.has-dropdown:hover > .dropdown-toggle .caret,
+.has-dropdown:focus-within > .dropdown-toggle .caret { transform: rotate(180deg); }
+
 /* Hero */
 .hero { min-height: 62vh; display: flex; align-items: center; justify-content: center; text-align: center; background: linear-gradient(135deg, #f0fdfa 0%, #ecfeff 45%, #fef9f0 100%); padding: 130px 20px 70px; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; width: 480px; height: 480px; background: radial-gradient(circle, rgba(20,184,166,0.08) 0%, transparent 70%); top: 30%; left: 62%; transform: translate(-50%, -50%); }
@@ -59,6 +75,15 @@ a { text-decoration: none; color: inherit; }
 .post-card h3 { font-size: 1.18rem; color: #1e293b; margin-bottom: 8px; line-height: 1.5; }
 .post-date { color: #94a3b8; font-size: 0.82rem; margin-bottom: 12px; }
 .post-card p.excerpt { color: #64748b; font-size: 0.92rem; line-height: 1.7; }
+
+/* 分頁列 */
+.pagination { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; align-items: center; margin-top: 48px; }
+.pagination:empty { display: none; }
+.page-btn { min-width: 40px; height: 40px; padding: 0 12px; background: #fff; border: 1px solid #e2e8f0; color: #64748b; border-radius: 10px; cursor: pointer; font-size: 0.95rem; transition: all 0.25s; }
+.page-btn:hover:not(:disabled):not(.active) { border-color: #14b8a6; color: #14b8a6; }
+.page-btn.active { background: #14b8a6; border-color: #14b8a6; color: #fff; cursor: default; }
+.page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.page-gap { color: #94a3b8; padding: 0 4px; }
 
 /* 文章頁 */
 .article-container { max-width: 760px; }
@@ -146,6 +171,15 @@ a { text-decoration: none; color: inherit; }
 .page-appdev .toc-video { color: #0891b2; background: #ecfeff; }
 .page-appdev .toc-body h3 a:hover { color: #0891b2; }
 
+/* C# 教學目錄頁：改用翠綠色（與 App 開發的青藍區隔） */
+.page-csharp .series-intro { background: linear-gradient(135deg, #ecfdf5, #f0fdfa); }
+.page-csharp .series-stage .stage-badge { background: #ecfdf5; color: #059669; }
+.page-csharp .toc-item:hover { border-color: #059669; box-shadow: 0 8px 20px rgba(5,150,105,0.10); }
+.page-csharp .toc-num { background: #059669; }
+.page-csharp .toc-num-extra { background: #34d399 !important; }
+.page-csharp .toc-video { color: #059669; background: #ecfdf5; }
+.page-csharp .toc-body h3 a:hover { color: #059669; }
+
 /* YouTube CTA */
 .yt-cta { background: linear-gradient(135deg, #f0fdfa, #fef9f0); border-radius: 18px; padding: 40px; text-align: center; margin: 40px auto; max-width: 760px; }
 .yt-cta h2 { color: #1e293b; font-size: 1.5rem; margin-bottom: 10px; }
@@ -192,8 +226,17 @@ a { text-decoration: none; color: inherit; }
     .menu-toggle { display: block; }
     .nav-links { display: none; flex-direction: column; position: absolute; top: 62px; left: 0; right: 0; background: #fff; padding: 20px; border-bottom: 1px solid #eef2f0; }
     .nav-links.active { display: flex; }
+    /* 手機版下拉：靜態排版、點父項展開子選單 */
+    .has-dropdown { position: static; }
+    .dropdown-menu { position: static; transform: none; opacity: 1; visibility: visible; display: none; box-shadow: none; border: none; padding: 4px 0 4px 16px; min-width: 0; }
+    .has-dropdown.open > .dropdown-menu { display: block; }
+    .has-dropdown.open > .dropdown-toggle .caret { transform: rotate(180deg); }
+    .has-dropdown:hover > .dropdown-menu { opacity: 1; visibility: visible; transform: none; }
+    .dropdown-menu a { padding: 8px 10px; }
     .hero h1 { font-size: 2.1rem; }
     .post-grid, .tools-grid { grid-template-columns: 1fr; }
+    .pagination { gap: 6px; }
+    .page-btn { min-width: 36px; height: 36px; padding: 0 9px; font-size: 0.9rem; }
     .article-header h1 { font-size: 1.6rem; }
     .footer-inner { flex-direction: column; text-align: center; }
     .sub-cta { flex-direction: column; text-align: center; }

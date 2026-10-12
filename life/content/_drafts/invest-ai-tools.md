@@ -5,6 +5,9 @@ keywords: ["AI投資", "投資工具", "股票分析工具", "投資自動化", 
 slug: "invest-ai-tools"
 date: "2026-09-27"
 order: 13
+series: "invest"
+series_stage: "高手篇"
+series_order: "13"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

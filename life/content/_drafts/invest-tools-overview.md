@@ -5,6 +5,9 @@ keywords: ["投資工具", "股票", "ETF", "基金", "債券", "投資理財", 
 slug: "invest-tools-overview"
 date: "2026-09-20"
 order: 4
+series: "invest"
+series_stage: "進階篇"
+series_order: "4"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

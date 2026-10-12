@@ -5,6 +5,9 @@ keywords: ["資產配置", "風險管理", "投資入門", "理財基本概念",
 slug: "invest-basics-asset-allocation"
 date: "2026-09-18"
 order: 2
+series: "invest"
+series_stage: "入門篇"
+series_order: "2"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

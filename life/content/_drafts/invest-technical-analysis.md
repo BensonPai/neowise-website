@@ -5,6 +5,9 @@ keywords: ["技術分析", "K線", "均線", "RSI", "MACD", "技術指標", "投
 slug: "invest-technical-analysis"
 date: "2026-09-25"
 order: 9
+series: "invest"
+series_stage: "進階篇"
+series_order: "9"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

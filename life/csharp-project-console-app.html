@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】實戰專案：動手做一個主控台待辦清單 App - 智慧喵</title>
+    <meta name="description" content="學了這麼多，這篇把全部串起來：用 C# 從零做一個可以新增、檢視、完成、刪除、並能存檔讀檔的主控台待辦清單程式，實際體會類別、集合、LINQ、檔案與例外處理怎麼協作。">
+    <meta name="keywords" content="C# 專案,主控台程式,Console App,待辦清單,C# 實戰,C# 範例,C# 教學">
+    <meta property="og:title" content="【C# 教學】實戰專案：動手做一個主控台待辦清單 App">
+    <meta property="og:description" content="學了這麼多，這篇把全部串起來：用 C# 從零做一個可以新增、檢視、完成、刪除、並能存檔讀檔的主控台待辦清單程式，實際體會類別、集合、LINQ、檔案與例外處理怎麼協作。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-project-console-app.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-project-console-app/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-project-console-app.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】實戰專案：動手做一個主控台待辦清單 App","description":"學了這麼多，這篇把全部串起來：用 C# 從零做一個可以新增、檢視、完成、刪除、並能存檔讀檔的主控台待辦清單程式，實際體會類別、集合、LINQ、檔案與例外處理怎麼協作。","datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-project-console-app.html"},"image":"https://neowise.com.tw/life/assets/csharp-project-console-app/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】實戰專案：動手做一個主控台待辦清單 App</h1>
+            <p class="article-meta">智慧喵　•　2026-10-12</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-project-console-app/cover.jpg" alt="一個在終端機中執行的待辦清單主控台程式畫面示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>恭喜你走到系列最後一篇！前面學的語法、類別、集合、LINQ、非同步、檔案 JSON、例外處理——這篇要把它們<strong>全部組起來</strong>，做一個真的能用的程式：<strong>主控台待辦清單 App</strong>。</p>
+<p>這就是學程式最有成就感的時刻：把一塊塊零件拼成一個完整的東西。跟著做完，你會對「一個程式怎麼從無到有」有完整的體會。</p>
+<h2>一、我們要做什麼</h2>
+<p>一個在終端機操作的待辦清單，功能：</p>
+<ul>
+<li><strong>新增</strong>待辦事項</li>
+<li><strong>列出</strong>所有事項（標示完成與否）</li>
+<li><strong>標記完成</strong></li>
+<li><strong>刪除</strong>事項</li>
+<li><strong>自動存檔</strong>：離開時存進檔案</li>
+<li><strong>自動讀檔</strong>：啟動時把上次的資料讀回來</li>
+</ul>
+<p>操作方式是文字選單：輸入數字選功能，像這樣：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-text">===== 待辦清單 =====
+1. [ ] 寫 C# 教學
+2. [v] 買晚餐
+--------------------
+[1] 新增  [2] 完成  [3] 刪除  [4] 離開
+請選擇：</code></pre></div>
+<p>先把需求想清楚再動手，這是寫程式的好習慣。</p>
+<h2>二、設計資料結構</h2>
+<p>一筆待辦事項有「內容」和「完成了沒」兩個資料，用一個類別表示（<a href="csharp-classes-objects.html" rel="noopener">類別篇</a>學的）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class TodoItem
+{
+    public string Title { get; set; }      // 事項內容
+    public bool IsDone { get; set; }        // 完成了沒
+}</code></pre></div>
+<p>一整份清單就是「一串 TodoItem」，用 <code>List&lt;TodoItem&gt;</code>（<a href="csharp-collections-linq.html" rel="noopener">集合篇</a>學的）來裝。</p>
+<h2>三、一塊塊把功能寫出來</h2>
+<p>先看每個功能怎麼寫（下面是片段講解，完整可執行版在第五節）。</p>
+<p><strong>列出清單</strong>——用 <code>foreach</code> 走訪，完成的標 <code>[v]</code>、未完成標 <code>[ ]</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static void ShowList(List&lt;TodoItem&gt; todos)
+{
+    Console.WriteLine(&quot;\n===== 待辦清單 =====&quot;);
+    if (todos.Count == 0)
+    {
+        Console.WriteLine(&quot;（目前沒有待辦事項）&quot;);
+    }
+    for (int i = 0; i &lt; todos.Count; i++)
+    {
+        string mark = todos[i].IsDone ? &quot;v&quot; : &quot; &quot;;   // 三元運算子
+        Console.WriteLine($&quot;{i + 1}. [{mark}] {todos[i].Title}&quot;);
+    }
+    Console.WriteLine(&quot;--------------------&quot;);
+}</code></pre></div>
+<p><strong>新增</strong>——讀使用者輸入，建一個 <code>TodoItem</code> 加進清單：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static void AddTodo(List&lt;TodoItem&gt; todos)
+{
+    Console.Write(&quot;輸入新事項：&quot;);
+    string title = Console.ReadLine();
+    if (string.IsNullOrWhiteSpace(title))   // 空白就不加
+    {
+        Console.WriteLine(&quot;內容不能空白。&quot;);
+        return;
+    }
+    todos.Add(new TodoItem { Title = title, IsDone = false });
+    Console.WriteLine(&quot;已新增！&quot;);
+}</code></pre></div>
+<p><strong>標記完成 / 刪除</strong>——請使用者輸入編號，注意「編號從 1 開始、但清單索引從 0 開始」要減 1：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static void MarkDone(List&lt;TodoItem&gt; todos)
+{
+    Console.Write(&quot;要完成哪一項（輸入編號）：&quot;);
+    if (int.TryParse(Console.ReadLine(), out int num)   // 安全轉數字（例外處理篇）
+        &amp;&amp; num &gt;= 1 &amp;&amp; num &lt;= todos.Count)
+    {
+        todos[num - 1].IsDone = true;     // 編號 1 對應索引 0
+        Console.WriteLine(&quot;已標記完成！&quot;);
+    }
+    else
+    {
+        Console.WriteLine(&quot;編號無效。&quot;);
+    }
+}</code></pre></div>
+<p><code>Console.ReadLine()</code> 讀使用者輸入的一行文字；<code>int.TryParse</code> 安全地把它轉成數字（還記得嗎？它不會丟例外，用回傳值告訴你成不成功）。</p>
+<h2>四、存檔與讀檔</h2>
+<p>這是讓資料「不會關掉就不見」的關鍵，用上<a href="csharp-files-data.html" rel="noopener">檔案與 JSON 篇</a>學的：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">static readonly string FilePath = &quot;todos.json&quot;;
+
+// 存檔：把整串清單序列化成 JSON 寫入檔案
+static void Save(List&lt;TodoItem&gt; todos)
+{
+    string json = JsonSerializer.Serialize(todos, new JsonSerializerOptions { WriteIndented = true });
+    File.WriteAllText(FilePath, json);
+}
+
+// 讀檔：啟動時把上次資料讀回；第一次執行檔案不存在就回空清單
+static List&lt;TodoItem&gt; Load()
+{
+    try
+    {
+        string json = File.ReadAllText(FilePath);
+        return JsonSerializer.Deserialize&lt;List&lt;TodoItem&gt;&gt;(json);
+    }
+    catch (FileNotFoundException)
+    {
+        return new List&lt;TodoItem&gt;();   // 第一次執行，從空清單開始
+    }
+}</code></pre></div>
+<p>注意 <code>Load()</code> 用 <code>try/catch</code> 接住「檔案還不存在」的情況——這正是上一篇強調的實務必備模式。</p>
+<h2>五、完整程式（可直接執行）</h2>
+<p>把上面全部組起來，這是<strong>完整、可以整段貼上執行</strong>的版本。</p>
+<p>這支程式有點長，先給你一張「地圖」——<code>Program</code> 類別裡依序包含這幾個方法，貼完可以對照確認每個都在：</p>
+<ul>
+<li><code>Main</code>：程式進入點，主選單迴圈</li>
+<li><code>ShowList</code>：列出清單</li>
+<li><code>AddTodo</code>：新增</li>
+<li><code>MarkDone</code>：標記完成</li>
+<li><code>DeleteTodo</code>：刪除</li>
+<li><code>Save</code>：存檔</li>
+<li><code>Load</code>：讀檔（<strong>在整段的最後面，別以為漏掉了</strong>）</li>
+</ul>
+<p>結構重點：<code>using</code> 在最上面、<code>Main</code> 是進入點、<code>class TodoItem</code> 放最後（避免 CS8803 順序問題）。整段從 <code>using</code> 到最後的 <code>}</code> 一次複製貼上即可：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">using System.Text.Json;
+
+class Program
+{
+    static readonly string FilePath = &quot;todos.json&quot;;
+
+    static void Main()
+    {
+        List&lt;TodoItem&gt; todos = Load();   // 啟動先讀回上次資料
+        bool running = true;
+
+        while (running)   // 主選單迴圈
+        {
+            ShowList(todos);
+            Console.WriteLine(&quot;[1] 新增  [2] 完成  [3] 刪除  [4] 離開&quot;);
+            Console.Write(&quot;請選擇：&quot;);
+            string choice = Console.ReadLine();
+
+            switch (choice)
+            {
+                case &quot;1&quot;: AddTodo(todos); break;
+                case &quot;2&quot;: MarkDone(todos); break;
+                case &quot;3&quot;: DeleteTodo(todos); break;
+                case &quot;4&quot;: running = false; break;
+                default: Console.WriteLine(&quot;請輸入 1~4。&quot;); break;
+            }
+
+            Save(todos);   // 每次操作後存檔，資料不怕丟
+        }
+
+        Console.WriteLine(&quot;已儲存，再見！🐾&quot;);
+    }
+
+    static void ShowList(List&lt;TodoItem&gt; todos)
+    {
+        Console.WriteLine(&quot;\n===== 待辦清單 =====&quot;);
+        if (todos.Count == 0)
+            Console.WriteLine(&quot;（目前沒有待辦事項）&quot;);
+        for (int i = 0; i &lt; todos.Count; i++)
+        {
+            string mark = todos[i].IsDone ? &quot;v&quot; : &quot; &quot;;
+            Console.WriteLine($&quot;{i + 1}. [{mark}] {todos[i].Title}&quot;);
+        }
+        Console.WriteLine(&quot;--------------------&quot;);
+    }
+
+    static void AddTodo(List&lt;TodoItem&gt; todos)
+    {
+        Console.Write(&quot;輸入新事項：&quot;);
+        string title = Console.ReadLine();
+        if (string.IsNullOrWhiteSpace(title))
+        {
+            Console.WriteLine(&quot;內容不能空白。&quot;);
+            return;
+        }
+        todos.Add(new TodoItem { Title = title, IsDone = false });
+        Console.WriteLine(&quot;已新增！&quot;);
+    }
+
+    static void MarkDone(List&lt;TodoItem&gt; todos)
+    {
+        Console.Write(&quot;要完成哪一項（輸入編號）：&quot;);
+        if (int.TryParse(Console.ReadLine(), out int num) &amp;&amp; num &gt;= 1 &amp;&amp; num &lt;= todos.Count)
+        {
+            todos[num - 1].IsDone = true;
+            Console.WriteLine(&quot;已標記完成！&quot;);
+        }
+        else
+        {
+            Console.WriteLine(&quot;編號無效。&quot;);
+        }
+    }
+
+    static void DeleteTodo(List&lt;TodoItem&gt; todos)
+    {
+        Console.Write(&quot;要刪除哪一項（輸入編號）：&quot;);
+        if (int.TryParse(Console.ReadLine(), out int num) &amp;&amp; num &gt;= 1 &amp;&amp; num &lt;= todos.Count)
+        {
+            todos.RemoveAt(num - 1);
+            Console.WriteLine(&quot;已刪除！&quot;);
+        }
+        else
+        {
+            Console.WriteLine(&quot;編號無效。&quot;);
+        }
+    }
+
+    static void Save(List&lt;TodoItem&gt; todos)
+    {
+        string json = JsonSerializer.Serialize(todos, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(FilePath, json);
+    }
+
+    static List&lt;TodoItem&gt; Load()
+    {
+        try
+        {
+            string json = File.ReadAllText(FilePath);
+            return JsonSerializer.Deserialize&lt;List&lt;TodoItem&gt;&gt;(json);
+        }
+        catch (FileNotFoundException)
+        {
+            return new List&lt;TodoItem&gt;();
+        }
+    }
+}
+
+class TodoItem
+{
+    public string Title { get; set; }
+    public bool IsDone { get; set; }
+}</code></pre></div>
+<p>跑跑看——新增幾筆、標記完成、關掉程式，再重新執行，你會發現<strong>資料還在</strong>（因為存進了 <code>todos.json</code>）。這就是一個麻雀雖小、五臟俱全的完整程式。</p>
+<h2>六、看看你用上了哪些東西</h2>
+<p>回頭看這個程式，整個系列的觀念幾乎都在裡面：</p>
+<div class="table-wrap"><table><thead><tr><th>用到的技能</th><th>在哪裡</th><th>哪篇學的</th></tr></thead><tbody><tr><td>變數、流程控制</td><td><code>while</code> 選單、<code>switch</code> 分流</td><td>語法基礎</td></tr><tr><td>方法</td><td>把每個功能拆成方法</td><td>方法與例外處理</td></tr><tr><td>例外處理</td><td><code>int.TryParse</code>、讀檔 <code>try/catch</code></td><td>方法與例外處理</td></tr><tr><td>類別與物件</td><td><code>TodoItem</code>、<code>Program</code></td><td>類別與物件</td></tr><tr><td>集合</td><td><code>List&lt;TodoItem&gt;</code></td><td>集合與 LINQ</td></tr><tr><td>檔案 + JSON</td><td><code>Save</code> / <code>Load</code></td><td>檔案讀寫與 JSON</td></tr></tbody></table></div>
+<p>有沒有發現——每個單篇學的時候像是零散的積木，組起來就是一個真東西。這就是學程式的樣子。</p>
+<h2>七、自己動手升級</h2>
+<p>想繼續練，試著幫它加功能：</p>
+<ul>
+<li><strong>編輯</strong>既有事項的內容。</li>
+<li><strong>用 LINQ</strong> 加一個「只看未完成」的檢視（<code>todos.Where(t =&gt; !t.IsDone)</code>）。</li>
+<li>幫事項加<strong>截止日期</strong>（在 <code>TodoItem</code> 加一個 <code>DateTime</code> 欄位）。</li>
+<li>把存讀改成<strong>非同步</strong>版本（<code>File.WriteAllTextAsync</code> / <code>ReadAllTextAsync</code>）。</li>
+</ul>
+<p>每加一個功能，都是把前面學的再用一次。</p>
+<h2>系列總結：你已經走完 C# 入門這條路</h2>
+<p>從第一篇到這裡，你完成了一整條學習路徑：</p>
+<ul>
+<li><strong>基礎</strong>：裝好環境、語法、方法與例外處理。</li>
+<li><strong>物件導向</strong>：類別、封裝繼承多型、介面與泛型。</li>
+<li><strong>進階</strong>：集合與 LINQ、非同步、檔案與 JSON。</li>
+<li><strong>實戰</strong>：把全部整合成一個能用的程式。</li>
+</ul>
+<p>你現在具備的，不只是「背了一些語法」，而是<strong>能獨立做出一個完整小程式的能力</strong>。這是很多人學程式卡住、而你跨過去了的那道門檻。</p>
+<p>接下來往哪走？C# 的世界還很大：</p>
+<ul>
+<li><strong>桌面應用</strong>：WPF、.NET MAUI，做有視窗介面的程式。</li>
+<li><strong>網站後端</strong>：ASP.NET Core，做網站與 Web API。</li>
+<li><strong>遊戲</strong>：Unity 用的就是 C#，想做遊戲可以接著學。</li>
+</ul>
+<p>挑一個你有興趣的方向深入，記得——<strong>持續動手做專案</strong>，是進步最快的路。</p>
+<p>謝謝你跟著智慧喵走完這個系列，辛苦了！有任何問題，歡迎來 YouTube 找我聊聊。我們下個系列見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想繼續把 C# 學得更深？</span><span class="affiliate-card-desc">入門之後想進階到桌面、Web 或遊戲開發，Hahow 上有不少 C# / .NET 的系統課程，挑一個有興趣的方向帶著專案練下去吧。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-files-data.html" rel="noopener">檔案讀寫與 JSON：讓程式能存資料、讀資料</a></li>
+<li>🎉 這是系列最後一篇，恭喜你學完！</li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

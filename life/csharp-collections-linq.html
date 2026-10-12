@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】集合與 LINQ：優雅地處理一堆資料 - 智慧喵</title>
+    <meta name="description" content="實務上你常要處理「一堆資料」。這篇帶你認識 C# 常用集合 List、Dictionary，再學 LINQ：用接近自然語言的寫法做篩選、排序、投影與統計，讓資料處理又短又好讀。">
+    <meta name="keywords" content="C# 集合,List,Dictionary,LINQ,Where,Select,資料處理,C# 教學">
+    <meta property="og:title" content="【C# 教學】集合與 LINQ：優雅地處理一堆資料">
+    <meta property="og:description" content="實務上你常要處理「一堆資料」。這篇帶你認識 C# 常用集合 List、Dictionary，再學 LINQ：用接近自然語言的寫法做篩選、排序、投影與統計，讓資料處理又短又好讀。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-collections-linq.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-collections-linq/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-collections-linq.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】集合與 LINQ：優雅地處理一堆資料","description":"實務上你常要處理「一堆資料」。這篇帶你認識 C# 常用集合 List、Dictionary，再學 LINQ：用接近自然語言的寫法做篩選、排序、投影與統計，讓資料處理又短又好讀。","datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-collections-linq.html"},"image":"https://neowise.com.tw/life/assets/csharp-collections-linq/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】集合與 LINQ：優雅地處理一堆資料</h1>
+            <p class="article-meta">智慧喵　•　2026-10-12</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-collections-linq/cover.jpg" alt="示意一堆雜亂資料經過 LINQ 篩選排序後變得整齊的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>物件導向篇走完，從這篇開始進入<strong>進階主題</strong>——都是實務上天天在用的技能。第一篇講<strong>集合與 LINQ</strong>：怎麼處理「一堆資料」。</p>
+<p>單一變數只能裝一個值，但真實程式常要處理「一群」東西：一串學生、一堆訂單、一列商品。這時就需要<strong>集合</strong>來裝它們，再用 <strong>LINQ</strong> 優雅地查詢、篩選、排序。</p>
+<blockquote>延續前面的提醒，範例若有自訂類別，用 <code>class Program { static void Main() {...} }</code> 結構包住執行碼。只用內建型別的小範例可以直接寫。</blockquote>
+<h2>一、List：最常用的集合</h2>
+<p><code>List&lt;T&gt;</code> 是最常用的集合——一串可以動態增減的資料。還記得上一篇說的泛型嗎？<code>&lt;T&gt;</code> 就是告訴它「這串要裝什麼型別」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">List&lt;string&gt; fruits = new List&lt;string&gt;();  // 一串字串
+
+fruits.Add(&quot;蘋果&quot;);       // 新增
+fruits.Add(&quot;香蕉&quot;);
+fruits.Add(&quot;橘子&quot;);
+
+Console.WriteLine(fruits.Count);     // 3（元素個數）
+Console.WriteLine(fruits[0]);        // 蘋果（用索引取，從 0 開始）
+
+fruits.Remove(&quot;香蕉&quot;);    // 移除某個元素
+fruits.Insert(0, &quot;芒果&quot;); // 在最前面插入
+
+Console.WriteLine(fruits.Contains(&quot;蘋果&quot;));  // True（有沒有包含）</code></pre></div>
+<p>常用操作一覽：</p>
+<ul>
+<li><code>Add(x)</code>：加到最後。</li>
+<li><code>Remove(x)</code> / <code>RemoveAt(i)</code>：移除某個值 / 某個位置。</li>
+<li><code>Count</code>：有幾個元素。</li>
+<li><code>[i]</code>：用索引存取（從 0 開始）。</li>
+<li><code>Contains(x)</code>：有沒有包含某個值。</li>
+</ul>
+<p><strong>List vs 陣列</strong>：你可能學過陣列 <code>string[]</code>。差別是——陣列長度固定、建立時就定死；<code>List</code> 長度可動態增減，實務上更常用。新手直接用 <code>List</code> 就好。</p>
+<h2>二、Dictionary：鍵值對</h2>
+<p>有時你要的不是「一串」，而是「用一個鍵去查對應的值」——像查字典：給一個詞（鍵），得到解釋（值）。這用 <code>Dictionary&lt;鍵型別, 值型別&gt;</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;();
+
+scores[&quot;小明&quot;] = 90;      // 鍵是名字，值是分數
+scores[&quot;小華&quot;] = 85;
+scores[&quot;小美&quot;] = 95;
+
+Console.WriteLine(scores[&quot;小明&quot;]);        // 90（用鍵查值）
+
+if (scores.ContainsKey(&quot;小華&quot;))           // 先確認鍵存在再查，比較安全
+{
+    Console.WriteLine($&quot;小華考了 {scores[&quot;小華&quot;]} 分&quot;);
+}</code></pre></div>
+<ul>
+<li>用 <code>[鍵]</code> 設定或讀取對應的值。</li>
+<li><code>ContainsKey(鍵)</code>：確認某個鍵在不在（直接查不存在的鍵會出錯，先確認較安全）。</li>
+<li>適合「用某個東西快速找到對應資料」的場景，例如「用學號找學生」。</li>
+</ul>
+<h2>三、走訪集合</h2>
+<p>用 <code>foreach</code>（基礎篇學過）走訪集合裡的每個元素，最直覺：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">List&lt;string&gt; fruits = new List&lt;string&gt; { &quot;蘋果&quot;, &quot;香蕉&quot;, &quot;橘子&quot; };  // 建立時直接給初始值
+
+foreach (string fruit in fruits)
+{
+    Console.WriteLine(fruit);
+}
+
+// 走訪 Dictionary：每個元素是一組「鍵值對」
+Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;
+{
+    [&quot;小明&quot;] = 90,
+    [&quot;小華&quot;] = 85
+};
+
+foreach (var pair in scores)
+{
+    Console.WriteLine($&quot;{pair.Key} 考了 {pair.Value} 分&quot;);
+}</code></pre></div>
+<p>注意上面用了 <code>new List&lt;string&gt; { ... }</code> 的<strong>集合初始化語法</strong>，建立的同時就塞好初始值，比一行行 <code>Add</code> 省事。</p>
+<h2>四、LINQ：用接近自然語言的方式查資料</h2>
+<p>這篇的重頭戲。<strong>LINQ</strong>（Language Integrated Query）讓你用很短、很好讀的寫法對集合做「篩選、排序、轉換、統計」，取代一堆手寫迴圈。</p>
+<p>先準備一組資料（一串學生成績）當範例：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        List&lt;Student&gt; students = new List&lt;Student&gt;
+        {
+            new Student { Name = &quot;小明&quot;, Score = 90 },
+            new Student { Name = &quot;小華&quot;, Score = 55 },
+            new Student { Name = &quot;小美&quot;, Score = 78 },
+            new Student { Name = &quot;小強&quot;, Score = 95 }
+        };
+
+        // 之後的 LINQ 範例都基於這組資料
+    }
+}
+
+class Student
+{
+    public string Name { get; set; }
+    public int Score { get; set; }
+}</code></pre></div>
+<p><strong>篩選：Where（挑出符合條件的）</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 挑出及格（&gt;= 60）的學生
+var passed = students.Where(s =&gt; s.Score &gt;= 60);
+
+foreach (var s in passed)
+    Console.WriteLine($&quot;{s.Name}：{s.Score}&quot;);
+// 小明、小美、小強</code></pre></div>
+<p><code>s =&gt; s.Score &gt;= 60</code> 是<strong>判斷條件</strong>：對每個學生 <code>s</code>，留下分數 &gt;= 60 的。這個 <code>=&gt;</code> 寫法叫 <strong>Lambda</strong>，可以想成「一個臨時的小判斷函式」。</p>
+<p><strong>排序：OrderBy / OrderByDescending</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">var ranked = students.OrderByDescending(s =&gt; s.Score);  // 依分數由高到低
+
+foreach (var s in ranked)
+    Console.WriteLine($&quot;{s.Name}：{s.Score}&quot;);
+// 小強95、小明90、小美78、小華55</code></pre></div>
+<p><code>OrderBy</code> 是由小到大，<code>OrderByDescending</code> 是由大到小。</p>
+<p><strong>投影：Select（把資料轉成另一種形式）</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 只要名字，不要整個物件
+var names = students.Select(s =&gt; s.Name);
+// 結果：小明、小華、小美、小強
+
+// 轉成「名字（分數）」的字串
+var labels = students.Select(s =&gt; $&quot;{s.Name}（{s.Score}）&quot;);</code></pre></div>
+<p><code>Select</code> 把每個元素「轉換」成你要的樣子。</p>
+<p><strong>常用的統計與取值</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">int count = students.Count(s =&gt; s.Score &gt;= 60);  // 及格幾人 → 3
+double avg = students.Average(s =&gt; s.Score);      // 平均分
+int max = students.Max(s =&gt; s.Score);             // 最高分 → 95
+var top = students.First(s =&gt; s.Score &gt;= 90);     // 第一個 90 分以上的 → 小明</code></pre></div>
+<p><strong>串接起來用才是精髓</strong>：這些方法可以像積木一樣接起來：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 及格的人，依分數由高到低，取出名字
+var result = students
+    .Where(s =&gt; s.Score &gt;= 60)
+    .OrderByDescending(s =&gt; s.Score)
+    .Select(s =&gt; s.Name);
+
+foreach (var name in result)
+    Console.WriteLine(name);
+// 小強、小明、小美</code></pre></div>
+<p>讀起來幾乎像白話：「學生 → 篩出及格 → 由高到低排 → 取名字」。想想看，同樣的事用手寫迴圈要寫多少行、多容易出錯？這就是 LINQ 的價值。</p>
+<h2>五、動手綜合練習</h2>
+<p>用一組商品資料練習 LINQ：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        List&lt;Product&gt; products = new List&lt;Product&gt;
+        {
+            new Product { Name = &quot;滑鼠&quot;, Price = 300 },
+            new Product { Name = &quot;鍵盤&quot;, Price = 900 },
+            new Product { Name = &quot;螢幕&quot;, Price = 5000 },
+            new Product { Name = &quot;耳機&quot;, Price = 1200 }
+        };
+
+        // 練習 1：價格 1000 以上的商品名稱
+        var expensive = products
+            .Where(p =&gt; p.Price &gt;= 1000)
+            .Select(p =&gt; p.Name);
+        Console.WriteLine(&quot;1000 以上：&quot; + string.Join(&quot;、&quot;, expensive));
+
+        // 練習 2：全部商品總價
+        decimal total = products.Sum(p =&gt; p.Price);
+        Console.WriteLine($&quot;總價：{total}&quot;);
+
+        // 練習 3：最便宜的商品
+        var cheapest = products.OrderBy(p =&gt; p.Price).First();
+        Console.WriteLine($&quot;最便宜：{cheapest.Name}&quot;);
+    }
+}
+
+class Product
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}</code></pre></div>
+<p>（<code>string.Join(&quot;、&quot;, 集合)</code> 是把一串東西用「、」接成一個字串的好用小工具。）</p>
+<p>試著自己改：找出 500~2000 之間的商品？依價格由高到低列出全部？算平均價？動手改最有感。</p>
+<h2>這一步大約要花多久？</h2>
+<p>集合（List、Dictionary）觀念簡單，幾天就熟。LINQ 建議多練，因為它的方法很多，但最常用的就是 <code>Where</code>、<code>Select</code>、<code>OrderBy</code>、<code>Count</code>、<code>Sum</code>、<code>First</code> 這幾個，先把這些練熟。練法：</p>
+<ul>
+<li>準備一組資料（學生、商品、訂單都行），反覆用 LINQ 問不同問題。</li>
+<li>練習「串接」——先 Where 再 OrderBy 再 Select，體會像積木堆疊的感覺。</li>
+<li>看到別人程式裡的 <code>.Where(...).Select(...)</code>，試著讀懂它在做什麼。</li>
+</ul>
+<h2>下一篇</h2>
+<p>會處理一堆資料後，下一篇進入另一個實務重點：<strong>非同步 async/await</strong>——當程式要下載檔案、呼叫網路 API 時，怎麼讓它「不卡住、能同時做多件事」。這是現代程式幾乎都會用到的技能。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 C# 進階技能練得更扎實？</span><span class="affiliate-card-desc">LINQ 是處理資料的利器，熟練它程式會短很多。Hahow 上有從 C# 到 .NET 實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-interfaces-generics.html" rel="noopener">介面與泛型：寫出更有彈性、可重用的程式</a></li>
+<li>➡️ 下一篇：<a href="csharp-async.html" rel="noopener">非同步 async/await：讓程式不卡頓</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

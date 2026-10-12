@@ -7,6 +7,9 @@ date: "2026-09-14"
 order: 1
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "總覽"
+series_order: "總"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "一台筆電同時顯示 iPhone 與 Android App 開發畫面的示意"

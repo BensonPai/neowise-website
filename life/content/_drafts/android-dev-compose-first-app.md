@@ -7,6 +7,9 @@ date: "2026-09-23"
 order: 10
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "Android"
+series_order: "3"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "Android 模擬器上顯示一個簡單 App 畫面的示意"

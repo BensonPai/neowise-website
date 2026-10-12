@@ -26,7 +26,13 @@
         <ul class="nav-links">
             <li><a href="index.html">首頁</a></li>
             <li><a href="invest.html">投資理財修煉</a></li>
-            <li><a href="appdev.html">App 開發指南</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
             <li><a href="tools.html">我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
@@ -148,6 +154,7 @@
                 <a href="index.html">首頁</a>
                 <a href="invest.html">投資理財修煉</a>
                 <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
                 <a href="tools.html">我的工具</a>
                 <a href="about.html">關於</a>
                 <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
@@ -156,7 +163,12 @@
         <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
     </div>
 </footer>
-<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
 <script>
 document.querySelectorAll('.code-copy').forEach(function (btn) {
   btn.addEventListener('click', function () {

@@ -7,6 +7,9 @@ date: "2026-09-25"
 order: 12
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "Android"
+series_order: "5"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "App 上架到 Google Play 的示意"

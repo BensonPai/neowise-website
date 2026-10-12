@@ -7,6 +7,9 @@ date: "2026-09-27"
 order: 14
 author: "智慧喵"
 category: "科技"
+series: "appdev"
+series_stage: "補充"
+series_order: "跨"
 status: "approved"
 youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "一套程式碼同時產出 iOS 與 Android 兩個 App 的示意"

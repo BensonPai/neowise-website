@@ -5,6 +5,9 @@ keywords: ["基本面分析", "選股方法", "公司評價", "獲利能力", "�
 slug: "invest-fundamental-analysis"
 date: "2026-09-24"
 order: 8
+series: "invest"
+series_stage: "進階篇"
+series_order: "8"
 author: "智慧喵"
 category: "投資理財"
 status: "approved"

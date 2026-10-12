@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】C# 是什麼、能做什麼？從零開始的學習地圖 - 智慧喵</title>
+    <meta name="description" content="想學 C# 卻不知道從何下手？這篇一次講清楚 C# 是什麼、能做哪些東西（桌面、Web、遊戲、後端）、要裝什麼工具，並給你一張從語法基礎到實戰專案的完整學習路徑，當作整個 C# 教學系列的入口。">
+    <meta name="keywords" content="C#,C# 教學,C# 入門,.NET,Visual Studio,程式設計入門,C# 能做什麼,學 C#">
+    <meta property="og:title" content="【C# 教學】C# 是什麼、能做什麼？從零開始的學習地圖">
+    <meta property="og:description" content="想學 C# 卻不知道從何下手？這篇一次講清楚 C# 是什麼、能做哪些東西（桌面、Web、遊戲、後端）、要裝什麼工具，並給你一張從語法基礎到實戰專案的完整學習路徑，當作整個 C# 教學系列的入口。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-complete-guide-overview.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-complete-guide-overview/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-complete-guide-overview.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】C# 是什麼、能做什麼？從零開始的學習地圖","description":"想學 C# 卻不知道從何下手？這篇一次講清楚 C# 是什麼、能做哪些東西（桌面、Web、遊戲、後端）、要裝什麼工具，並給你一張從語法基礎到實戰專案的完整學習路徑，當作整個 C# 教學系列的入口。","datePublished":"2026-10-10","dateModified":"2026-10-10","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-complete-guide-overview.html"},"image":"https://neowise.com.tw/life/assets/csharp-complete-guide-overview/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】C# 是什麼、能做什麼？從零開始的學習地圖</h1>
+            <p class="article-meta">智慧喵　•　2026-10-10</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-complete-guide-overview/cover.jpg" alt="一台筆電螢幕上顯示 C# 程式碼與 .NET 標誌的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>「我想學程式，聽說 C# 不錯……可是它到底能做什麼？從哪裡開始學？」</p>
+<p>如果你心裡冒出過這個問題，這篇就是為你寫的。網路上 C# 教學一大堆，但往往一上來就叫你打開 Visual Studio、貼一段看不懂的程式。這篇先不急著寫 code，而是帶你把整張地圖看清楚：<strong>C# 是什麼、能做哪些東西、要裝什麼、以及這個系列會怎麼帶你一步步學。</strong></p>
+<p>這是「C# 教學」系列的入口。後面我規劃的是一條<strong>循序漸進、重觀念</strong>的路，不是把語法硬塞給你，而是讓你每一步都知道「學這個是為了做什麼」。</p>
+<h2>一、C# 是什麼？</h2>
+<p>C#（讀作 C-Sharp）是微軟在 2000 年推出的程式語言，跑在 <strong>.NET</strong> 這個平台上。它的定位是「現代、好讀、功能完整」的通用語言——語法乾淨、工具成熟，而且背後有微軟長期維護，學了不怕過時。</p>
+<p>幾個它的特色，用白話說：</p>
+<ul>
+<li><strong>強型別</strong>：變數是什麼型別要講清楚，雖然一開始多打幾個字，但編譯器會幫你擋掉很多低級錯誤。</li>
+<li><strong>物件導向</strong>：天生就是為「用類別組織程式」設計的，學會它對理解很多現代語言都有幫助。</li>
+<li><strong>跨平台</strong>：現在的 .NET 不只在 Windows 跑，macOS、Linux 都行。</li>
+<li><strong>生態完整</strong>：從做視窗程式、網站、手機 App 到遊戲，幾乎都有對應的框架。</li>
+</ul>
+<h2>二、C# 能做什麼？</h2>
+<p>這是最多人好奇的地方。學會 C#，你可以做這些：</p>
+<div class="table-wrap"><table><thead><tr><th>領域</th><th>用的技術</th><th>做出來的東西</th></tr></thead><tbody><tr><td>桌面應用程式</td><td>WPF、WinForms、MAUI</td><td>Windows 視窗軟體、工具程式</td></tr><tr><td>網站與後端</td><td>ASP.NET Core</td><td>網站、Web API、後端服務</td></tr><tr><td>遊戲開發</td><td>Unity</td><td>2D／3D 遊戲（Unity 用 C# 寫腳本）</td></tr><tr><td>跨平台 App</td><td>.NET MAUI</td><td>一套程式碼跑 Windows／Android／iOS</td></tr><tr><td>雲端與服務</td><td>Azure Functions 等</td><td>雲端服務、自動化後端</td></tr></tbody></table></div>
+<p>換句話說，C# 不是只能做某一種東西的語言。它是那種「學會之後，很多方向都能走」的通用底子。對初學者特別友善的一點是：<strong>Unity 遊戲開發用的就是 C#</strong>，如果你是想做遊戲入門的，學 C# 一舉兩得。</p>
+<h2>三、學 C# 要裝什麼？</h2>
+<p>好消息是：全部免費，而且任何一台還算堪用的電腦都能開始。你需要兩樣東西。</p>
+<p><strong>1. .NET SDK</strong></p>
+<p>這是 C# 的「開發套件」，包含編譯器與執行環境。沒有它，程式沒辦法跑。到 .NET 官方網站下載安裝即可，Windows、macOS、Linux 都有。</p>
+<p><strong>2. 一個編輯器 / IDE（二選一）</strong></p>
+<ul>
+<li><strong>Visual Studio</strong>（Windows / Mac）：微軟官方的大型開發工具，功能最完整，有免費的 Community 版。新手我會先推這個，因為它把編譯、除錯、提示整合得最好。</li>
+<li><strong>Visual Studio Code</strong>：輕量編輯器，裝上 C# 擴充套件也能寫，跨平台、開得快。習慣輕量工具的人會喜歡。</li>
+</ul>
+<blockquote>這兩個名字很像，別搞混：<strong>Visual Studio</strong> 是完整 IDE，<strong>Visual Studio Code</strong> 是輕量編輯器，是兩個不同的軟體。環境怎麼裝，下一篇會手把手帶。</blockquote>
+<h2>四、這個系列會帶你走到哪</h2>
+<p>我把 C# 的學習路徑分成五個階段，一階一階往上疊：</p>
+<ol>
+<li><strong>總覽</strong>（就是這篇）：先看懂全貌，知道自己在學什麼。</li>
+<li><strong>語法基礎</strong>：變數與型別、流程控制、方法、例外處理——寫任何 C# 程式的地基。</li>
+<li><strong>物件導向</strong>：類別與物件、封裝繼承多型、介面與泛型，學會用結構良好的方式組織程式。</li>
+<li><strong>進階主題</strong>：集合與 LINQ、非同步 async/await、檔案與資料存取等實用技能。</li>
+<li><strong>實戰專案</strong>：把前面學到的全部串起來，做一個完整的小專案收尾。</li>
+</ol>
+<p>建議就從頭照順序走。程式這種東西，地基沒打穩，後面會越學越吃力；反過來說，基礎紮實了，後面會越學越快。</p>
+<h2>五、給初學者的三句真心話</h2>
+<p>最後，分享幾句我自己學程式的體會：</p>
+<ul>
+<li><strong>別怕看不懂，先動手跑</strong>。程式是「做中學」的東西，讀十遍不如自己打一次、按下執行看結果。</li>
+<li><strong>錯誤訊息是朋友，不是敵人</strong>。C# 的編譯器會告訴你哪裡錯、為什麼錯，看懂它比什麼都重要。</li>
+<li><strong>慢就是快</strong>。不用急著追進度，每個概念真的懂了再往下，整體反而學得更快更穩。</li>
+</ul>
+<p>準備好了嗎？下一篇我們就來把開發環境裝起來，跑出你的第一支 C# 程式。這個系列的每一篇底部都有導覽連結，跟著走就對了。</p>
+<p>那麼，我們下一篇見。🐾</p>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>➡️ 下一篇：<a href="csharp-setup-tools.html" rel="noopener">開發環境準備：安裝 .NET SDK 與 Visual Studio，跑出第一支程式</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

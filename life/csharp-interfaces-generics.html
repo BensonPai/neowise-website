@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】介面與泛型：寫出更有彈性、可重用的程式 - 智慧喵</title>
+    <meta name="description" content="這篇帶你認識 C# 的介面（interface）與抽象類別：怎麼定義「一份契約」，以及泛型（generics）如何讓同一段程式適用多種型別，寫出又彈性又安全的程式碼。">
+    <meta name="keywords" content="C# 介面,interface,抽象類別,abstract,泛型,generics,C# 教學">
+    <meta property="og:title" content="【C# 教學】介面與泛型：寫出更有彈性、可重用的程式">
+    <meta property="og:description" content="這篇帶你認識 C# 的介面（interface）與抽象類別：怎麼定義「一份契約」，以及泛型（generics）如何讓同一段程式適用多種型別，寫出又彈性又安全的程式碼。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-interfaces-generics.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-interfaces-generics/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-interfaces-generics.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】介面與泛型：寫出更有彈性、可重用的程式","description":"這篇帶你認識 C# 的介面（interface）與抽象類別：怎麼定義「一份契約」，以及泛型（generics）如何讓同一段程式適用多種型別，寫出又彈性又安全的程式碼。","datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-interfaces-generics.html"},"image":"https://neowise.com.tw/life/assets/csharp-interfaces-generics/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】介面與泛型：寫出更有彈性、可重用的程式</h1>
+            <p class="article-meta">智慧喵　•　2026-10-12</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-interfaces-generics/cover.jpg" alt="示意介面是一份契約、泛型是一個可套不同型別的模具的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="csharp-oop-pillars.html" rel="noopener">三大支柱</a>學完，這篇是物件導向篇的最後一塊：<strong>介面與泛型</strong>。這兩個是很多 C# 框架和函式庫的基石，學會它們，你讀別人的程式、用別人的套件都會更有感。</p>
+<p>延續前面的提醒：範例涉及多個類別時，用 <code>class Program { static void Main() {...} }</code> 結構包住執行碼，避免 CS8803 的順序問題。</p>
+<h2>一、介面（interface）：一份「契約」</h2>
+<p><strong>介面要解決的問題是</strong>：我只在乎「這個東西會做某件事」，不在乎它「怎麼做、是什麼」。</p>
+<p>打個比方：插座就是一種「介面」。它規定「提供 110V 電」，至於插上來的是電風扇、充電器還是檯燈，插座不管——只要符合插座規格就能用。</p>
+<p>介面在程式裡就是<strong>一份契約</strong>：它只列出「有哪些方法」，但<strong>不寫怎麼實作</strong>。誰想符合這份契約，誰就得把這些方法實作出來。</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 定義一份契約：會發出聲音
+interface ISoundMaker
+{
+    void MakeSound();   // 只宣告「有這個方法」，不寫內容
+}</code></pre></div>
+<ul>
+<li>介面名稱習慣用 <strong>大寫 I 開頭</strong>（<code>ISoundMaker</code>），這是 C# 的命名慣例，一眼就看出「這是介面」。</li>
+<li>裡面的方法<strong>只有宣告、沒有內容</strong>（連大括號都沒有，直接分號結束）。</li>
+</ul>
+<p>接著讓類別<strong>實作</strong>這份契約（語法跟繼承一樣用 <code>:</code>）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Dog : ISoundMaker
+{
+    public void MakeSound()   // 必須實作契約規定的方法
+    {
+        Console.WriteLine(&quot;汪汪！&quot;);
+    }
+}
+
+class Doorbell : ISoundMaker  // 門鈴也會發聲，但它跟狗一點關係都沒有
+{
+    public void MakeSound()
+    {
+        Console.WriteLine(&quot;叮咚～&quot;);
+    }
+}</code></pre></div>
+<p>威力在這裡——狗和門鈴<strong>毫無血緣關係</strong>（不像繼承那樣是「同一種東西」），但只要都實作了 <code>ISoundMaker</code>，就能被當成「會發聲的東西」統一處理：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        List&lt;ISoundMaker&gt; things = new List&lt;ISoundMaker&gt;
+        {
+            new Dog(),
+            new Doorbell()
+        };
+
+        foreach (ISoundMaker thing in things)
+        {
+            thing.MakeSound();   // 不管是狗還是門鈴，都會發聲
+        }
+        // 輸出：汪汪！　叮咚～
+    }
+}</code></pre></div>
+<p><strong>介面 vs 繼承，差在哪？</strong></p>
+<ul>
+<li><strong>繼承</strong>是「<strong>是一種</strong>」：狗是一種動物（<code>Dog : Animal</code>），會連資料帶行為一起繼承。</li>
+<li><strong>介面</strong>是「<strong>會做某件事</strong>」：狗、門鈴都「會發聲」（實作 <code>ISoundMaker</code>），彼此可以毫無關係。</li>
+<li>一個類別<strong>只能繼承一個父類別</strong>，但<strong>可以實作多個介面</strong>（例如 <code>class Dog : Animal, ISoundMaker, IRunnable</code>）。</li>
+</ul>
+<h2>二、抽象類別（abstract）：介於中間的選擇</h2>
+<p>有時你想要「有共通實作、又強制子類別補完某些方法」——這就是<strong>抽象類別</strong>，介於「一般類別」和「純介面」之間：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">abstract class Shape         // abstract：不能直接 new，只能被繼承
+{
+    public string Name { get; set; }
+
+    public void Describe()   // 一般方法：子類別直接共用
+    {
+        Console.WriteLine($&quot;這是一個 {Name}，面積是 {Area()}&quot;);
+    }
+
+    public abstract double Area();   // 抽象方法：沒內容，強制子類別實作
+}
+
+class Circle : Shape
+{
+    public double Radius { get; set; }
+
+    public override double Area()    // 必須補完父類別的抽象方法
+    {
+        return 3.14159 * Radius * Radius;
+    }
+}</code></pre></div>
+<ul>
+<li><strong><code>abstract class</code></strong>：抽象類別，<strong>不能直接 <code>new</code></strong>，只能當父類別被繼承。</li>
+<li><strong>抽象方法</strong>：只宣告、沒內容，子類別<strong>一定要</strong> <code>override</code> 補完。</li>
+<li>它同時能有「一般方法」（像 <code>Describe</code>，子類別直接共用）。</li>
+</ul>
+<p><strong>介面 vs 抽象類別怎麼選？</strong> 簡單判斷：</p>
+<ul>
+<li>只想定義「一份能力契約」、不帶實作 → 用<strong>介面</strong>。</li>
+<li>想定義一群「是一種」的類別、又要共用部分實作 → 用<strong>抽象類別</strong>。</li>
+</ul>
+<p>新手階段先把介面用熟，抽象類別知道有就好。</p>
+<h2>三、泛型（generics）：同一段程式，適用多種型別</h2>
+<p><strong>泛型要解決的問題是</strong>：同樣的邏輯，不想為每種型別重寫一遍。</p>
+<p>想像你要寫一個「盒子」，可以裝任何東西。如果沒有泛型，你得寫 <code>IntBox</code>（裝 int）、<code>StringBox</code>（裝 string）……每種型別一個，重複到爆。泛型讓你<strong>寫一次、適用所有型別</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// &lt;T&gt; 是「型別參數」——T 代表「某種型別，用的時候才決定」
+class Box&lt;T&gt;
+{
+    private T _item;
+
+    public void Put(T item) =&gt; _item = item;
+    public T Get() =&gt; _item;
+}</code></pre></div>
+<p>用的時候才指定 T 是什麼：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        Box&lt;int&gt; intBox = new Box&lt;int&gt;();   // 這個盒子裝 int
+        intBox.Put(100);
+        Console.WriteLine(intBox.Get());    // 100
+
+        Box&lt;string&gt; strBox = new Box&lt;string&gt;();  // 這個盒子裝 string
+        strBox.Put(&quot;智慧喵&quot;);
+        Console.WriteLine(strBox.Get());    // 智慧喵
+    }
+}</code></pre></div>
+<p>同一個 <code>Box&lt;T&gt;</code>，裝 int 也行、裝 string 也行。重點是它<strong>型別安全</strong>——<code>Box&lt;int&gt;</code> 只能放 int，你放字串進去會在編譯時就被擋下，不會等到執行才爆。這就是泛型的兩大好處：<strong>重用 + 型別安全</strong>。</p>
+<p><strong>你其實早就用過泛型了</strong>：還記得前面常用的 <code>List&lt;T&gt;</code> 嗎？</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">List&lt;int&gt; numbers = new List&lt;int&gt;();      // 一串 int
+List&lt;string&gt; names = new List&lt;string&gt;();  // 一串 string</code></pre></div>
+<p>那個 <code>&lt;int&gt;</code>、<code>&lt;string&gt;</code> 就是在告訴 <code>List</code> 這個泛型「我這串要裝什麼」。C# 的集合（下一篇的主題）幾乎都是泛型做的。</p>
+<h2>四、串起來看</h2>
+<p>這篇的兩個主角，角色不同但常搭配：</p>
+<ul>
+<li><strong>介面</strong>解決「<strong>用統一方式操作不同東西</strong>」——只要符合契約就能通用。</li>
+<li><strong>泛型</strong>解決「<strong>同一段程式適用多種型別</strong>」——寫一次，到處能用、又安全。</li>
+</ul>
+<p>很多 C# 的函式庫就是「泛型 + 介面」疊出來的，例如 <code>List&lt;T&gt;</code>（泛型）本身也實作了多個介面。現在你讀到這種寫法，就知道背後在做什麼了。</p>
+<h2>這一步大約要花多久？</h2>
+<p>介面的觀念要多練（抓 1~2 週），泛型先理解 <code>List&lt;T&gt;</code> 這種「指定型別」的用法就夠入門，自己寫泛型類別是進階，不急。練法：</p>
+<ul>
+<li>定義一個介面（例如 <code>IPlayable { void Play(); }</code>），讓兩個不相干的類別（<code>Song</code>、<code>Video</code>）都實作它，再用一個 <code>List</code> 統一跑 <code>Play()</code>。</li>
+<li>泛型先熟練用現成的 <code>List&lt;T&gt;</code>、<code>Dictionary&lt;K,V&gt;</code>，有餘力再試著自己寫個 <code>Box&lt;T&gt;</code>。</li>
+</ul>
+<h2>下一篇</h2>
+<p>物件導向篇到這裡就完整了——類別、三大支柱、介面與泛型，你已經掌握 C# 組織程式的核心工具。接下來進入<strong>進階主題</strong>，第一篇是 <strong>集合與 LINQ</strong>：怎麼優雅地處理「一堆資料」，這也是實務上最常用的技能之一。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 C# 物件導向學得更透？</span><span class="affiliate-card-desc">介面與泛型是讀懂框架的關鍵。Hahow 上有從 C# 到 .NET 實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-oop-pillars.html" rel="noopener">封裝、繼承、多型：物件導向的三大支柱</a></li>
+<li>➡️ 下一篇：<a href="csharp-collections-linq.html" rel="noopener">集合與 LINQ：優雅地處理一堆資料</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

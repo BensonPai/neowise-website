@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】類別與物件：物件導向的第一步 - 智慧喵</title>
+    <meta name="description" content="C# 是物件導向語言，而類別是它的核心。這篇帶你從零認識類別與物件：欄位、屬性、方法、建構式，以及 new 一個物件到底發生了什麼事，為後面的封裝繼承多型打底。">
+    <meta name="keywords" content="C# 類別,C# 物件,class,object,屬性,建構式,物件導向,C# 教學">
+    <meta property="og:title" content="【C# 教學】類別與物件：物件導向的第一步">
+    <meta property="og:description" content="C# 是物件導向語言，而類別是它的核心。這篇帶你從零認識類別與物件：欄位、屬性、方法、建構式，以及 new 一個物件到底發生了什麼事，為後面的封裝繼承多型打底。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-classes-objects.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-classes-objects/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-classes-objects.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】類別與物件：物件導向的第一步","description":"C# 是物件導向語言，而類別是它的核心。這篇帶你從零認識類別與物件：欄位、屬性、方法、建構式，以及 new 一個物件到底發生了什麼事，為後面的封裝繼承多型打底。","datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-classes-objects.html"},"image":"https://neowise.com.tw/life/assets/csharp-classes-objects/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】類別與物件：物件導向的第一步</h1>
+            <p class="article-meta">智慧喵　•　2026-10-12</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-classes-objects/cover.jpg" alt="用藍圖與成品比喻類別與物件關係的概念示意圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="csharp-methods-exceptions.html" rel="noopener">基礎篇</a>走完，你已經能寫出會跑的程式了。從這篇開始，進入 C# 真正的核心精神：<strong>物件導向（Object-Oriented Programming，OOP）</strong>。</p>
+<p>物件導向聽起來很學術，但它的出發點其實很直覺：<strong>用「東西」的方式來組織程式</strong>。而這一切的起點，就是這篇要講的 <strong>類別</strong> 與 <strong>物件</strong>。</p>
+<h2>一、類別與物件：藍圖與成品</h2>
+<p>先用一個比喻把觀念講清楚：</p>
+<ul>
+<li><strong>類別（class）是藍圖</strong>——它定義「這種東西長什麼樣、有哪些資料、能做什麼」，但它本身不是實際的東西。</li>
+<li><strong>物件（object）是依藍圖造出來的成品</strong>——根據藍圖做出一個個實際存在、能用的東西。</li>
+</ul>
+<p>舉例：你畫了一張「汽車設計藍圖」（類別），上面寫明汽車有顏色、品牌、能加速能煞車。然後你照這張藍圖造出一台<strong>紅色的 Toyota</strong>、一台<strong>黑色的 Honda</strong>——這兩台實際的車，就是<strong>物件</strong>。</p>
+<p>同一張藍圖（類別）可以造出很多台車（物件），每台各有自己的顏色、品牌。這就是類別與物件的關係。</p>
+<h2>二、定義一個類別</h2>
+<p>來把上面的概念寫成程式。定義一個最簡單的「學生」類別：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Student
+{
+    // 欄位 / 屬性：這個類別「有什麼資料」
+    public string Name;
+    public int Age;
+
+    // 方法：這個類別「能做什麼」
+    public void Introduce()
+    {
+        Console.WriteLine($&quot;大家好，我叫 {Name}，今年 {Age} 歲。&quot;);
+    }
+}</code></pre></div>
+<p>拆解這個類別，它有兩種<strong>成員</strong>：</p>
+<ul>
+<li><strong>資料</strong>（<code>Name</code>、<code>Age</code>）：描述這個學生「是什麼樣子」。</li>
+<li><strong>行為</strong>（<code>Introduce</code> 方法）：描述這個學生「能做什麼」。</li>
+</ul>
+<p><code>public</code> 代表「外部可以存取」，之後講封裝時會深入。</p>
+<h2>三、建立並使用物件</h2>
+<p>有了類別（藍圖），用 <strong><code>new</code></strong> 來造出物件（成品）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 用 new 依 Student 藍圖造出一個物件
+Student s1 = new Student();
+s1.Name = &quot;小明&quot;;       // 用 . 存取物件的成員
+s1.Age = 18;
+s1.Introduce();         // 印出：大家好，我叫 小明，今年 18 歲。
+
+// 再造一個，各有各的資料
+Student s2 = new Student();
+s2.Name = &quot;小華&quot;;
+s2.Age = 20;
+s2.Introduce();         // 印出：大家好，我叫 小華，今年 20 歲。</code></pre></div>
+<p>重點：</p>
+<ul>
+<li><strong><code>new Student()</code></strong>：依 <code>Student</code> 類別造出一個新物件。</li>
+<li><strong><code>.</code>（點）</strong>：存取物件的成員（屬性、方法）。</li>
+<li><code>s1</code> 和 <code>s2</code> 是<strong>兩個獨立的物件</strong>，各自有自己的 <code>Name</code> 和 <code>Age</code>，互不影響。</li>
+</ul>
+<h2>四、屬性：比欄位更好的做法</h2>
+<p>前面的 <code>public string Name;</code> 這種直接開放的叫<strong>欄位（field）</strong>，簡單但不夠安全——任何人都能亂塞值（例如把年齡設成 -5）。C# 更推薦用<strong>屬性（property）</strong>，它看起來像欄位，但能加上控制：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Student
+{
+    // 自動屬性：最常見的寫法，簡潔又比欄位好
+    public string Name { get; set; }
+    public int Age { get; set; }
+}</code></pre></div>
+<p><code>{ get; set; }</code> 的意思是「可以讀（get）、可以寫（set）」。用起來跟欄位一樣：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">Student s = new Student();
+s.Name = &quot;小明&quot;;          // set
+Console.WriteLine(s.Name); // get → 小明</code></pre></div>
+<p>屬性的好處是<strong>可以加入檢查邏輯</strong>。例如不讓年齡變成負數：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Student
+{
+    public string Name { get; set; }
+
+    private int _age;      // 底層真正存值的欄位（private = 外部碰不到）
+    public int Age
+    {
+        get { return _age; }
+        set
+        {
+            if (value &lt; 0)
+                _age = 0;       // 不合理的值就擋掉
+            else
+                _age = value;   // value 是外部傳進來的新值
+        }
+    }
+}</code></pre></div>
+<p>這就是屬性比欄位強的地方：外觀一樣好用，但你能在背後把關。這個「把資料保護起來」的觀念，正是下一篇封裝的核心。</p>
+<h2>五、建構式：建立物件時就設定好</h2>
+<p>每次 <code>new</code> 完還要一行行設定 <code>Name</code>、<code>Age</code> 很麻煩。<strong>建構式（constructor）</strong> 讓你在建立物件的當下就把值帶進去：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Student
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    // 建構式：方法名要跟類別同名，沒有回傳型別
+    public Student(string name, int age)
+    {
+        Name = name;
+        Age = age;
+    }
+
+    public void Introduce()
+    {
+        Console.WriteLine($&quot;我叫 {Name}，今年 {Age} 歲。&quot;);
+    }
+}</code></pre></div>
+<p>這樣建立物件就能一行搞定：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">Student s = new Student(&quot;小明&quot;, 18);   // 建立時直接帶入
+s.Introduce();                         // 我叫 小明，今年 18 歲。</code></pre></div>
+<ul>
+<li>建構式的<strong>名稱必須和類別同名</strong>（<code>Student</code>），而且<strong>沒有回傳型別</strong>。</li>
+<li>它在 <code>new</code> 的那一刻自動被呼叫。</li>
+<li>你也可以寫多個建構式（參數不同），這就是前一篇講過的<strong>多載</strong>。</li>
+</ul>
+<h2>六、一個要記住的特性：物件是「參考型別」</h2>
+<p>這點新手常踩雷，先建立觀念。物件變數存的<strong>不是物件本身，而是「指向物件的參考」</strong>（可以想成一個地址）。所以：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">Student a = new Student(&quot;小明&quot;, 18);
+Student b = a;          // b 和 a 指向「同一個」物件，不是複製
+
+b.Name = &quot;改名了&quot;;
+Console.WriteLine(a.Name);   // 印出：改名了（因為 a 和 b 是同一個物件！）</code></pre></div>
+<p><code>b = a</code> 並沒有複製出第二個學生，而是讓 <code>b</code> 和 <code>a</code> 指向<strong>同一個</strong>物件。改 <code>b</code> 等於改 <code>a</code>。這跟前面學的 <code>int</code>、<code>double</code> 那種「數值型別」（複製的是值）不同，是 C# 的重要分野。現在知道有這回事就好，之後會更有感。</p>
+<h2>七、動手綜合練習</h2>
+<p>做一個「銀行帳戶」類別，把類別、屬性、建構式、方法全用上：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class BankAccount
+{
+    public string Owner { get; set; }
+    public decimal Balance { get; private set; }   // 餘額只能內部改，外部不能亂設
+
+    // 建構式：開戶時設定戶名與初始餘額
+    public BankAccount(string owner, decimal initial)
+    {
+        Owner = owner;
+        Balance = initial;
+    }
+
+    // 存款
+    public void Deposit(decimal amount)
+    {
+        if (amount &lt;= 0)
+        {
+            Console.WriteLine(&quot;存款金額要大於 0&quot;);
+            return;
+        }
+        Balance += amount;
+        Console.WriteLine($&quot;{Owner} 存入 {amount}，餘額 {Balance}&quot;);
+    }
+
+    // 提款
+    public void Withdraw(decimal amount)
+    {
+        if (amount &gt; Balance)
+        {
+            Console.WriteLine(&quot;餘額不足&quot;);
+            return;
+        }
+        Balance -= amount;
+        Console.WriteLine($&quot;{Owner} 提出 {amount}，餘額 {Balance}&quot;);
+    }
+}</code></pre></div>
+<p>用它：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">BankAccount acc = new BankAccount(&quot;智慧喵&quot;, 1000m);
+acc.Deposit(500);    // 智慧喵 存入 500，餘額 1500
+acc.Withdraw(2000);  // 餘額不足
+acc.Withdraw(300);   // 智慧喵 提出 300，餘額 1200</code></pre></div>
+<p>注意 <code>Balance</code> 用了 <code>private set</code>——外部<strong>不能</strong>直接 <code>acc.Balance = 999999</code>，只能透過 <code>Deposit</code> / <code>Withdraw</code> 這些有把關的方法改。這就是用類別「保護資料」的實際好處。</p>
+<blockquote>⚠ <strong>貼進專案時要注意「順序」！</strong> 從這篇開始，你的程式同時有「執行的程式碼」和「類別定義」兩種東西。新版 .NET 的頂層語句有個規定：<strong>執行碼一定要寫在最前面，所有 <code>class</code> 定義要放在它後面</strong>。如果把 <code>class BankAccount { ... }</code> 放到執行碼前面，就會跳出錯誤 <strong>CS8803：「最上層陳述式必須在命名空間和型別宣告之前」</strong>。</blockquote>
+<p>&gt;</p>
+<blockquote>為了避免搞混順序，<strong>當程式開始有自己的類別時，建議改用下面這種傳統結構</strong>——把執行碼放進 <code>Main</code>、類別放在旁邊，怎麼擺都不會錯：</blockquote>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        BankAccount acc = new BankAccount(&quot;智慧喵&quot;, 1000m);
+        acc.Deposit(500);    // 智慧喵 存入 500，餘額 1500
+        acc.Withdraw(2000);  // 餘額不足
+        acc.Withdraw(300);   // 智慧喵 提出 300，餘額 1200
+    }
+}
+
+class BankAccount
+{
+    public string Owner { get; set; }
+    public decimal Balance { get; private set; }
+
+    public BankAccount(string owner, decimal initial)
+    {
+        Owner = owner;
+        Balance = initial;
+    }
+
+    public void Deposit(decimal amount)
+    {
+        if (amount &lt;= 0) { Console.WriteLine(&quot;存款金額要大於 0&quot;); return; }
+        Balance += amount;
+        Console.WriteLine($&quot;{Owner} 存入 {amount}，餘額 {Balance}&quot;);
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount &gt; Balance) { Console.WriteLine(&quot;餘額不足&quot;); return; }
+        Balance -= amount;
+        Console.WriteLine($&quot;{Owner} 提出 {amount}，餘額 {Balance}&quot;);
+    }
+}</code></pre></div>
+<p>這段是<strong>完整、可以直接整段貼上執行</strong>的版本——<code>Program</code> 裡的 <code>Main</code> 是程式進入點，<code>BankAccount</code> 是我們定義的類別。前面的範例為了聚焦觀念拆成小段呈現，實際動手時照這個完整結構擺就不會有順序問題。</p>
+<blockquote>補充：那前幾篇直接寫、沒有 <code>Main</code> 的範例為什麼能跑？因為那些檔案裡<strong>只有執行碼、沒有自己的類別</strong>，頂層語句就能單獨成立。一旦你開始定義類別，用 <code>class Program</code> + <code>Main</code> 這種結構最保險。</blockquote>
+<p><strong>動手練習</strong>：試著自己在 <code>BankAccount</code> 裡加一個<strong>轉帳</strong>方法——從這個帳戶轉一筆錢「到另一個帳戶」（也就是自己扣錢、對方加錢）。方法可以取名 <code>TransferTo</code>（Transfer 轉帳 + To 到…，名字你自己取也行）。它會像這樣用：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">BankAccount a = new BankAccount(&quot;智慧喵&quot;, 1000m);
+BankAccount b = new BankAccount(&quot;小明&quot;, 500m);
+a.TransferTo(b, 300m);   // 智慧喵轉 300 給小明 → a 剩 700、b 變 800</code></pre></div>
+<p>提示：方法會收<strong>兩個參數</strong>——「要轉給誰（另一個 <code>BankAccount</code> 物件）」和「轉多少錢」。先檢查自己餘額夠不夠，再自己扣錢、讓對方加錢。</p>
+<p>這裡有個卡點正好是練習重點：對方的 <code>Balance</code> 是 <code>private set</code>，你<strong>不能</strong>直接寫 <code>對方.Balance += 金額</code>。想想看——我們不是已經有一個「安全加錢」的方法了嗎？對，就呼叫對方的 <code>Deposit</code>。這也剛好呼應本篇的主題：<strong>資料被保護起來，只能透過方法去改</strong>。</p>
+<h2>這一步大約要花多久？</h2>
+<p>類別與物件是觀念轉換的門檻，很多人卡在「什麼時候該開一個類別」。建議：</p>
+<ul>
+<li>先熟練「定義類別 → new 物件 → 用 . 操作」的流程。</li>
+<li>多拿生活中的東西來練：車子、書、寵物、帳戶……想想它有哪些資料、能做什麼。</li>
+<li>搞懂屬性（尤其 <code>private set</code>）和建構式，這兩個最常用。</li>
+</ul>
+<p>這觀念需要時間消化，別急。一旦「用物件思考」的開關打開，你會發現程式變得好組織很多。</p>
+<h2>下一篇</h2>
+<p>會定義類別之後，下一篇進入物件導向的核心三支柱：<strong>封裝、繼承、多型</strong>。這三個特性才是物件導向真正威力的來源，也會把這篇提到的「保護資料」「重用程式」講透。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 C# 物件導向學得更透？</span><span class="affiliate-card-desc">OOP 是程式進階的分水嶺。Hahow 上有從 C# 到 .NET 實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-methods-exceptions.html" rel="noopener">方法與例外處理：把程式切成好用的小塊，並優雅地處理錯誤</a></li>
+<li>➡️ 下一篇：<a href="csharp-oop-pillars.html" rel="noopener">封裝、繼承、多型：物件導向的三大支柱</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

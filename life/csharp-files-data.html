@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【C# 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料 - 智慧喵</title>
+    <meta name="description" content="程式關掉資料就不見？這篇帶你用 C# 做檔案讀寫，並認識怎麼把物件轉成 JSON 存檔、再讀回來，讓你的程式真正能記住東西，為實戰專案做準備。">
+    <meta name="keywords" content="C# 檔案讀寫,File,StreamReader,JSON,序列化,System.Text.Json,C# 教學">
+    <meta property="og:title" content="【C# 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料">
+    <meta property="og:description" content="程式關掉資料就不見？這篇帶你用 C# 做檔案讀寫，並認識怎麼把物件轉成 JSON 存檔、再讀回來，讓你的程式真正能記住東西，為實戰專案做準備。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/csharp-files-data.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/csharp-files-data/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/csharp-files-data.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【C# 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料","description":"程式關掉資料就不見？這篇帶你用 C# 做檔案讀寫，並認識怎麼把物件轉成 JSON 存檔、再讀回來，讓你的程式真正能記住東西，為實戰專案做準備。","datePublished":"2026-10-12","dateModified":"2026-10-12","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/csharp-files-data.html"},"image":"https://neowise.com.tw/life/assets/csharp-files-data/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【C# 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料</h1>
+            <p class="article-meta">智慧喵　•　2026-10-12</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/csharp-files-data/cover.jpg" alt="示意程式把資料寫入檔案、再從檔案讀回的雙向流程概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="csharp-async.html" rel="noopener">上一篇</a>學會非同步。這篇是進階篇最後一塊，也是最實用的技能之一：<strong>讓程式能把資料存起來</strong>。</p>
+<p>你前面寫的程式有個共同問題——<strong>一關掉，資料就全沒了</strong>。因為資料都放在記憶體，程式結束就清空。這篇要解決它：把資料<strong>存進檔案</strong>，下次打開再<strong>讀回來</strong>，程式才能真正「記住東西」。這也是下一篇實戰專案的直接基礎。</p>
+<blockquote>範例會用到自訂類別，記得用 <code>class Program { static void Main() {...} }</code> 結構。</blockquote>
+<h2>一、最基本的檔案讀寫</h2>
+<p>C# 用 <code>File</code> 這個工具做檔案讀寫，最簡單的是整個檔案一次讀寫文字：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        // 寫入：把文字存成檔案（檔案不存在會自動建立，存在會覆蓋）
+        File.WriteAllText(&quot;note.txt&quot;, &quot;這是我存下來的筆記。&quot;);
+        Console.WriteLine(&quot;已寫入 note.txt&quot;);
+
+        // 讀取：把整個檔案讀成字串
+        string content = File.ReadAllText(&quot;note.txt&quot;);
+        Console.WriteLine($&quot;讀回來的內容：{content}&quot;);
+    }
+}</code></pre></div>
+<ul>
+<li><strong><code>File.WriteAllText(檔名, 內容)</code></strong>：把文字寫進檔案。檔案不存在就建立、存在就<strong>整個覆蓋</strong>。</li>
+<li><strong><code>File.ReadAllText(檔名)</code></strong>：把整個檔案讀成一個字串。</li>
+</ul>
+<p><strong>多行資料</strong>可以用對應的 Lines 版本：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">string[] lines = { &quot;第一行&quot;, &quot;第二行&quot;, &quot;第三行&quot; };
+File.WriteAllLines(&quot;list.txt&quot;, lines);          // 一行一筆寫入
+
+string[] readLines = File.ReadAllLines(&quot;list.txt&quot;);  // 讀回成字串陣列
+foreach (string line in readLines)
+    Console.WriteLine(line);</code></pre></div>
+<blockquote>檔案存哪？只給檔名（像 <code>&quot;note.txt&quot;</code>）會存在程式執行目錄下。想指定位置可以給完整路徑，例如 <code>@&quot;C:\Users\你\Desktop\note.txt&quot;</code>（字串前的 <code>@</code> 讓反斜線不用跳脫）。</blockquote>
+<h2>二、問題來了：怎麼存「物件」？</h2>
+<p>純文字好存，但實務上你要存的通常是<strong>物件</strong>——一個學生、一筆訂單、一串待辦事項。難道要自己把每個欄位拼成文字、讀回來再一個個拆解嗎？太麻煩也容易出錯。</p>
+<p>這就是 <strong>JSON</strong> 登場的時候。</p>
+<p><strong>JSON</strong> 是一種通用的資料格式，長這樣：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-json">{
+  &quot;Name&quot;: &quot;智慧喵&quot;,
+  &quot;Score&quot;: 95
+}</code></pre></div>
+<p>它的好處是：<strong>人看得懂、程式好處理、跨語言通用</strong>（網路 API 幾乎都用它）。我們要做的，就是把 C# 物件「轉成 JSON 字串存檔」、再「從 JSON 字串讀回物件」。這兩個動作有專有名詞：</p>
+<ul>
+<li><strong>序列化（Serialize）</strong>：物件 → JSON 字串。</li>
+<li><strong>反序列化（Deserialize）</strong>：JSON 字串 → 物件。</li>
+</ul>
+<h2>三、用 System.Text.Json 存讀物件</h2>
+<p>C# 內建 <code>System.Text.Json</code> 可以做這件事，不用裝額外套件。先引用它，再序列化：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">using System.Text.Json;    // 放在檔案最上方
+
+class Program
+{
+    static void Main()
+    {
+        Student s = new Student { Name = &quot;智慧喵&quot;, Score = 95 };
+
+        // 序列化：物件 → JSON 字串
+        string json = JsonSerializer.Serialize(s);
+        Console.WriteLine(json);   // {&quot;Name&quot;:&quot;智慧喵&quot;,&quot;Score&quot;:95}
+
+        // 存進檔案
+        File.WriteAllText(&quot;student.json&quot;, json);
+    }
+}
+
+class Student
+{
+    public string Name { get; set; }
+    public int Score { get; set; }
+}</code></pre></div>
+<p>讀回來則用反序列化：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">// 從檔案讀回 JSON 字串
+string json = File.ReadAllText(&quot;student.json&quot;);
+
+// 反序列化：JSON 字串 → Student 物件
+Student s = JsonSerializer.Deserialize&lt;Student&gt;(json);
+
+Console.WriteLine($&quot;{s.Name} 考了 {s.Score} 分&quot;);   // 智慧喵 考了 95 分</code></pre></div>
+<p>重點：</p>
+<ul>
+<li><strong><code>JsonSerializer.Serialize(物件)</code></strong>：轉成 JSON 字串。</li>
+<li><strong><code>JsonSerializer.Deserialize&lt;型別&gt;(字串)</code></strong>：轉回物件，角括號 <code>&lt;Student&gt;</code> 告訴它「要轉成什麼型別」（還記得泛型嗎？就是這個）。</li>
+</ul>
+<p><strong>存一整串物件</strong>也完全一樣——這正是下一篇待辦清單要用的：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">List&lt;Student&gt; students = new List&lt;Student&gt;
+{
+    new Student { Name = &quot;小明&quot;, Score = 90 },
+    new Student { Name = &quot;小華&quot;, Score = 85 }
+};
+
+// 一串物件照樣能序列化
+string json = JsonSerializer.Serialize(students);
+File.WriteAllText(&quot;students.json&quot;, json);
+
+// 讀回成 List
+string read = File.ReadAllText(&quot;students.json&quot;);
+List&lt;Student&gt; loaded = JsonSerializer.Deserialize&lt;List&lt;Student&gt;&gt;(read);
+Console.WriteLine($&quot;讀回 {loaded.Count} 筆學生資料&quot;);</code></pre></div>
+<blockquote>想讓存出來的 JSON 有排版（換行縮排、好閱讀），可以加選項： <code>JsonSerializer.Serialize(students, new JsonSerializerOptions { WriteIndented = true });</code></blockquote>
+<h2>四、別忘了錯誤處理</h2>
+<p>讀檔很容易出錯——<strong>檔案不存在、沒權限、內容壞掉</strong>都會讓程式崩潰。還記得<a href="csharp-methods-exceptions.html" rel="noopener">例外處理篇</a>嗎？這裡正好用上：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">try
+{
+    string json = File.ReadAllText(&quot;students.json&quot;);
+    List&lt;Student&gt; students = JsonSerializer.Deserialize&lt;List&lt;Student&gt;&gt;(json);
+    Console.WriteLine($&quot;成功讀入 {students.Count} 筆&quot;);
+}
+catch (FileNotFoundException)
+{
+    Console.WriteLine(&quot;檔案不存在，可能是第一次執行，從空清單開始。&quot;);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($&quot;讀取失敗：{ex.Message}&quot;);
+}</code></pre></div>
+<p>特別是「<strong>第一次執行時檔案還不存在</strong>」這個情況很常見——用 <code>try/catch</code> 接住它、改成「從空資料開始」，程式就不會因為找不到檔案而掛掉。這個模式下一篇會直接用到。</p>
+<h2>五、動手綜合練習</h2>
+<p>把檔案 + JSON + 類別 + 集合全部串起來，做一個「存讀商品清單」的小程式：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-csharp">using System.Text.Json;
+
+class Program
+{
+    static void Main()
+    {
+        string file = &quot;products.json&quot;;
+
+        // 準備資料
+        List&lt;Product&gt; products = new List&lt;Product&gt;
+        {
+            new Product { Name = &quot;滑鼠&quot;, Price = 300 },
+            new Product { Name = &quot;鍵盤&quot;, Price = 900 }
+        };
+
+        // 存檔（加 WriteIndented 讓 JSON 好讀）
+        string json = JsonSerializer.Serialize(products, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(file, json);
+        Console.WriteLine($&quot;已存 {products.Count} 筆到 {file}&quot;);
+
+        // 讀回來
+        try
+        {
+            string read = File.ReadAllText(file);
+            List&lt;Product&gt; loaded = JsonSerializer.Deserialize&lt;List&lt;Product&gt;&gt;(read);
+            foreach (var p in loaded)
+                Console.WriteLine($&quot;{p.Name}：{p.Price} 元&quot;);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($&quot;讀取失敗：{ex.Message}&quot;);
+        }
+    }
+}
+
+class Product
+{
+    public string Name { get; set; }
+    public decimal Price { get; set; }
+}</code></pre></div>
+<p>跑完去程式目錄找找 <code>products.json</code>，打開看看裡面長什麼樣（會是排版好的 JSON）。試著自己加一筆商品、重新跑，確認存讀都正確。</p>
+<h2>這一步大約要花多久？</h2>
+<p>檔案讀寫觀念簡單（<code>WriteAllText</code> / <code>ReadAllText</code> 幾分鐘就懂）。JSON 序列化建議多練，因為實戰和串接網路 API 都會用到。練法：</p>
+<ul>
+<li>先練純文字讀寫，確認檔案真的被建立、讀得回來。</li>
+<li>練把一個物件、一串物件存成 JSON 再讀回。</li>
+<li>一定要練「檔案不存在時用 try/catch 接住」，這是實務必備。</li>
+</ul>
+<h2>下一篇</h2>
+<p>進階篇到這裡就完整了——集合與 LINQ、非同步、檔案與 JSON，你已經備齊實務需要的工具。下一篇是整個系列的<strong>壓軸實戰</strong>：<strong>動手做一個主控台待辦清單 App</strong>，把前面學過的語法、類別、集合、檔案存讀全部整合進一個真的能用的程式。</p>
+<p>準備好把學到的東西組起來了嗎？下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 C# 進階技能練得更扎實？</span><span class="affiliate-card-desc">檔案與資料處理是實戰必備。Hahow 上有從 C# 到 .NET 實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="csharp.html" rel="noopener">C# 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="csharp-async.html" rel="noopener">非同步 async/await：讓程式不卡頓</a></li>
+<li>➡️ 下一篇：<a href="csharp-project-console-app.html" rel="noopener">實戰專案：動手做一個主控台待辦清單 App</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

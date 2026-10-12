@@ -42,6 +42,94 @@ const IMG_EXT = /\.(png|jpe?g|webp)$/i;
 // 分類 -> 標籤 CSS class（對應 style.css）
 const CAT_CLASS = { '投資理財': 'invest', '科技': 'tech', '旅遊': 'travel', '生活': 'life' };
 
+// 列表頁每頁顯示幾篇文章（文章變多時由前端分頁，不會一次全載）
+const POSTS_PER_PAGE = 12;
+
+/* ---------- 系列設定表 ----------
+ * 每個「系列目錄頁」的編排資訊集中在這裡。文章只要在 front-matter 標：
+ *   series: <這裡的 key>      例：csharp
+ *   series_stage: <階段 key>  例：基礎        （對應下方 stages[].key）
+ *   series_order: <數字>      例：2           （決定編號與同階段排序；數字會直接當圓圈內的號碼）
+ * 腳本會自動把同系列文章依階段分組、產生目錄頁 <key>.html。
+ *
+ * 欄位說明：
+ *   navLabel  導覽列/頁尾顯示的名稱
+ *   group     'academy' = 收進「科技學院」下拉；其他（如 'invest'）維持獨立
+ *   pageClass <body> 的 class，用來在 style.css 做主題色覆蓋（如 page-appdev / page-csharp）
+ *   title/subtitle 目錄頁 page-header 的大標與副標
+ *   metaDescription/metaKeywords 目錄頁 SEO
+ *   intro     series-intro 區塊的段落陣列（HTML 片段，支援 inline 樣式字串）
+ *   stages    各階段：key 用於文章對應、badge 徽章文字、title 階段標題、desc 階段說明
+ *   ytText    YouTube CTA 的副標文案
+ */
+const SERIES = {
+  appdev: {
+    navLabel: 'App 開發指南',
+    group: 'academy',
+    pageClass: 'page-appdev',
+    title: 'App 開發完整指南 🐾',
+    subtitle: '從 iPhone 到 Android，一條扎實的系統學習路徑，帶你從零做出並上架自己的 App',
+    metaDescription: '智慧喵的 App 開發完整指南系列目錄：從 iPhone（iOS）到 Android，涵蓋開發工具、開發流程、上架商店、費用與賺錢方式，一條扎實的系統學習路徑，帶你從零做出並上架自己的 App。',
+    metaKeywords: 'App 開發,iOS 開發,Android 開發,iPhone App 教學,Swift,Kotlin,SwiftUI,Jetpack Compose,App 上架,跨平台開發,智慧喵',
+    intro: [
+      '想做一個 App，卻不知道從哪裡開始？這個系列把整條路攤開來：先用一篇總覽建立全貌（工具、流程、上架、費用、賺錢），再分成 iOS 與 Android 兩條對稱的學習路徑，一步步從裝環境、學語言、做畫面、串資料，走到上架與變現。',
+      '走的是「扎實系統學習」路線，不是速成班。建議先看總覽篇，再挑一個平台（iOS 或 Android）從頭走完；學過一個平台再學另一個會快很多。每篇文章底部都有系列導覽連結。',
+      '<span style="color:#94a3b8;font-size:0.86rem;">※ 文中費用、版本、上架規則等均標註查證時間，技術演進快，實際請以各官方文件為準。</span>',
+    ],
+    stages: [
+      { key: '總覽', badge: '總覽', title: '先看全貌', desc: '一篇看懂開發工具、流程、上架、費用與賺錢方式，決定你該先學哪個平台。' },
+      { key: 'iOS', badge: 'iOS', title: 'iPhone 開發路徑', desc: '用 Swift + SwiftUI，從環境準備一路到上架 App Store 與變現。' },
+      { key: 'Android', badge: 'Android', title: 'Android 開發路徑', desc: '用 Kotlin + Jetpack Compose，結構與 iOS 對稱；學過 iOS 再學會快很多。' },
+      { key: '補充', badge: '補充', title: '跨平台方案', desc: '學原生要學兩套，想「寫一次兩邊共用」？這篇幫你選型。' },
+    ],
+    ytText: '影片版的 App 開發教學、程式與工具分享，歡迎來看看',
+  },
+
+  csharp: {
+    navLabel: 'C# 教學',
+    group: 'academy',
+    pageClass: 'page-csharp',
+    title: 'C# 程式設計完整教學 🐾',
+    subtitle: '從零開始學 C#，一條循序漸進的路徑，帶你從語法基礎走到實戰應用',
+    metaDescription: '智慧喵的 C# 程式設計完整教學系列目錄：從開發環境、語法基礎、物件導向，到進階主題與實戰專案，一條循序漸進的學習路徑，適合完全沒寫過程式或想系統補強 C# 的人。',
+    metaKeywords: 'C#,C sharp,C# 教學,.NET,Visual Studio,物件導向,程式設計入門,C# 入門,智慧喵',
+    intro: [
+      '想學 C#，卻被滿坑滿谷的教學搞得更亂？這個系列把 C# 從頭到尾鋪成一條路：先裝好環境、打穩語法基礎，再進入物件導向與進階主題，最後用實戰專案把學到的串起來。',
+      '走的是「循序漸進、重觀念」路線。建議從第一篇環境準備開始照順序走；每個主題都盡量用能動手跑的小範例說明。每篇文章底部都有系列導覽連結。',
+      '<span style="color:#94a3b8;font-size:0.86rem;">※ 文中版本、工具與 API 均標註查證時間，實際請以 .NET / Microsoft Learn 官方文件為準。</span>',
+    ],
+    stages: [
+      { key: '總覽', badge: '總覽', title: '先看全貌', desc: '一篇看懂 C# 能做什麼、要裝什麼、這個系列會帶你走到哪。' },
+      { key: '基礎', badge: '基礎', title: '語法基礎', desc: '變數與型別、流程控制、方法與例外處理，打穩寫 C# 的地基。' },
+      { key: '物件導向', badge: 'OOP', title: '物件導向', desc: '類別與物件、封裝繼承多型、介面與泛型，寫出結構良好的程式。' },
+      { key: '進階', badge: '進階', title: '進階主題', desc: '集合與 LINQ、非同步、檔案與資料存取等實用進階主題。' },
+      { key: '實戰', badge: '實戰', title: '實戰專案', desc: '把前面學到的整合起來，做出一個完整的小專案。' },
+    ],
+    ytText: '影片版的 C# 與程式教學、工具分享，歡迎來看看',
+  },
+
+  invest: {
+    navLabel: '投資理財修煉',
+    group: 'invest',          // 獨立，不收進科技學院下拉
+    pageClass: '',            // 用預設紫色主題
+    title: '投資理財修煉 🐾',
+    subtitle: '從零開始，把投資一步步學會、學透的完整學習地圖',
+    metaDescription: '智慧喵的投資理財修煉系列目錄：從入門的理財心法、進階的投資招式，到高手的財務自由修煉，一步步把投資學會、學透的完整學習地圖。',
+    metaKeywords: '投資理財,投資入門,資產配置,ETF,技術分析,基本面分析,財務自由,智慧喵',
+    intro: [
+      '這是我自己的投資學習記錄。我把它整理成一條由淺入深的路徑：先建立正確的觀念與心態（入門篇），再認識各種投資工具與分析方法（進階篇），最後走向被動收入與財務自由的規劃（高手篇）。',
+      '建議照順序閱讀，也歡迎挑有興趣的主題直接看。每篇文章底部都有「上一篇／下一篇」連結，方便你順著走。',
+      '<span style="color:#94a3b8;font-size:0.86rem;">※ 本系列為個人學習記錄與知識整理，非投資建議。投資有風險，請獨立判斷。</span>',
+    ],
+    stages: [
+      { key: '入門篇', badge: '入門篇', title: '理財心法', desc: '先把觀念與心態打穩，這是所有投資的地基。' },
+      { key: '進階篇', badge: '進階篇', title: '投資招式', desc: '認識各種投資工具與分析方法，開始實作。' },
+      { key: '高手篇', badge: '高手篇', title: '財務自由修煉', desc: '把投資變成長期的財務策略，走向自由。' },
+    ],
+    ytText: '影片版的理財、投資與工具分享，歡迎來看看',
+  },
+};
+
 /* ---------- 工具 ---------- */
 function escapeHtml(str = '') {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -413,8 +501,16 @@ function markdownToHtml(md) {
 }
 
 /* ---------- 共用片段 ---------- */
+// 導覽列。active 可為 'home'/'invest'/'tools'，或某個系列 key（如 'appdev'/'csharp'），
+// 系列 key 會讓「科技學院」父項與對應子項同時高亮。
 function navbar(active) {
   const on = (k) => active === k ? ' class="active"' : '';
+  // 「科技學院」下拉：列出所有「科技系列」（SERIES 中 group === 'academy' 者）
+  const academyKeys = Object.keys(SERIES).filter(k => SERIES[k].group === 'academy');
+  const academyOpen = academyKeys.includes(active);   // 目前頁屬於科技學院任一系列
+  const academyItems = academyKeys.map(k =>
+    `                <li><a href="${k}.html"${on(k)}>${SERIES[k].navLabel}</a></li>`
+  ).join('\n');
   return `<nav class="navbar">
     <div class="nav-container">
         <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
@@ -422,12 +518,28 @@ function navbar(active) {
         <ul class="nav-links">
             <li><a href="index.html"${on('home')}>首頁</a></li>
             <li><a href="invest.html"${on('invest')}>投資理財修煉</a></li>
-            <li><a href="appdev.html"${on('appdev')}>App 開發指南</a></li>
+            <li class="has-dropdown${academyOpen ? ' open' : ''}">
+                <a href="#" class="dropdown-toggle${academyOpen ? ' active' : ''}" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+${academyItems}
+                </ul>
+            </li>
             <li><a href="tools.html"${on('tools')}>我的工具</a></li>
             <li><a href="about.html" class="btn-nav">關於</a></li>
         </ul>
     </div>
 </nav>`;
+}
+
+// 導覽列下拉所需的互動 JS（手機點擊展開、桌機 hover 由 CSS 處理）。
+// 與 footer 的 menu-toggle 併在一起輸出。
+function navbarScript() {
+  return `<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>`;
 }
 function footer() {
   return `<footer class="footer">
@@ -437,7 +549,7 @@ function footer() {
             <div class="footer-links">
                 <a href="index.html">首頁</a>
                 <a href="invest.html">投資理財修煉</a>
-                <a href="appdev.html">App 開發指南</a>
+${Object.keys(SERIES).filter(k => SERIES[k].group === 'academy').map(k => `                <a href="${k}.html">${SERIES[k].navLabel}</a>`).join('\n')}
                 <a href="tools.html">我的工具</a>
                 <a href="about.html">關於</a>
                 <a href="${YT_URL}" rel="noopener">YouTube</a>
@@ -446,7 +558,7 @@ function footer() {
         <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
     </div>
 </footer>
-<script>document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});</script>`;
+${navbarScript()}`;
 }
 
 /* ---------- 讀文章 ---------- */
@@ -624,22 +736,221 @@ ${navbar('home')}
         <div class="post-grid">
 ${arts.length ? cards : ''}
         </div>
-        ${arts.length ? '' : empty}
+        ${arts.length ? '<nav class="pagination" aria-label="文章分頁"></nav>' : empty}
     </div>
 </section>
 ${footer()}
 <script>
-document.querySelectorAll('.filter-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-        document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active');});
-        btn.classList.add('active');
-        var f = btn.getAttribute('data-filter');
-        document.querySelectorAll('.post-card').forEach(function(c){
-            c.style.display = (f === 'all' || c.getAttribute('data-category') === f) ? '' : 'none';
+(function(){
+    var PER_PAGE = ${POSTS_PER_PAGE};
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.post-card'));
+    var pagination = document.querySelector('.pagination');
+    var filterBtns = Array.prototype.slice.call(document.querySelectorAll('.filter-btn'));
+    var currentFilter = 'all';
+    var currentPage = 1;
+
+    // 取得符合目前分類的文章卡片
+    function matched(){
+        return cards.filter(function(c){
+            return currentFilter === 'all' || c.getAttribute('data-category') === currentFilter;
+        });
+    }
+
+    // 依目前分類與頁碼，決定每張卡片顯示與否
+    function applyView(){
+        var list = matched();
+        var totalPages = Math.max(1, Math.ceil(list.length / PER_PAGE));
+        if (currentPage > totalPages) currentPage = totalPages;
+        var start = (currentPage - 1) * PER_PAGE;
+        var end = start + PER_PAGE;
+        cards.forEach(function(c){ c.style.display = 'none'; });
+        list.slice(start, end).forEach(function(c){ c.style.display = ''; });
+        renderPagination(totalPages);
+    }
+
+    // 產生分頁列（含省略號），單頁時隱藏
+    function renderPagination(totalPages){
+        if (!pagination) return;
+        pagination.innerHTML = '';
+        if (totalPages <= 1) return;
+
+        var frag = document.createDocumentFragment();
+        var addBtn = function(label, page, opts){
+            opts = opts || {};
+            var b = document.createElement('button');
+            b.className = 'page-btn' + (opts.active ? ' active' : '');
+            b.textContent = label;
+            if (opts.disabled) { b.disabled = true; }
+            else { b.addEventListener('click', function(){ goTo(page); }); }
+            frag.appendChild(b);
+        };
+        var addGap = function(){
+            var s = document.createElement('span');
+            s.className = 'page-gap';
+            s.textContent = '…';
+            frag.appendChild(s);
+        };
+
+        addBtn('‹', currentPage - 1, { disabled: currentPage === 1 });
+
+        // 頁碼顯示策略：永遠顯示首尾頁，當前頁前後各一頁，其餘用省略號
+        var pages = [];
+        for (var p = 1; p <= totalPages; p++){
+            if (p === 1 || p === totalPages || (p >= currentPage - 1 && p <= currentPage + 1)) pages.push(p);
+        }
+        var prev = 0;
+        pages.forEach(function(p){
+            if (p - prev > 1) addGap();
+            addBtn(String(p), p, { active: p === currentPage });
+            prev = p;
+        });
+
+        addBtn('›', currentPage + 1, { disabled: currentPage === totalPages });
+        pagination.appendChild(frag);
+    }
+
+    // 切頁並捲回列表頂端
+    function goTo(page){
+        currentPage = page;
+        applyView();
+        var grid = document.querySelector('.post-grid');
+        if (grid) window.scrollTo({ top: grid.offsetTop - 80, behavior: 'smooth' });
+    }
+
+    filterBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+            filterBtns.forEach(function(b){ b.classList.remove('active'); });
+            btn.classList.add('active');
+            currentFilter = btn.getAttribute('data-filter');
+            currentPage = 1;      // 換分類時回到第一頁
+            applyView();
         });
     });
-});
+
+    applyView();
+})();
 </script>
+</body>
+</html>`;
+}
+
+/* ---------- 系列目錄頁（資料驅動） ----------
+ * 依 SERIES[key] 的 stages 定義，把 posts（已篩出屬於此系列的文章）分組排序，
+ * 產生一頁「階段 → 編號卡片」的目錄頁，輸出成 <key>.html。
+ * 文章用 series_order 決定圓圈內的編號與同階段排序：
+ *   - 數字（如 2）→ 圓圈顯示數字，依數字排序
+ *   - 非數字（如「總」「跨」）→ 當作特別編號，套 toc-num-extra 樣式，排在數字後面
+ */
+function renderSeriesToc(key, posts) {
+  const cfg = SERIES[key];
+  if (!cfg) return '';
+  const esc = escapeHtml;
+
+  // 分組：stageKey -> 該階段文章陣列
+  const byStage = {};
+  for (const s of cfg.stages) byStage[s.key] = [];
+  const orphan = [];   // 標了 series 但 series_stage 不在定義內的，收集起來印警告
+  for (const p of posts) {
+    const st = p.series_stage || '';
+    if (byStage[st]) byStage[st].push(p);
+    else orphan.push(p);
+  }
+  if (orphan.length) {
+    orphan.forEach(p => console.warn(`  ⚠ 系列「${key}」文章 series_stage 無法對應（略過排入目錄）：${p.slug}（stage=${p.series_stage || '空'}）`));
+  }
+
+  // 排序輔助：數字 series_order 在前（由小到大），非數字在後
+  const orderVal = (p) => {
+    const v = p.series_order;
+    if (v === undefined || v === '') return Number.POSITIVE_INFINITY;
+    const n = Number(v);
+    return Number.isNaN(n) ? Number.POSITIVE_INFINITY : n;
+  };
+  const sortStage = (list) => list.slice().sort((a, b) => {
+    const d = orderVal(a) - orderVal(b);
+    if (d !== 0) return d;
+    return String(a.series_order || '').localeCompare(String(b.series_order || ''));
+  });
+
+  // 單篇卡片
+  const tocItem = (p) => {
+    const raw = p.series_order;
+    const isNum = raw !== undefined && raw !== '' && !Number.isNaN(Number(raw));
+    const numCls = isNum ? 'toc-num' : 'toc-num toc-num-extra';
+    const numText = isNum ? esc(String(Number(raw))) : esc(String(raw || '•'));
+    const hasVideo = !!youtubeId(p.youtube || '');
+    const videoTag = hasVideo ? ' <span class="toc-video">🎬 有影片</span>' : '';
+    // 目錄頁顯示標題：去掉標題開頭的【...】系列前綴，讓目錄更乾淨
+    const cleanTitle = String(p.title || '').replace(/^【[^】]*】/, '');
+    const desc = p.toc_desc || p.description || '';
+    return `                <li class="toc-item">
+                    <span class="${numCls}">${numText}</span>
+                    <div class="toc-body">
+                        <h3><a href="${p.slug}.html">${esc(cleanTitle)}</a>${videoTag}</h3>
+                        <p>${esc(desc)}</p>
+                    </div>
+                </li>`;
+  };
+
+  // 各階段區塊（空階段不輸出）
+  const stagesHtml = cfg.stages.map(s => {
+    const list = sortStage(byStage[s.key] || []);
+    if (!list.length) return '';
+    return `        <div class="series-stage">
+            <h2><span class="stage-badge">${esc(s.badge)}</span>${esc(s.title)}</h2>
+            <p class="stage-desc">${esc(s.desc)}</p>
+            <ol class="toc-list">
+${list.map(tocItem).join('\n')}
+            </ol>
+        </div>`;
+  }).filter(Boolean).join('\n\n');
+
+  const introHtml = (cfg.intro || []).map(p => `            <p>${p}</p>`).join('\n');
+  const bodyClass = cfg.pageClass ? ` class="${cfg.pageClass}"` : '';
+  const url = `${SITE_URL}/${key}.html`;
+  const empty = `<p style="text-align:center;color:#94a3b8;padding:40px 0;">本系列文章即將登場，敬請期待 🐾</p>`;
+
+  return `<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    ${gaSnippet()}
+    <title>${esc(cfg.title.replace(/\s*🐾\s*$/, ''))} 全系列目錄 - 智慧喵</title>
+    <meta name="description" content="${esc(cfg.metaDescription || '')}">
+    <meta name="keywords" content="${esc(cfg.metaKeywords || '')}">
+    <meta property="og:title" content="${esc(cfg.title.replace(/\s*🐾\s*$/, ''))} 全系列目錄 - 智慧喵">
+    <meta property="og:description" content="${esc(cfg.subtitle || '')}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="${url}">
+    <link rel="canonical" href="${url}">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body${bodyClass}>
+${navbar(key)}
+
+<section class="page-header">
+    <h1>${esc(cfg.title)}</h1>
+    <p>${esc(cfg.subtitle || '')}</p>
+</section>
+
+<section class="page-content">
+    <div class="series-toc">
+        <div class="series-intro">
+${introHtml}
+        </div>
+
+${stagesHtml || '        ' + empty}
+    </div>
+
+    <div class="yt-cta">
+        <h2>🎬 訂閱智慧喵 YouTube 頻道</h2>
+        <p>${esc(cfg.ytText || '影片版的教學與工具分享，歡迎來看看')}</p>
+        <a href="${YT_URL}?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱 YouTube 頻道</a>
+    </div>
+</section>
+${footer()}
 </body>
 </html>`;
 }
@@ -648,10 +959,10 @@ document.querySelectorAll('.filter-btn').forEach(function(btn){
 function renderSitemap(arts) {
   const today = new Date().toISOString().slice(0, 10);
   const urls = [`  <url><loc>${SITE_URL}/</loc><lastmod>${today}</lastmod></url>`,
-    `  <url><loc>${SITE_URL}/invest.html</loc><lastmod>${today}</lastmod></url>`,
-    `  <url><loc>${SITE_URL}/appdev.html</loc><lastmod>${today}</lastmod></url>`,
     `  <url><loc>${SITE_URL}/tools.html</loc><lastmod>${today}</lastmod></url>`,
     `  <url><loc>${SITE_URL}/about.html</loc><lastmod>${today}</lastmod></url>`];
+  // 系列目錄頁（appdev.html / csharp.html / invest.html …）由 SERIES 動態列出
+  for (const key of Object.keys(SERIES)) urls.push(`  <url><loc>${SITE_URL}/${key}.html</loc><lastmod>${today}</lastmod></url>`);
   for (const a of arts) urls.push(`  <url><loc>${SITE_URL}/${a.slug}.html</loc><lastmod>${a.date || today}</lastmod></url>`);
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -686,6 +997,14 @@ async function main() {
   }
   writeFileSync(join(LIFE_ROOT, 'index.html'), renderIndex(pub), 'utf8');
   console.log('  ✔ 列表：life/index.html');
+
+  // 系列目錄頁：把帶 series 的文章分組，逐系列產生 <key>.html
+  for (const key of Object.keys(SERIES)) {
+    const seriesPosts = pub.filter(a => a.series === key);
+    writeFileSync(join(LIFE_ROOT, `${key}.html`), renderSeriesToc(key, seriesPosts), 'utf8');
+    console.log(`  ✔ 系列目錄：life/${key}.html（${seriesPosts.length} 篇）`);
+  }
+
   writeFileSync(join(LIFE_ROOT, 'sitemap.xml'), renderSitemap(pub), 'utf8');
   console.log('  ✔ sitemap：life/sitemap.xml');
   const totalSec = ((Date.now() - t0) / 1000).toFixed(1);

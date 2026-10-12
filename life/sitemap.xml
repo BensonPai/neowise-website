@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://neowise.com.tw/life/</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://neowise.com.tw/life/invest.html</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://neowise.com.tw/life/appdev.html</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://neowise.com.tw/life/tools.html</loc><lastmod>2026-10-09</lastmod></url>
-  <url><loc>https://neowise.com.tw/life/about.html</loc><lastmod>2026-10-09</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/tools.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/about.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/appdev.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/invest.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-project-console-app.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-files-data.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-async.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-collections-linq.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-interfaces-generics.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-oop-pillars.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-classes-objects.html</loc><lastmod>2026-10-12</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-methods-exceptions.html</loc><lastmod>2026-10-11</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-syntax-basics.html</loc><lastmod>2026-10-11</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-setup-tools.html</loc><lastmod>2026-10-11</lastmod></url>
+  <url><loc>https://neowise.com.tw/life/csharp-complete-guide-overview.html</loc><lastmod>2026-10-10</lastmod></url>
   <url><loc>https://neowise.com.tw/life/file-sharing-windows-mac.html</loc><lastmod>2026-10-09</lastmod></url>
   <url><loc>https://neowise.com.tw/life/macos-openvanilla-boshiamy.html</loc><lastmod>2026-10-09</lastmod></url>
   <url><loc>https://neowise.com.tw/life/liberty-square-taipei.html</loc><lastmod>2026-10-08</lastmod></url>
