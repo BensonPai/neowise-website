@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】實戰專案：做一個檔案整理小工具 - 智慧喵</title>
+    <meta name="description" content="學了這麼多，這篇把全部串起來：用 Python 做一個能自動整理資料夾的命令列小工具，實際體會語法、函式、資料結構、檔案操作怎麼協作成一個真正能用的程式。">
+    <meta name="keywords" content="Python 專案,命令列工具,CLI,檔案整理,Python 實戰,Python 範例,Python 教學">
+    <meta property="og:title" content="【Python 教學】實戰專案：做一個檔案整理小工具">
+    <meta property="og:description" content="學了這麼多，這篇把全部串起來：用 Python 做一個能自動整理資料夾的命令列小工具，實際體會語法、函式、資料結構、檔案操作怎麼協作成一個真正能用的程式。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-project-cli-tool.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-project-cli-tool/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-project-cli-tool.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】實戰專案：做一個檔案整理小工具","description":"學了這麼多，這篇把全部串起來：用 Python 做一個能自動整理資料夾的命令列小工具，實際體會語法、函式、資料結構、檔案操作怎麼協作成一個真正能用的程式。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-project-cli-tool.html"},"image":"https://neowise.com.tw/life/assets/python-project-cli-tool/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】實戰專案：做一個檔案整理小工具</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-project-cli-tool/cover.jpg" alt="一個在終端機中執行的 Python 檔案整理工具畫面示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>恭喜你走到系列最後一篇！前面學的語法、函式、資料結構、物件導向，還有實用應用（檔案、爬蟲、自動化、資料處理）——這篇要把它們<strong>組起來</strong>，做一個真的能用的程式：<strong>檔案整理小工具</strong>。</p>
+<p>這是學程式最有成就感的時刻：把一塊塊零件拼成一個完整的東西。而且這個工具你以後真的用得到——把亂糟糟的下載資料夾一鍵整理乾淨。</p>
+<h2>一、我們要做什麼</h2>
+<p>一個命令列小工具，功能：</p>
+<ul>
+<li><strong>掃描</strong>指定資料夾裡的檔案</li>
+<li>依<strong>副檔名</strong>自動把檔案分類到對應子資料夾（圖片進 images、文件進 docs…）</li>
+<li><strong>預覽模式</strong>：先看會怎麼分、但不實際動（安全第一）</li>
+<li><strong>執行整理</strong>：確認無誤後才真的搬</li>
+</ul>
+<p>先把需求想清楚再動手，這是好習慣。這個工具正好把<a href="python-automation.html" rel="noopener">自動化篇</a>的檔案操作、和整個系列的基本功都用上。</p>
+<h2>二、設計思路</h2>
+<p>把工作拆成幾個<strong>函式</strong>（呼應<a href="python-functions.html" rel="noopener">函式篇</a>），各司其職：</p>
+<ul>
+<li>一個「副檔名 → 分類」的 <strong>dict 對照表</strong>（呼應<a href="python-data-structures.html" rel="noopener">資料結構篇</a>）</li>
+<li><code>scan_folder</code>：掃描資料夾、決定每個檔案要去哪</li>
+<li><code>organize</code>：實際執行搬移（含預覽模式）</li>
+</ul>
+<p>把邏輯拆成函式的好處是：好讀、好改、好測試。</p>
+<h2>三、一塊塊看</h2>
+<p><strong>對照表</strong>——決定哪種副檔名歸哪類：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">CATEGORIES = {
+    &quot;.jpg&quot;: &quot;images&quot;, &quot;.png&quot;: &quot;images&quot;, &quot;.gif&quot;: &quot;images&quot;,
+    &quot;.pdf&quot;: &quot;docs&quot;, &quot;.docx&quot;: &quot;docs&quot;, &quot;.txt&quot;: &quot;docs&quot;,
+    &quot;.mp3&quot;: &quot;music&quot;, &quot;.mp4&quot;: &quot;videos&quot;, &quot;.zip&quot;: &quot;archives&quot;,
+}</code></pre></div>
+<p><strong>掃描</strong>——走訪資料夾，列出「每個檔案該搬去哪」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+def scan_folder(folder):
+    plan = []                              # 存放 (檔案, 分類) 的清單
+    for item in folder.iterdir():
+        if item.is_file():
+            category = CATEGORIES.get(item.suffix.lower())
+            if category:                   # 只處理對照表裡有的副檔名
+                plan.append((item, category))
+    return plan</code></pre></div>
+<p>它回傳一份「整理計畫」——每個元素是「哪個檔案、要搬到哪一類」。先算好計畫、不急著動，這樣才能先預覽。</p>
+<h2>四、預覽模式：安全第一</h2>
+<p>還記得<a href="python-automation.html" rel="noopener">自動化篇</a>的安全提醒嗎？動真實檔案前，先讓使用者<strong>預覽</strong>會發生什麼，確認了才真的搬。這靠一個 <code>preview</code> 參數控制：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">def organize(folder, preview=True):
+    plan = scan_folder(folder)
+    if not plan:
+        print(&quot;沒有需要整理的檔案。&quot;)
+        return
+
+    for item, category in plan:
+        if preview:
+            print(f&quot;[預覽] {item.name} → {category}/&quot;)      # 只印，不動
+        else:
+            target_dir = folder / category
+            target_dir.mkdir(exist_ok=True)
+            item.rename(target_dir / item.name)             # 真的搬
+            print(f&quot;[完成] {item.name} → {category}/&quot;)</code></pre></div>
+<p><code>preview=True</code> 時只印出計畫、不動任何檔案；<code>preview=False</code> 才真的搬。這就是「先看再做」的安全設計。</p>
+<h2>五、完整程式（可直接執行）</h2>
+<p>把上面全部組起來。這是<strong>完整、可以整段貼上執行</strong>的版本。先說明這支程式包含的部分，貼完可以對照：</p>
+<ul>
+<li><code>CATEGORIES</code>：副檔名對照表</li>
+<li><code>scan_folder</code>：掃描、產生整理計畫</li>
+<li><code>organize</code>：執行（含預覽模式）</li>
+<li><code>main</code>：主流程，問使用者資料夾、先預覽、確認後再整理</li>
+</ul>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+# 副檔名 → 分類資料夾
+CATEGORIES = {
+    &quot;.jpg&quot;: &quot;images&quot;, &quot;.png&quot;: &quot;images&quot;, &quot;.gif&quot;: &quot;images&quot;,
+    &quot;.pdf&quot;: &quot;docs&quot;, &quot;.docx&quot;: &quot;docs&quot;, &quot;.txt&quot;: &quot;docs&quot;,
+    &quot;.mp3&quot;: &quot;music&quot;, &quot;.mp4&quot;: &quot;videos&quot;, &quot;.zip&quot;: &quot;archives&quot;,
+}
+
+
+def scan_folder(folder):
+    &quot;&quot;&quot;掃描資料夾，回傳 [(檔案, 分類), ...] 的整理計畫&quot;&quot;&quot;
+    plan = []
+    for item in folder.iterdir():
+        if item.is_file():
+            category = CATEGORIES.get(item.suffix.lower())
+            if category:
+                plan.append((item, category))
+    return plan
+
+
+def organize(folder, preview=True):
+    &quot;&quot;&quot;整理資料夾。preview=True 只預覽、不動檔案&quot;&quot;&quot;
+    plan = scan_folder(folder)
+    if not plan:
+        print(&quot;沒有需要整理的檔案。&quot;)
+        return
+
+    for item, category in plan:
+        if preview:
+            print(f&quot;[預覽] {item.name} → {category}/&quot;)
+        else:
+            target_dir = folder / category
+            target_dir.mkdir(exist_ok=True)
+            item.rename(target_dir / item.name)
+            print(f&quot;[完成] {item.name} → {category}/&quot;)
+
+
+def main():
+    # 問使用者要整理哪個資料夾
+    path = input(&quot;請輸入要整理的資料夾路徑：&quot;).strip()
+    folder = Path(path)
+
+    # 錯誤處理：資料夾不存在就結束（呼應例外處理觀念）
+    if not folder.is_dir():
+        print(&quot;找不到這個資料夾，請確認路徑。&quot;)
+        return
+
+    # 1. 先預覽
+    print(&quot;\n=== 預覽（不會真的動檔案）===&quot;)
+    organize(folder, preview=True)
+
+    # 2. 問使用者要不要真的執行
+    answer = input(&quot;\n確定要照上面整理嗎？(y/n)：&quot;).strip().lower()
+    if answer == &quot;y&quot;:
+        print(&quot;\n=== 開始整理 ===&quot;)
+        organize(folder, preview=False)
+        print(&quot;\n整理完成！🐾&quot;)
+    else:
+        print(&quot;已取消，沒有動任何檔案。&quot;)
+
+
+# 程式進入點
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre></div>
+<blockquote>最後那行 <code>if __name__ == &quot;__main__&quot;:</code> 是 Python 的慣例寫法，意思是「這個檔案被直接執行時，才跑 main()」。現在先照抄、知道它是程式進入點即可，之後學到模組會更懂。</blockquote>
+<p><strong>跑跑看</strong>（強烈建議先用測試資料夾）：先隨便建一個資料夾、丟幾個不同類型的檔案進去，執行程式、輸入那個資料夾路徑。它會<strong>先給你預覽</strong>，你確認 <code>y</code> 之後才真的分類。這個「先預覽再執行」正是負責任的檔案工具該有的樣子。</p>
+<h2>六、看看你用上了哪些東西</h2>
+<p>回頭看這個程式，整個系列的觀念幾乎都在裡面：</p>
+<div class="table-wrap"><table><thead><tr><th>用到的技能</th><th>在哪裡</th><th>哪篇學的</th></tr></thead><tbody><tr><td>變數、流程控制</td><td>if 判斷、for 迴圈</td><td>語法基礎</td></tr><tr><td>函式</td><td>scan_folder、organize、main</td><td>函式</td></tr><tr><td>資料結構</td><td>CATEGORIES（dict）、plan（list）</td><td>資料結構</td></tr><tr><td>檔案操作</td><td>pathlib、rename、mkdir</td><td>自動化</td></tr><tr><td>錯誤處理觀念</td><td>檢查資料夾存不存在</td><td>檔案與 JSON</td></tr></tbody></table></div>
+<p>每個單篇學的時候像零散的積木，組起來就是一個真東西。這就是學程式的樣子。</p>
+<h2>七、自己動手升級</h2>
+<p>想繼續練，試著加功能：</p>
+<ul>
+<li><strong>依日期分類</strong>：把檔案依修改月份分到不同資料夾。</li>
+<li><strong>可設定的對照表</strong>：把 CATEGORIES 存成 JSON 檔，程式啟動時讀進來（用上<a href="python-files-json.html" rel="noopener">檔案與 JSON 篇</a>）。</li>
+<li><strong>做成命令列參數工具</strong>：用內建的 <code>argparse</code>，讓你能 <code>python organize.py D:/下載</code> 直接帶路徑執行。</li>
+<li><strong>加記錄</strong>：把每次整理了哪些檔案寫進一個 log 檔。</li>
+</ul>
+<p>每加一個功能，都是把前面學的再用一次。</p>
+<h2>系列總結：你已經走完 Python 入門這條路</h2>
+<p>從第一篇到這裡，你完成了一整條學習路徑：</p>
+<ul>
+<li><strong>基礎</strong>：環境、語法、函式、資料結構。</li>
+<li><strong>物件導向</strong>：類別與物件、繼承與特殊方法。</li>
+<li><strong>實用應用</strong>：檔案與 JSON、爬蟲、自動化、資料處理。</li>
+<li><strong>實戰</strong>：把全部整合成一個能用的工具。</li>
+</ul>
+<p>你現在具備的，不只是「背了一些語法」，而是<strong>能獨立做出一個完整小程式的能力</strong>，而且摸過了 Python 最實用的幾個方向。這是很多人學程式卡住、而你跨過去了的那道門檻。</p>
+<p>接下來往哪走？Python 的世界很大：</p>
+<ul>
+<li><strong>資料分析 / AI</strong>：接續 pandas，往 NumPy、機器學習（scikit-learn）、深度學習發展。</li>
+<li><strong>網站後端</strong>：用 Django 或 Flask 做網站與 API。</li>
+<li><strong>自動化深化</strong>：把更多日常工作交給程式。</li>
+<li><strong>桌面 / 遊戲</strong>：PyQt 做桌面程式、Pygame 做小遊戲。</li>
+</ul>
+<p>挑一個你有興趣的方向深入，記得——<strong>持續動手做專案</strong>，是進步最快的路。</p>
+<p>謝謝你跟著智慧喵走完這個系列，辛苦了！有任何問題，歡迎來 YouTube 找我聊聊。我們下個系列見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想繼續把 Python 學得更深？</span><span class="affiliate-card-desc">入門之後想進階到資料分析、AI、網站或自動化，Hahow 上有不少 Python 系統課程，挑一個有興趣的方向帶著專案練下去吧。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-data-analysis.html" rel="noopener">資料處理入門：用 pandas 讀 CSV、篩選、統計</a></li>
+<li>🎉 這是系列最後一篇，恭喜你學完！</li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

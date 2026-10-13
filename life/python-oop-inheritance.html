@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】繼承與特殊方法：讓類別更強大 - 智慧喵</title>
+    <meta name="description" content="學會類別之後，這篇進入繼承（複用與擴充）與 Python 的特殊方法（dunder methods，如 __str__）：讓你的類別能被 print 得漂亮、能用運算子，寫出更 Python 風格的程式。">
+    <meta name="keywords" content="Python 繼承,inheritance,特殊方法,dunder,__str__,方法覆寫,Python OOP,Python 教學">
+    <meta property="og:title" content="【Python 教學】繼承與特殊方法：讓類別更強大">
+    <meta property="og:description" content="學會類別之後，這篇進入繼承（複用與擴充）與 Python 的特殊方法（dunder methods，如 __str__）：讓你的類別能被 print 得漂亮、能用運算子，寫出更 Python 風格的程式。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-oop-inheritance.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-oop-inheritance/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-oop-inheritance.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】繼承與特殊方法：讓類別更強大","description":"學會類別之後，這篇進入繼承（複用與擴充）與 Python 的特殊方法（dunder methods，如 __str__）：讓你的類別能被 print 得漂亮、能用運算子，寫出更 Python 風格的程式。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-oop-inheritance.html"},"image":"https://neowise.com.tw/life/assets/python-oop-inheritance/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】繼承與特殊方法：讓類別更強大</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-oop-inheritance/cover.jpg" alt="示意子類別繼承父類別、並加上特殊方法的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-classes-objects.html" rel="noopener">上一篇</a>學會了用類別造物件。這篇是物件導向篇最後一塊，講兩個讓類別更強大的工具：<strong>繼承</strong>（讓類別之間能複用）和 <strong>特殊方法</strong>（讓物件更好用、更有 Python 味）。</p>
+<h2>一、繼承：共通的部分不要重複寫</h2>
+<p><strong>繼承要解決的問題是</strong>：很多類別有共同的部分，不想重複寫。</p>
+<p>舉例：狗、貓都是動物，都有名字、都會吃東西。與其在 <code>Dog</code>、<code>Cat</code> 各寫一遍，不如把共通的放進父類別 <code>Animal</code>，讓子類別<strong>繼承</strong>它：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 父類別：共通的部分放這裡
+class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self):
+        print(f&quot;{self.name} 正在吃東西&quot;)
+
+
+# 子類別：括號裡寫父類別，就繼承了它
+class Dog(Animal):
+    def bark(self):
+        print(f&quot;{self.name} 說：汪汪！&quot;)</code></pre></div>
+<p>用起來：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">d = Dog(&quot;小黑&quot;)
+d.eat()      # 繼承自 Animal → 小黑 正在吃東西
+d.bark()     # Dog 自己的 → 小黑 說：汪汪！</code></pre></div>
+<p><code>Dog</code> 沒有自己寫 <code>__init__</code> 和 <code>eat()</code>，卻能直接用——因為它<strong>繼承</strong>了 <code>Animal</code>。寫法就是 <code>class 子類別(父類別):</code>。</p>
+<h2>二、super()：呼叫父類別</h2>
+<p>如果子類別想「在父類別的基礎上多做一點」，用 <strong><code>super()</code></strong> 呼叫父類別：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Dog(Animal):
+    def __init__(self, name, breed):
+        super().__init__(name)    # 先呼叫父類別的 __init__ 設定 name
+        self.breed = breed        # 再加上 Dog 自己的屬性
+
+    def bark(self):
+        print(f&quot;{self.name}（{self.breed}）說：汪汪！&quot;)
+
+
+d = Dog(&quot;小黑&quot;, &quot;柴犬&quot;)
+d.bark()     # 小黑（柴犬）說：汪汪！</code></pre></div>
+<p><code>super().__init__(name)</code> 的意思是「請父類別先把 name 設定好」，然後子類別再補自己的 <code>breed</code>。這樣就不用把父類別做過的事再抄一遍。</p>
+<h2>三、方法覆寫：子類別給出自己的版本</h2>
+<p>子類別可以<strong>改寫</strong>父類別的方法，給出自己的版本（這叫 override，覆寫）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Animal:
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print(f&quot;{self.name} 發出聲音&quot;)
+
+
+class Dog(Animal):
+    def speak(self):                    # 改寫父類別的 speak
+        print(f&quot;{self.name} 說：汪汪！&quot;)
+
+class Cat(Animal):
+    def speak(self):
+        print(f&quot;{self.name} 說：喵～&quot;)
+
+
+Dog(&quot;小黑&quot;).speak()    # 小黑 說：汪汪！
+Cat(&quot;咪咪&quot;).speak()    # 咪咪 說：喵～</code></pre></div>
+<p>同樣叫 <code>speak()</code>，狗和貓各自表現出自己的行為。Python 不需要像 C# 那樣加 <code>virtual</code>/<code>override</code> 關鍵字，<strong>直接在子類別定義同名方法就會覆寫</strong>。</p>
+<h2>四、多型與「鴨子型別」</h2>
+<p>Python 處理「同一個動作、不同東西不同做法」的方式很有自己的風格，叫 <strong>鴨子型別（duck typing）</strong>：</p>
+<blockquote>「如果牠走起來像鴨子、叫起來像鴨子，那牠就是鴨子。」</blockquote>
+<p>意思是：Python <strong>不在乎物件是什麼類別，只在乎它有沒有你要呼叫的方法</strong>。只要有 <code>speak()</code>，不管是狗、貓、還是其他什麼，都能用：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">animals = [Dog(&quot;小黑&quot;), Cat(&quot;咪咪&quot;)]
+
+for a in animals:
+    a.speak()        # 不管是狗是貓，有 speak() 就能叫
+# 小黑 說：汪汪！
+# 咪咪 說：喵～</code></pre></div>
+<blockquote>跟 C# 的差別：C# 要靠 <code>virtual</code>/<code>override</code> 和共同的父類別/介面；Python 更隨性——只要有那個方法就能用，不強制要繼承關係。這讓 Python 很靈活，但也要自己確保物件真的有那個方法。</blockquote>
+<h2>五、特殊方法（dunder methods）</h2>
+<p>Python 有一組<strong>特殊方法</strong>，名字前後都是雙底線（像 <code>__init__</code>），叫 <strong>dunder method</strong>（double underscore）。它們讓你的物件能融入 Python 的語法。最實用的是 <strong><code>__str__</code></strong>。</p>
+<p><strong>問題</strong>：直接 print 一個物件，印出來很醜：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Dog:
+    def __init__(self, name):
+        self.name = name
+
+d = Dog(&quot;小黑&quot;)
+print(d)     # &lt;__main__.Dog object at 0x000001...&gt;（看不懂的東西）</code></pre></div>
+<p><strong>加上 <code>__str__</code></strong>，就能決定「這個物件被 print 時要顯示什麼」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Dog:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return f&quot;狗狗：{self.name}&quot;
+
+d = Dog(&quot;小黑&quot;)
+print(d)     # 狗狗：小黑（漂亮多了）</code></pre></div>
+<ul>
+<li><strong><code>__str__</code></strong>：定義物件被 <code>print()</code> 或轉成字串時的樣子。</li>
+<li>這些 dunder 方法是 Python 「很 Python」的地方——讓自訂物件也能用內建語法。</li>
+</ul>
+<p>除了 <code>__str__</code>，還有兩個常見的，各看一個小例子就懂它們在做什麼：</p>
+<p><strong><code>__len__</code></strong>——讓你的物件可以用 <code>len()</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Team:
+    def __init__(self, members):
+        self.members = members      # members 是一個 list
+
+    def __len__(self):
+        return len(self.members)    # 定義 len(隊伍) 要回傳什麼
+
+team = Team([&quot;小明&quot;, &quot;小華&quot;, &quot;小美&quot;])
+print(len(team))     # 3（因為我們定義了 __len__）</code></pre></div>
+<p><strong><code>__eq__</code></strong>——讓你的物件可以用 <code>==</code> 比較：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __eq__(self, other):
+        # 自己定義「兩個點相等」的意思：x、y 都一樣就算相等
+        return self.x == other.x and self.y == other.y
+
+p1 = Point(3, 5)
+p2 = Point(3, 5)
+print(p1 == p2)      # True（若沒定義 __eq__，這裡會是 False）</code></pre></div>
+<blockquote>沒定義 <code>__eq__</code> 時，<code>==</code> 預設只看「是不是同一個物件」，所以兩個內容一樣的點會被判定為不相等。定義了 <code>__eq__</code>，你就能決定「怎樣算相等」。這些 dunder 方法先知道 <code>__str__</code> 最常用、其他遇到再學即可。</blockquote>
+<h2>六、動手綜合練習</h2>
+<p>建一組有繼承關係的類別，並加上 <code>__str__</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Shape:
+    def __init__(self, name):
+        self.name = name
+
+    def area(self):
+        return 0
+
+    def __str__(self):
+        return f&quot;{self.name} 的面積是 {self.area()}&quot;
+
+
+class Circle(Shape):
+    def __init__(self, radius):
+        super().__init__(&quot;圓形&quot;)
+        self.radius = radius
+
+    def area(self):                      # 覆寫，算圓面積
+        return round(3.14159 * self.radius ** 2, 2)
+
+
+class Rectangle(Shape):
+    def __init__(self, w, h):
+        super().__init__(&quot;長方形&quot;)
+        self.w = w
+        self.h = h
+
+    def area(self):
+        return self.w * self.h
+
+
+# 用鴨子型別：都有 area() 和 __str__，統一處理
+shapes = [Circle(5), Rectangle(3, 4)]
+for s in shapes:
+    print(s)
+# 圓形 的面積是 78.54
+# 長方形 的面積是 12</code></pre></div>
+<p>這個小程式把這篇全用上了：繼承（Circle/Rectangle 繼承 Shape）、super()、方法覆寫（各自算面積）、特殊方法（__str__）、鴨子型別（統一 print）。試著自己加一個 <code>Triangle</code>（三角形）類別練練看。</p>
+<h2>這一步大約要花多久？</h2>
+<p>繼承和 <code>super()</code> 的觀念抓幾天就懂；dunder 方法先把 <code>__str__</code> 練熟（最常用），其他遇到再學。練法：</p>
+<ul>
+<li>建一組有繼承關係的類別（動物、圖形都行），練 super() 和方法覆寫。</li>
+<li>幫你的類別加 <code>__str__</code>，讓 print 出來好看。</li>
+<li>體會鴨子型別：把不同類別的物件放進一個 list，用迴圈統一呼叫同名方法。</li>
+</ul>
+<h2>下一篇</h2>
+<p>物件導向篇到這裡就完整了——類別、繼承、特殊方法，你已經掌握 Python 組織程式的核心工具。接下來進入最有感的 <strong>實用應用</strong> 階段，第一篇是 <strong>檔案讀寫與 JSON</strong>：讓你的程式能把資料存起來、讀回來，真正能記住東西。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 物件導向學得更透？</span><span class="affiliate-card-desc">繼承與特殊方法是寫出好程式的關鍵。Hahow 上有從 Python 入門到實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-classes-objects.html" rel="noopener">類別與物件：用物件的方式組織程式</a></li>
+<li>➡️ 下一篇：<a href="python-files-json.html" rel="noopener">檔案讀寫與 JSON：讓程式能存資料、讀資料</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

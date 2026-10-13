@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】類別與物件：用物件的方式組織程式 - 智慧喵</title>
+    <meta name="description" content="這篇帶你認識 Python 的物件導向：用 class 定義類別、__init__ 建構式、屬性與方法、self 是什麼，從零學會「用物件思考」組織程式。">
+    <meta name="keywords" content="Python 類別,Python 物件,class,__init__,self,物件導向,Python 教學">
+    <meta property="og:title" content="【Python 教學】類別與物件：用物件的方式組織程式">
+    <meta property="og:description" content="這篇帶你認識 Python 的物件導向：用 class 定義類別、__init__ 建構式、屬性與方法、self 是什麼，從零學會「用物件思考」組織程式。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-classes-objects.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-classes-objects/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-classes-objects.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】類別與物件：用物件的方式組織程式","description":"這篇帶你認識 Python 的物件導向：用 class 定義類別、__init__ 建構式、屬性與方法、self 是什麼，從零學會「用物件思考」組織程式。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-classes-objects.html"},"image":"https://neowise.com.tw/life/assets/python-classes-objects/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】類別與物件：用物件的方式組織程式</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-classes-objects/cover.jpg" alt="用藍圖與成品比喻類別與物件關係的概念示意圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-data-structures.html" rel="noopener">基礎篇</a>走完，你已經能寫出會跑的程式了。從這篇開始，進入<strong>物件導向（OOP）</strong>——用「東西」的方式來組織程式。這一切的起點，就是 <strong>類別</strong> 與 <strong>物件</strong>。</p>
+<h2>一、類別與物件：藍圖與成品</h2>
+<p>先用比喻把觀念講清楚：</p>
+<ul>
+<li><strong>類別（class）是藍圖</strong>——定義「這種東西長什麼樣、有哪些資料、能做什麼」，但它本身不是實際的東西。</li>
+<li><strong>物件（object）是依藍圖造出來的成品</strong>——根據藍圖做出一個個實際能用的東西。</li>
+</ul>
+<p>舉例：你畫一張「狗」的設計藍圖（類別），上面寫明狗有名字、年齡、會叫。然後照藍圖造出一隻叫「小黑」的狗、一隻叫「小白」的狗——這兩隻實際的狗就是<strong>物件</strong>。同一張藍圖能造出很多隻，各有各的名字。</p>
+<h2>二、定義一個類別</h2>
+<p>把上面的概念寫成程式。定義一個「狗」類別：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class Dog:
+    # __init__：建構式，建立物件時自動執行，用來設定初始資料
+    def __init__(self, name, age):
+        self.name = name      # 把傳進來的 name 存成這隻狗的屬性
+        self.age = age
+
+    # 方法：這個類別「能做什麼」
+    def bark(self):
+        print(f&quot;{self.name} 說：汪汪！&quot;)</code></pre></div>
+<p>這段有三個新東西要解釋：<code>class</code>、<code>__init__</code>、<code>self</code>。</p>
+<ul>
+<li><strong><code>class Dog:</code></strong>：用 <code>class</code> 定義一個類別，名稱習慣<strong>字首大寫</strong>（<code>Dog</code>）。</li>
+<li><strong><code>__init__</code></strong>：念作「dunder init」（dunder = 雙底線 double underscore）。它是<strong>建構式</strong>——每次建立一隻新狗時，Python 會自動呼叫它，用來設定這隻狗的初始資料。</li>
+<li><strong>方法</strong>：<code>bark</code> 是這個類別的方法（定義在 class 裡的函式）。</li>
+</ul>
+<h2>三、self 是什麼？（Python 新手重點）</h2>
+<p>你一定注意到每個方法第一個參數都是 <strong><code>self</code></strong>，而且 <code>name</code> 要寫成 <code>self.name</code>。這是 Python 物件導向最需要先搞懂的點。</p>
+<p><strong><code>self</code> 代表「物件自己」</strong>。因為同一個類別可以造出很多物件（很多隻狗），當你呼叫某隻狗的方法時，<code>self</code> 就代表「<strong>被呼叫的那一隻</strong>」，這樣程式才知道要用誰的資料。</p>
+<ul>
+<li><code>self.name = name</code>：把資料存進「這隻狗自己」身上。</li>
+<li><code>self.name</code>（在 bark 裡）：讀取「這隻狗自己」的名字。</li>
+</ul>
+<blockquote>不用緊張，呼叫方法時你<strong>不用自己傳 self</strong>，Python 會自動把物件填進去。你只要記得：定義方法時第一個參數寫 <code>self</code>、要存取物件自己的資料就用 <code>self.xxx</code>。</blockquote>
+<h2>四、建立並使用物件</h2>
+<p>有了類別（藍圖），來造物件（成品）。Python 建立物件<strong>不用 new</strong>，直接「類別名稱()」就好：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 建立物件：直接呼叫類別，括號裡的參數會傳給 __init__
+dog1 = Dog(&quot;小黑&quot;, 3)
+dog2 = Dog(&quot;小白&quot;, 5)
+
+# 用 . 存取屬性與方法
+print(dog1.name)      # 小黑
+print(dog2.age)       # 5
+dog1.bark()           # 小黑 說：汪汪！
+dog2.bark()           # 小白 說：汪汪！</code></pre></div>
+<p>重點：</p>
+<ul>
+<li><strong><code>Dog(&quot;小黑&quot;, 3)</code></strong>：建立物件，<code>&quot;小黑&quot;</code> 和 <code>3</code> 會對應傳給 <code>__init__</code> 的 <code>name</code> 和 <code>age</code>（self 不用你傳）。</li>
+<li><strong><code>.</code>（點）</strong>：存取物件的屬性（<code>dog1.name</code>）或方法（<code>dog1.bark()</code>）。</li>
+<li><code>dog1</code> 和 <code>dog2</code> 是<strong>兩個獨立的物件</strong>，各有各的 name、age，互不影響。</li>
+</ul>
+<blockquote>跟 C# 的差別：C# 建立物件要寫 <code>new Dog(...)</code>，Python 不用 <code>new</code>，直接 <code>Dog(...)</code> 就好，更簡潔。</blockquote>
+<h2>五、動手綜合練習</h2>
+<p>做一個「銀行帳戶」類別，把類別、<code>__init__</code>、屬性、方法全用上：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">class BankAccount:
+    def __init__(self, owner, balance):
+        self.owner = owner        # 戶名
+        self.balance = balance    # 餘額
+
+    def deposit(self, amount):
+        if amount &lt;= 0:
+            print(&quot;存款金額要大於 0&quot;)
+            return
+        self.balance += amount
+        print(f&quot;{self.owner} 存入 {amount}，餘額 {self.balance}&quot;)
+
+    def withdraw(self, amount):
+        if amount &gt; self.balance:
+            print(&quot;餘額不足&quot;)
+            return
+        self.balance -= amount
+        print(f&quot;{self.owner} 提出 {amount}，餘額 {self.balance}&quot;)
+
+
+# 使用
+acc = BankAccount(&quot;智慧喵&quot;, 1000)
+acc.deposit(500)      # 智慧喵 存入 500，餘額 1500
+acc.withdraw(2000)    # 餘額不足
+acc.withdraw(300)     # 智慧喵 提出 300，餘額 1200</code></pre></div>
+<p>注意 <code>deposit</code>、<code>withdraw</code> 都透過 <code>self.balance</code> 操作「這個帳戶自己」的餘額，而且加了檢查（存款要正數、提款不能超過餘額）。這就是用類別把「資料 + 操作」綁在一起的好處。</p>
+<p>試著自己加一個 <code>transfer</code>（轉帳給另一個帳戶）方法——提示：收兩個參數「要轉給誰（另一個 BankAccount 物件）」和「金額」，自己扣錢、呼叫對方的 <code>deposit</code> 加錢。</p>
+<h2>這一步大約要花多久？</h2>
+<p>類別與物件是觀念轉換的門檻，很多人卡在「什麼時候該開一個類別」和「self 是什麼」。建議：</p>
+<ul>
+<li>先熟練「定義類別 → 建立物件 → 用 . 操作」的流程。</li>
+<li><strong>把 self 搞懂</strong>——記住「self 就是物件自己」，多寫幾個類別就有感。</li>
+<li>拿生活中的東西來練：狗、車子、書、帳戶……想想它有哪些資料、能做什麼。</li>
+</ul>
+<p>這觀念需要時間消化，別急。一旦「用物件思考」的開關打開，程式會變得好組織很多。</p>
+<h2>下一篇</h2>
+<p>會定義類別之後，下一篇進入 <strong>繼承與特殊方法</strong>：讓類別之間能複用（繼承），並用 Python 的特殊方法（像 <code>__str__</code>）讓你的物件能被 print 得漂亮、更有 Python 味。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 物件導向學得更透？</span><span class="affiliate-card-desc">OOP 是程式進階的分水嶺。Hahow 上有從 Python 入門到實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-data-structures.html" rel="noopener">資料結構：list、tuple、dict、set 一次搞懂</a></li>
+<li>➡️ 下一篇：<a href="python-oop-inheritance.html" rel="noopener">繼承與特殊方法：讓類別更強大</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

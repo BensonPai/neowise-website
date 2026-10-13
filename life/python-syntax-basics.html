@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】語法基礎：變數、型別、流程控制與縮排規則 - 智慧喵</title>
+    <meta name="description" content="環境裝好後，就從 Python 語法基礎開始動手寫。這篇帶你搞懂變數與型別、運算子、if/for/while 流程控制，以及 Python 最特別的「用縮排表示程式區塊」規則，打好地基。">
+    <meta name="keywords" content="Python 變數,Python 型別,Python 流程控制,Python 縮排,if,for 迴圈,Python 語法,Python 教學">
+    <meta property="og:title" content="【Python 教學】語法基礎：變數、型別、流程控制與縮排規則">
+    <meta property="og:description" content="環境裝好後，就從 Python 語法基礎開始動手寫。這篇帶你搞懂變數與型別、運算子、if/for/while 流程控制，以及 Python 最特別的「用縮排表示程式區塊」規則，打好地基。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-syntax-basics.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-syntax-basics/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-syntax-basics.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】語法基礎：變數、型別、流程控制與縮排規則","description":"環境裝好後，就從 Python 語法基礎開始動手寫。這篇帶你搞懂變數與型別、運算子、if/for/while 流程控制，以及 Python 最特別的「用縮排表示程式區塊」規則，打好地基。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-syntax-basics.html"},"image":"https://neowise.com.tw/life/assets/python-syntax-basics/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】語法基礎：變數、型別、流程控制與縮排規則</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-syntax-basics/cover.jpg" alt="程式編輯器中一段 Python 變數與 for 迴圈的程式碼示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-setup-tools.html" rel="noopener">環境裝好了</a>，這篇開始真正動手寫 <strong>Python</strong>。</p>
+<p>這一篇是整個系列的地基：變數、型別、運算子、流程控制——寫<strong>任何</strong> Python 程式都會用到的基本功。Python 語法很乾淨，但它有一個跟多數語言很不一樣的規則（縮排），我會特別講清楚。建議每個範例都親手打一次、改改看，手感比死背重要。</p>
+<p>小提醒：在 VS Code 建一個 <code>.py</code> 檔，把範例貼進去跟著跑最有效。文中的 <code>print(...)</code> 就是「印出一行」。</p>
+<h2>一、變數與型別</h2>
+<p>Python 的變數<strong>不用宣告型別</strong>，直接賦值就好——它會自動判斷：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">score = 100          # 整數
+name = &quot;智慧喵&quot;       # 字串
+height = 175.5       # 小數
+is_student = False   # 布林（True / False）</code></pre></div>
+<ul>
+<li>不用寫 <code>int</code>、<code>string</code> 這些，Python 看你給什麼值，自動決定型別（這叫<strong>動態型別</strong>）。</li>
+<li>變數命名習慣用小寫加底線（像 <code>is_student</code>），這是 Python 的慣例。</li>
+</ul>
+<p>想知道某個變數是什麼型別，用 <code>type()</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">print(type(score))   # &lt;class 'int'&gt;（整數）
+print(type(name))    # &lt;class 'str'&gt;（字串）</code></pre></div>
+<p>常見型別：<code>int</code>（整數）、<code>float</code>（小數）、<code>str</code>（字串）、<code>bool</code>（布林）。</p>
+<p><strong>型別轉換</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">age_text = &quot;25&quot;           # 這是字串
+age = int(age_text)       # 轉成整數 25
+price = str(100)          # 數字轉字串 &quot;100&quot;</code></pre></div>
+<blockquote>新手陷阱：從鍵盤輸入或檔案讀進來的東西，<strong>預設都是字串</strong>。例如 <code>input()</code> 讀到的 <code>&quot;25&quot;</code> 是字串，要拿來算數學得先 <code>int()</code> 轉成數字，否則 <code>&quot;25&quot; + 1</code> 會出錯。</blockquote>
+<h2>二、運算子與字串</h2>
+<p><strong>算術運算子</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">a = 10
+b = 3
+print(a + b)    # 13
+print(a - b)    # 7
+print(a * b)    # 30
+print(a / b)    # 3.3333...（Python 的 / 一律給小數）
+print(a // b)   # 3（// 是整數除法，捨去小數）
+print(a % b)    # 1（餘數）
+print(a ** b)   # 1000（次方，10 的 3 次方）</code></pre></div>
+<blockquote>跟某些語言不同：Python 的 <code>/</code> 永遠給小數結果（<code>10 / 3</code> 是 3.33）。想要整數相除捨去小數，用 <code>//</code>。</blockquote>
+<p><strong>比較與邏輯</strong>：Python 的邏輯運算子用英文單字 <code>and</code> / <code>or</code> / <code>not</code>（不是 <code>&amp;&amp;</code>、<code>||</code>）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">print(a &gt; b)              # True
+print(a &gt; 5 and b &lt; 5)    # True（兩邊都成立）
+print(a &gt; 5 or b &gt; 5)     # True（任一成立）
+print(not a &gt; 5)          # False</code></pre></div>
+<p><strong>字串格式化（f-string）</strong>：在字串前加 <code>f</code>，用 <code>{}</code> 把變數塞進去，超好用：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">name = &quot;智慧喵&quot;
+level = 3
+print(f&quot;哈囉 {name}，你現在是第 {level} 級&quot;)
+# 哈囉 智慧喵，你現在是第 3 級</code></pre></div>
+<h2>三、縮排：Python 最特別的地方</h2>
+<p>這是 Python 跟多數語言<strong>最不一樣</strong>的點，新手一定要先搞懂。</p>
+<p>多數語言（像 C#、Java）用<strong>大括號 <code>{ }</code></strong> 來框住一個程式區塊。Python 不用大括號——它<strong>用「縮排」來表示程式區塊</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">if score &gt;= 60:
+    print(&quot;及格&quot;)        # 縮排了，所以屬於 if 的內容
+    print(&quot;恭喜&quot;)        # 一樣縮排，也屬於 if
+print(&quot;這行沒縮排&quot;)       # 回到最外層，不屬於 if</code></pre></div>
+<p>重點：</p>
+<ul>
+<li>區塊開頭的那行結尾要加 <strong>冒號 <code>:</code></strong>（像 <code>if ...:</code>）。</li>
+<li>下一層的程式要<strong>往右縮排</strong>（慣例是 <strong>4 個空白</strong>）。</li>
+<li>同一個區塊的縮排必須<strong>一致</strong>，縮錯會直接報錯（<code>IndentationError</code>）。</li>
+</ul>
+<blockquote>新手最常踩的雷就是縮排。好消息是：VS Code 會幫你自動縮排，而且<strong>不要混用「空白」和「Tab」</strong>（看起來一樣、電腦看起來不一樣，會報錯）。VS Code 預設按 Tab 會轉成空白，照它的預設走最安全。</blockquote>
+<p>這個設計的好處是：Python 程式天生整齊，想亂排都難。</p>
+<h2>四、流程控制</h2>
+<h3>if：條件判斷</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">temperature = 28
+
+if temperature &gt;= 30:
+    print(&quot;好熱，開冷氣&quot;)
+elif temperature &gt;= 20:      # elif = else if
+    print(&quot;天氣舒服&quot;)
+else:
+    print(&quot;有點冷&quot;)</code></pre></div>
+<p>注意：條件後面加冒號 <code>:</code>、下一行縮排。<code>elif</code> 是 Python 版的「else if」。</p>
+<h3>for：走訪 / 重複</h3>
+<p>Python 的 <code>for</code> 很直覺——「對每個東西做一件事」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 搭配 range() 跑固定次數
+for i in range(1, 6):        # 1, 2, 3, 4, 5（不含 6）
+    print(f&quot;第 {i} 次&quot;)
+
+# 直接走訪一串東西
+fruits = [&quot;蘋果&quot;, &quot;香蕉&quot;, &quot;橘子&quot;]
+for fruit in fruits:
+    print(fruit)</code></pre></div>
+<ul>
+<li><code>range(1, 6)</code> 產生 1 到 5（<strong>不含結尾的 6</strong>，這點新手要記）。</li>
+<li><code>for x in 一串東西</code> 會一個個取出來，比其他語言的 for 迴圈好讀。</li>
+</ul>
+<h3>while：條件成立就一直做</h3>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">count = 3
+while count &gt; 0:
+    print(f&quot;倒數 {count}&quot;)
+    count -= 1        # 別忘了讓條件有機會變 False，否則變無窮迴圈</code></pre></div>
+<p><code>break</code> 可中途跳出迴圈、<code>continue</code> 可跳過這一輪，兩個都常用。</p>
+<h2>五、動手綜合練習</h2>
+<p>把上面全用上，做一個「印 1 到 10、標出奇偶數」的小程式：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">for i in range(1, 11):           # 1 到 10
+    if i % 2 == 0:
+        print(f&quot;{i} 是偶數&quot;)
+    else:
+        print(f&quot;{i} 是奇數&quot;)</code></pre></div>
+<p>跑跑看，再試著自己改：只印偶數？改成 1 到 100？用 <code>i % 3 == 0</code> 找 3 的倍數？動手改，才是真的學會。</p>
+<h2>這一步大約要花多久？</h2>
+<p>Python 語法基礎抓 <strong>1~2 週</strong>。如果你學過其他語言（C#、Java 等），觀念大多相通，可能幾天就上手，主要是適應縮排和 Python 的寫法。練法：</p>
+<ul>
+<li>每個觀念親手打、改數值看變化。</li>
+<li><strong>特別練縮排</strong>——這是 Python 新手最常卡的地方，多寫幾個 if、for 就習慣了。</li>
+<li>寫個小程式綜合練習，例如「輸入分數印等第」。</li>
+</ul>
+<p>重點是手感，不是背。這些會在你之後寫的每一支 Python 程式裡反覆出現。</p>
+<h2>下一篇</h2>
+<p>變數和流程控制有了，但程式一長就會亂。下一篇進入 <strong>函式</strong>——學會用 <code>def</code> 把程式切成一塊塊好用、可重用的「函式」，讓程式有條理。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 練得更扎實？</span><span class="affiliate-card-desc">語言基礎最怕只看不練。Hahow 上有從 Python 入門到實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-setup-tools.html" rel="noopener">開發環境準備：安裝 Python、VS Code，跑出第一支程式</a></li>
+<li>➡️ 下一篇：<a href="python-functions.html" rel="noopener">函式：把程式切成好用的小塊</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

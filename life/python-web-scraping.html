@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】網路爬蟲入門：用 requests + BeautifulSoup 抓網頁資料 - 智慧喵</title>
+    <meta name="description" content="Python 最受歡迎的應用之一就是爬蟲。這篇帶你用 requests 抓網頁、用 BeautifulSoup 解析內容，從零學會自動抓取網頁資料，並說明禮貌爬取與法律界線。">
+    <meta name="keywords" content="Python 爬蟲,requests,BeautifulSoup,網路爬蟲,抓網頁,web scraping,Python 教學">
+    <meta property="og:title" content="【Python 教學】網路爬蟲入門：用 requests + BeautifulSoup 抓網頁資料">
+    <meta property="og:description" content="Python 最受歡迎的應用之一就是爬蟲。這篇帶你用 requests 抓網頁、用 BeautifulSoup 解析內容，從零學會自動抓取網頁資料，並說明禮貌爬取與法律界線。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-web-scraping.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-web-scraping/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-web-scraping.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】網路爬蟲入門：用 requests + BeautifulSoup 抓網頁資料","description":"Python 最受歡迎的應用之一就是爬蟲。這篇帶你用 requests 抓網頁、用 BeautifulSoup 解析內容，從零學會自動抓取網頁資料，並說明禮貌爬取與法律界線。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-web-scraping.html"},"image":"https://neowise.com.tw/life/assets/python-web-scraping/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】網路爬蟲入門：用 requests + BeautifulSoup 抓網頁資料</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-web-scraping/cover.jpg" alt="示意程式自動從網頁抓取資料的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-files-json.html" rel="noopener">上一篇</a>學會存讀資料。這篇講 Python 最受歡迎的應用之一：<strong>網路爬蟲</strong>——用程式自動把網頁上的資料抓下來。</p>
+<p>爬蟲很實用（抓價格、整理資料、監控更新），但它也最需要「守規矩」。所以這篇<strong>先講規矩，再講技術</strong>——爬得聰明，也要爬得正當。</p>
+<h2>一、先搞懂規矩（這段最重要，別跳過）</h2>
+<p>用程式抓別人的網站，不是「技術上做得到」就代表「可以做」。開始前先建立這些觀念：</p>
+<ul>
+<li><strong>看 robots.txt</strong>：大多網站在網址後面加 <code>/robots.txt</code>（例如 <code>example.com/robots.txt</code>）會列出「哪些頁面不希望被爬」。這是業界共識，請尊重它。</li>
+<li><strong>看網站使用條款</strong>：有些網站明文禁止爬取，違反可能有法律責任。</li>
+<li><strong>別狂打</strong>：短時間大量請求會造成對方伺服器負擔，等同攻擊。<strong>每次請求之間要加延遲</strong>（後面會教）。</li>
+<li><strong>個資與版權</strong>：抓到的資料若含個人資料或受版權保護的內容，不能隨意散布、商用。</li>
+<li><strong>優先找官方 API</strong>：很多服務有提供官方 API（正式的資料取得管道），有 API 就用 API，比爬 HTML 更穩定、也更正當。</li>
+</ul>
+<blockquote>一句話總結：<strong>把爬蟲當成「有禮貌的訪客」</strong>——輕手輕腳、遵守告示、不打擾對方正常運作。本篇範例都用公開、允許練習的網站。</blockquote>
+<h2>二、安裝工具</h2>
+<p>爬蟲用兩個套件：<code>requests</code>（抓網頁）和 <code>beautifulsoup4</code>（解析內容）。用上一篇沒細講、但總覽提過的 <strong>pip</strong> 安裝：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-bash">pip install requests beautifulsoup4</code></pre></div>
+<p>（Mac/Linux 若 <code>pip</code> 沒反應，試 <code>pip3</code>。）</p>
+<blockquote>如果執行程式時出現 <code>ModuleNotFoundError: No module named 'requests'</code>（明明裝了卻找不到），通常是「裝套件的 Python」和「跑程式的 Python」不是同一個。解法請回頭看<a href="python-setup-tools.html" rel="noopener">環境準備篇的 venv 段落</a>——用虛擬環境把它們綁在一起就不會出錯。</blockquote>
+<h2>三、用 requests 抓網頁</h2>
+<p><code>requests</code> 讓你用一行就把網頁抓下來：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import requests
+
+url = &quot;https://example.com&quot;
+response = requests.get(url)        # 發出請求、拿回回應
+
+print(response.status_code)         # 200 代表成功
+print(response.text[:200])          # 印出網頁 HTML 的前 200 字</code></pre></div>
+<p>重點：</p>
+<ul>
+<li><strong><code>requests.get(網址)</code></strong>：抓一個網頁，回傳一個 response 物件。</li>
+<li><strong><code>response.status_code</code></strong>：狀態碼。<strong>200</strong> = 成功；<strong>404</strong> = 找不到；<strong>403</strong> = 被拒絕。</li>
+<li><strong><code>response.text</code></strong>：網頁的 HTML 原始碼（一大串字串）。</li>
+</ul>
+<p><strong>加上 headers（模擬瀏覽器）</strong>：有些網站會擋掉沒有瀏覽器標頭的請求，加個 <code>User-Agent</code> 比較不會被擋：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">headers = {&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;}
+response = requests.get(url, headers=headers)</code></pre></div>
+<h2>四、用 BeautifulSoup 解析</h2>
+<p>抓回來的 <code>response.text</code> 是一大串 HTML，很難直接用。<strong>BeautifulSoup</strong> 幫你把它變成「可以用程式找東西」的結構：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import requests
+from bs4 import BeautifulSoup
+
+url = &quot;https://example.com&quot;
+response = requests.get(url, headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;})
+
+# 把 HTML 丟給 BeautifulSoup 解析
+soup = BeautifulSoup(response.text, &quot;html.parser&quot;)
+
+# 找東西
+print(soup.title.text)              # 網頁標題
+print(soup.find(&quot;h1&quot;).text)         # 第一個 &lt;h1&gt; 的文字
+
+# find_all 找出所有符合的
+for link in soup.find_all(&quot;a&quot;):     # 所有 &lt;a&gt; 連結
+    print(link.get(&quot;href&quot;))         # 取出連結的網址</code></pre></div>
+<p>常用方法：</p>
+<ul>
+<li><strong><code>BeautifulSoup(html, &quot;html.parser&quot;)</code></strong>：建立解析器。</li>
+<li><strong><code>soup.find(&quot;標籤&quot;)</code></strong>：找<strong>第一個</strong>符合的元素。</li>
+<li><strong><code>soup.find_all(&quot;標籤&quot;)</code></strong>：找<strong>所有</strong>符合的，回傳一個 list。</li>
+<li><strong><code>.text</code></strong>：取元素裡的文字；<strong><code>.get(&quot;屬性&quot;)</code></strong>：取屬性值（像連結的 <code>href</code>）。</li>
+</ul>
+<h2>五、禮貌爬取：加延遲</h2>
+<p>如果你要連續抓很多頁，<strong>一定要在每次請求之間加延遲</strong>，別把對方伺服器打爆：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import requests
+import time
+
+urls = [&quot;https://example.com/page1&quot;, &quot;https://example.com/page2&quot;]
+
+for url in urls:
+    response = requests.get(url, headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;})
+    print(f&quot;抓了 {url}，狀態 {response.status_code}&quot;)
+    time.sleep(2)        # 每抓一頁休息 2 秒，當個有禮貌的訪客</code></pre></div>
+<p><code>time.sleep(2)</code> 讓程式暫停 2 秒再抓下一頁。這一步看似拖慢速度，但它是負責任爬蟲的基本禮貌，也降低你被封鎖的機會。</p>
+<h2>六、動手練習與注意</h2>
+<p>一個完整的小範例（抓網頁標題與所有連結）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import requests
+from bs4 import BeautifulSoup
+import time
+
+url = &quot;https://example.com&quot;       # 練習請用公開、允許爬取的網站
+response = requests.get(url, headers={&quot;User-Agent&quot;: &quot;Mozilla/5.0&quot;})
+
+if response.status_code == 200:
+    soup = BeautifulSoup(response.text, &quot;html.parser&quot;)
+    print(&quot;標題：&quot;, soup.title.text)
+    print(&quot;連結：&quot;)
+    for link in soup.find_all(&quot;a&quot;):
+        print(&quot; -&quot;, link.get(&quot;href&quot;))
+else:
+    print(f&quot;抓取失敗，狀態碼 {response.status_code}&quot;)
+
+time.sleep(2)</code></pre></div>
+<p><strong>練習建議</strong>：拿 <code>example.com</code> 這種公開範例站、或專門給人練爬蟲的網站（搜尋「爬蟲練習網站」）來試，別一上來就爬商業網站。再次提醒——<strong>合法與禮貌是底線</strong>，技術只是工具。</p>
+<h2>這一步大約要花多久？</h2>
+<p>爬蟲基本流程（requests 抓 → BeautifulSoup 解析）抓 <strong>1~2 週</strong>就能上手。難的通常不是語法，而是「看懂目標網頁的 HTML 結構、找出要抓的元素在哪」，這需要多練。練法：</p>
+<ul>
+<li>先用 <code>example.com</code> 練 requests + BeautifulSoup 的基本流程。</li>
+<li>用瀏覽器的「檢查元素」看網頁結構，練習用 find / find_all 定位。</li>
+<li><strong>每個練習都加 <code>time.sleep</code></strong>，養成禮貌爬取的習慣。</li>
+</ul>
+<h2>下一篇</h2>
+<p>會抓網頁後，下一篇講另一個超實用的應用：<strong>自動化腳本</strong>——用 Python 批次處理檔案、整理資料夾，把每天重複的瑣事交給程式，體會「寫一次、省一輩子」的威力。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 爬蟲學得更完整？</span><span class="affiliate-card-desc">爬蟲從入門到實戰有不少眉角。Hahow 上有專門的 Python 爬蟲系統課程，想要有完整範例與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-files-json.html" rel="noopener">檔案讀寫與 JSON：讓程式能存資料、讀資料</a></li>
+<li>➡️ 下一篇：<a href="python-automation.html" rel="noopener">自動化腳本：把重複的工作交給程式</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

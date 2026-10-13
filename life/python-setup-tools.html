@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】開發環境準備：安裝 Python、VS Code，跑出第一支程式 - 智慧喵</title>
+    <meta name="description" content="學 Python 的第一關是把環境裝好。這篇手把手帶你安裝 Python、設定 VS Code、認識 pip 套件安裝器，並跑出第一支程式，踏出 Python 開發扎實的第一步。">
+    <meta name="keywords" content="Python 安裝,VS Code Python,pip,Python 環境,Hello World,Python 教學,Python 入門">
+    <meta property="og:title" content="【Python 教學】開發環境準備：安裝 Python、VS Code，跑出第一支程式">
+    <meta property="og:description" content="學 Python 的第一關是把環境裝好。這篇手把手帶你安裝 Python、設定 VS Code、認識 pip 套件安裝器，並跑出第一支程式，踏出 Python 開發扎實的第一步。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-setup-tools.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-setup-tools/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-setup-tools.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】開發環境準備：安裝 Python、VS Code，跑出第一支程式","description":"學 Python 的第一關是把環境裝好。這篇手把手帶你安裝 Python、設定 VS Code、認識 pip 套件安裝器，並跑出第一支程式，踏出 Python 開發扎實的第一步。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-setup-tools.html"},"image":"https://neowise.com.tw/life/assets/python-setup-tools/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】開發環境準備：安裝 Python、VS Code，跑出第一支程式</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-setup-tools/cover.jpg" alt="電腦螢幕上開著 VS Code，顯示一支簡單的 Python 程式" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>在<a href="python-complete-guide-overview.html" rel="noopener">上一篇總覽</a>裡，我們看過 Python 能做什麼了。從這篇開始正式動手。</p>
+<p>第一關不是寫程式，而是<strong>把開發環境準備好</strong>。Python 的環境門檻很低——任何一台 Windows、Mac 或 Linux 電腦都能開始，而且全部免費。照著做，十幾分鐘就能跑出你的第一支程式。</p>
+<p>這篇會帶你完成四件事：安裝 Python、認識 pip、設定 VS Code、跑出第一支程式。</p>
+<h2>一、安裝 Python</h2>
+<p>先裝核心——<strong>Python 直譯器</strong>，它是讓 Python 程式能跑的引擎。</p>
+<ol>
+<li>到 Python 官方網站（搜尋「python download」就能找到 <code>python.org</code>）。</li>
+<li>下載<strong>最新的穩定版</strong>（網站通常會自動偵測你的系統、給出對應的下載按鈕）。截至查證時（<strong>2026-10-13</strong>），直接抓官網首頁推薦的版本即可，實際版本請以 <a href="https://www.python.org/downloads/" rel="noopener">Python 官方下載頁</a>為準。</li>
+<li>執行安裝檔。</li>
+</ol>
+<p><strong>Windows 使用者注意——這是新手最常漏、也最常害人卡關的一步：</strong></p>
+<blockquote>安裝畫面最下方有一個勾選框 <strong>「Add Python to PATH」</strong>（把 Python 加入環境變數），<strong>一定要勾起來</strong>再按安裝。勾了它，你才能在終端機直接打 <code>python</code> 指令。很多人沒勾，後面打指令一直說「找不到 python」，就是卡在這裡。</blockquote>
+<p>Mac 通常已內建一個舊版 Python，但建議還是從官網裝一份新的；Mac / Linux 安裝相對單純，照官網指示即可。</p>
+<p><strong>確認裝好了沒</strong>：打開終端機（Windows 的「命令提示字元」或 PowerShell、Mac 的「終端機」），輸入：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-bash">python --version</code></pre></div>
+<p>印出一組版本號（例如 <code>Python 3.x.x</code>）就代表成功。</p>
+<blockquote>如果 Windows 顯示「找不到 python」，九成是剛才沒勾「Add Python to PATH」。解法：重新執行安裝檔、選 Modify、把它勾起來；或重裝一次記得勾。</blockquote>
+<h2>二、認識 pip：Python 威力的來源</h2>
+<p>裝 Python 時會<strong>順便裝好一個超重要的工具：pip</strong>。</p>
+<p>pip 是 Python 的<strong>套件安裝器</strong>。還記得總覽說過，Python 的強大來自「什麼都有現成套件」嗎？那些套件（像之後會用到的 requests、pandas）就是用 pip 一行指令裝進來的：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-bash">pip install 套件名稱</code></pre></div>
+<p>例如之後學爬蟲時會打 <code>pip install requests</code>，它就會自動幫你把套件下載安裝好。現在不用裝任何東西，先知道 <strong>pip 是「幫你裝別人寫好的工具」的指令</strong>就夠了。</p>
+<p><strong>確認 pip 在</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-bash">pip --version</code></pre></div>
+<blockquote>小知識：有時指令要用 <code>pip3</code> / <code>python3</code>（Mac/Linux 常見，區分新舊版）。如果 <code>pip</code> 沒反應，試試 <code>pip3</code>。</blockquote>
+<h2>三、安裝與設定 VS Code</h2>
+<p>有了 Python 引擎，接著裝寫程式的地方。新手我推薦 <strong>VS Code</strong>——免費、輕量、對 Python 支援很好。</p>
+<ol>
+<li>到 <a href="https://code.visualstudio.com/" rel="noopener">VS Code 官方網站</a>下載安裝檔（或搜尋「vscode download」），網站會自動偵測你的系統給出對應下載按鈕。</li>
+<li>執行下載的安裝檔，一路照預設按下去完成安裝。</li>
+<li>安裝完<strong>打開 VS Code</strong>，到左側的<strong>擴充套件（Extensions）</strong>圖示（四個方塊那個），搜尋「<strong>Python</strong>」，安裝 Microsoft 官方那個 Python 擴充套件。</li>
+<li>這個擴充套件會提供：語法highlight、自動完成、一鍵執行、除錯等便利功能。</li>
+</ol>
+<blockquote>認明：清單裡很多名字含 Python 的套件，你要裝的是<strong>名稱就叫「Python」、發行者是 Microsoft（有藍勾勾）</strong>的那個。裝它的時候，它會<strong>自動把相關的套件（如 Pylance、Python Debugger）一起裝好</strong>——所以你會看到一次多裝了幾個，這是正常的，不用一個個手動裝。</blockquote>
+<blockquote>簡單說順序是：<strong>先下載安裝檔 → 裝好 VS Code 本體 → 打開它 → 再裝 Python 擴充套件</strong>。VS Code 本體和擴充套件是兩個東西，別只裝了本體就跳去寫程式。</blockquote>
+<blockquote>為什麼不是 PyCharm？PyCharm 也很好（專為 Python 設計、功能完整），但對新手來說 VS Code 更輕量、開得快、學習曲線平緩。先用 VS Code，之後有需要再試 PyCharm。</blockquote>
+<h2>四、跑出第一支程式</h2>
+<p>來跑經典的第一支程式。</p>
+<ol>
+<li>在電腦上建一個資料夾（例如 <code>python-learn</code>），用 VS Code 打開它。</li>
+<li>新建一個檔案，命名 <code>hello.py</code>（Python 檔案的副檔名是 <code>.py</code>）。</li>
+<li>在裡面寫一行：</li>
+</ol>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">print(&quot;Hello, World!&quot;)</code></pre></div>
+<ol>
+<li>執行——點右上角的 <strong>▶ 執行按鈕</strong>（或在檔案上按右鍵選「在終端機中執行 Python 檔案」）。</li>
+<li>下方終端機就會印出 <code>Hello, World!</code>。</li>
+</ol>
+<p><code>print(...)</code> 是 Python 最常用的指令，意思是「把括號裡的東西印出來」。恭喜，你跑了人生第一支 Python 程式。🎉</p>
+<p><strong>試著改一下</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">print(&quot;哈囉，我是智慧喵，開始學 Python 了！&quot;)</code></pre></div>
+<p>再執行一次，看輸出有沒有跟著變。這種「改一點、跑一次、看結果」的循環，就是學程式最有效的方式——而 Python 試錯特別快，寫完直接跑、不用等編譯。</p>
+<h2>五、認識你的工具：三層關係</h2>
+<p>把這篇裝的東西，用一張關係圖收尾：</p>
+<figure><img src="assets/python-setup-tools/toolchain.jpg" alt="Python 開發工具鏈關係圖" loading="lazy"></figure>
+<ul>
+<li><strong>Python 直譯器</strong>：最底層的引擎，負責執行你寫的 Python 程式。</li>
+<li><strong>編輯器（VS Code）</strong>：你寫程式的地方，提供提示、執行、除錯等便利。</li>
+<li><strong>pip</strong>：套件安裝器，幫你把別人寫好的強大工具裝進來用。</li>
+</ul>
+<p>這篇我們把這三樣準備好了，接下來就能專心學語言本身。</p>
+<h2>六、虛擬環境 venv：強烈建議一開始就用</h2>
+<p>你可能會看到一個詞叫 <strong>venv（虛擬環境）</strong>。簡單說，它是「為每個專案建立一個獨立的 Python 套件空間」。這聽起來像進階主題，但我<strong>建議你一開始就用</strong>，因為它能避免一個新手超常撞到的坑（下面會講）。</p>
+<p><strong>怎麼建、怎麼用</strong>：在 VS Code 開啟終端機（檢視 → 終端機），切到你的專案資料夾，依序打：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-bash"># 1. 建立虛擬環境（會產生一個 venv 資料夾）
+py -m venv venv
+
+# 2. 啟用它（Windows PowerShell）
+.\venv\Scripts\Activate.ps1
+# Mac / Linux 則是：source venv/bin/activate
+
+# 3. 啟用成功後，提示字元最前面會出現 (venv)，之後裝的套件都進這個環境
+pip install 套件名稱</code></pre></div>
+<p>啟用後，最後一步<strong>讓 VS Code 也用這個環境</strong>：按 <code>Ctrl+Shift+P</code>、輸入「Python: Select Interpreter」，選路徑含 <code>venv</code> 的那個。</p>
+<blockquote>若啟用時 PowerShell 跳紅字「因為此系統上已停用指令碼執行」，先打這行放行（問 Y/N 按 Y，只影響你自己帳號）：<code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>，再重試啟用。</blockquote>
+<p><strong>為什麼強烈建議用它——避開「ModuleNotFoundError」這個坑</strong>：</p>
+<p>如果你電腦裝了不只一個 Python（很常見，尤其有裝過其他含 Python 的軟體），<code>pip install</code> 可能把套件裝到 A 這個 Python，但 VS Code 執行程式時用的是 B，結果程式說「找不到套件」（<code>ModuleNotFoundError</code>）——明明裝了卻找不到。用 venv 把環境綁定在專案裡，就不會錯位。</p>
+<blockquote>已經撞到 <code>ModuleNotFoundError</code> 了？兩個解法：①（推薦）照上面建一個 venv、在裡面重裝套件、VS Code 選用該環境。②臨時解：改用 <code>python -m pip install 套件名</code>（用「現在這個 python」的 pip 裝，保證不錯位）。</blockquote>
+<p><strong>小提醒</strong>：之後每次重開終端機，要先跑一次啟用指令（看到 <code>(venv)</code> 才對）；VS Code 選好直譯器後，開新終端機通常會自動幫你啟用。</p>
+<h2>這一步大約要花多久？</h2>
+<p>準備環境很快，時間主要花在下載：</p>
+<ul>
+<li>安裝 Python：十分鐘內（記得勾 Add to PATH）。</li>
+<li>安裝 VS Code + Python 擴充套件：十幾分鐘。</li>
+<li>建檔、跑出 Hello World：幾分鐘。</li>
+</ul>
+<p>這階段的目標很單純：<strong>能建一個 .py 檔、按執行、在終端機看到自己印出的文字</strong>。做到這步，你的 Python 開發環境就正式上線了。</p>
+<h2>下一篇</h2>
+<p>環境備妥後，下一篇進入 <strong>Python 語法基礎</strong>——變數與型別、運算子、流程控制，還有 Python 最特別的「用縮排表示程式區塊」規則。這是真正開始寫程式邏輯的地方。</p>
+<p>學程式別跳過基礎，一步一步來最快。我們下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想更有系統地學 Python？</span><span class="affiliate-card-desc">想要有完整練習與專案帶著走的話，Hahow 上有不少 Python 入門到進階的系統課程，可以挑一門有興趣的開始。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-complete-guide-overview.html" rel="noopener">Python 是什麼、能做什麼？從零開始的學習地圖（總覽）</a></li>
+<li>➡️ 下一篇：<a href="python-syntax-basics.html" rel="noopener">語法基礎：變數、型別、流程控制與縮排規則</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

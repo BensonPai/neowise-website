@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】資料處理入門：用 pandas 讀 CSV、篩選、統計 - 智慧喵</title>
+    <meta name="description" content="Python 在資料分析界是王者。這篇帶你入門 pandas：讀取 CSV、檢視與篩選資料、做基本統計，還有畫出簡單圖表，體會用程式處理資料的威力。">
+    <meta name="keywords" content="Python 資料分析,pandas,CSV,DataFrame,資料處理,matplotlib,Python 教學">
+    <meta property="og:title" content="【Python 教學】資料處理入門：用 pandas 讀 CSV、篩選、統計">
+    <meta property="og:description" content="Python 在資料分析界是王者。這篇帶你入門 pandas：讀取 CSV、檢視與篩選資料、做基本統計，還有畫出簡單圖表，體會用程式處理資料的威力。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-data-analysis.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-data-analysis/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-data-analysis.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】資料處理入門：用 pandas 讀 CSV、篩選、統計","description":"Python 在資料分析界是王者。這篇帶你入門 pandas：讀取 CSV、檢視與篩選資料、做基本統計，還有畫出簡單圖表，體會用程式處理資料的威力。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-data-analysis.html"},"image":"https://neowise.com.tw/life/assets/python-data-analysis/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】資料處理入門：用 pandas 讀 CSV、篩選、統計</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-data-analysis/cover.jpg" alt="示意用 pandas 把表格資料整理與統計的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-automation.html" rel="noopener">上一篇</a>學會自動化。這篇是實用應用的最後一塊、也是 Python 的招牌強項：<strong>資料處理</strong>。</p>
+<p>Python 在資料分析界幾乎是王者，核心工具就是 <strong>pandas</strong>。有了它，Excel 要點半天的篩選、統計、樞紐分析，用幾行程式就能搞定，而且能處理 Excel 開不動的大檔案。</p>
+<h2>一、安裝與認識 pandas</h2>
+<p>pandas 不是內建的，用 pip 安裝（建議在上一篇環境篇講的 venv 裡裝）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-bash">pip install pandas</code></pre></div>
+<blockquote>遇到裝了卻 <code>ModuleNotFoundError</code>？回頭看<a href="python-setup-tools.html" rel="noopener">環境準備篇的 venv 段落</a>，多半是 Python 環境錯位。</blockquote>
+<p><strong>DataFrame 是什麼</strong>：pandas 的核心是 <strong>DataFrame</strong>——你可以把它想成「程式裡的試算表」，有欄（column）有列（row），就像一張 Excel 表。pandas 做的事，就是用程式操作這張表。</p>
+<h3>補充：用 Jupyter Notebook 做資料分析更順手</h3>
+<p>做資料分析時，很多人愛用 <strong>Jupyter Notebook</strong>。它跟一般 <code>.py</code> 檔最大的差別是：可以把程式<strong>切成一格一格（cell）分開跑</strong>，每格跑完<strong>立刻在下面看到結果</strong>（表格、圖表都直接顯示），改哪格就只重跑哪格——很適合「邊試邊看」的資料探索。</p>
+<p><strong>在 VS Code 裡用（最簡單，不用額外開軟體）：</strong></p>
+<ol>
+<li>新建一個副檔名為 <strong><code>.ipynb</code></strong> 的檔案（notebook 檔），VS Code 會自動用 notebook 介面打開。</li>
+<li>在格子裡打程式，按 <strong>Shift + Enter</strong> 執行這一格並跳到下一格。</li>
+<li>第一次執行時，VS Code 可能提示你安裝需要的東西，照它指示點「安裝」即可。</li>
+</ol>
+<blockquote>關於要裝什麼，別被兩個名字很像的東西搞混： - <strong>Jupyter 擴充套件</strong>（VS Code 的外掛）：當初裝 Microsoft 官方「Python」擴充套件時，通常<strong>已經連它一起裝好了</strong>，不用再另外裝。 - <strong><code>jupyter</code> 套件</strong>（Python 套件）：這是讓 notebook 核心能跑的東西，若 VS Code 提示缺少，就在你的 venv 裡 <code>pip install jupyter</code>（或 <code>pip install ipykernel</code>）。</blockquote>
+<p>&gt;</p>
+<blockquote>簡單說：<strong>VS Code 擴充多半已有、直接開 <code>.ipynb</code> 試；真的缺東西時它會提示你裝。</strong></blockquote>
+<p><strong>用起來像這樣</strong>——一格放一個步驟，分開跑、逐步看：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 第 1 格：讀資料
+import pandas as pd
+df = pd.read_csv(&quot;students.csv&quot;)
+df.head()          # 直接顯示前幾列的表格（notebook 會漂亮地排版出來）</code></pre></div>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 第 2 格：分組統計（跑這格會直接在下面顯示結果）
+df.groupby(&quot;subject&quot;)[&quot;score&quot;].mean()</code></pre></div>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 第 3 格：畫圖（圖表直接內嵌顯示在格子下方）
+df.groupby(&quot;subject&quot;)[&quot;score&quot;].mean().plot(kind=&quot;bar&quot;)</code></pre></div>
+<ul>
+<li>notebook 裡<strong>最後一行的結果會自動顯示</strong>，不用每次都 <code>print()</code>（例如上面直接寫 <code>df.head()</code> 就會印出表格）。</li>
+<li>每格可獨立執行，改了某格只要重跑那格，不用整個程式從頭跑——這是它最爽的地方。</li>
+</ul>
+<blockquote>新手不用糾結要用哪個：<strong>學語法、寫工具用一般 <code>.py</code>；做資料探索、想一步步看結果用 Notebook</strong>。兩個都用同一套 Python 和套件，隨時切換都行。這篇的範例用 <code>.py</code> 或 Notebook 跑都可以。</blockquote>
+<h2>二、讀取資料</h2>
+<p>假設你有一個 CSV 檔 <code>students.csv</code>（CSV 是最常見的表格資料格式，Excel 可以另存成 CSV）。它的內容長這樣——第一行是欄位名稱，之後每行一筆資料：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-text">name,subject,score
+小明,數學,90
+小華,數學,55
+小美,英文,78
+小強,英文,95
+小李,數學,82</code></pre></div>
+<blockquote>想直接練不想自己打？<a href="assets/python-data-analysis/students.csv" rel="noopener">下載這份範例 students.csv</a>（15 筆、數學/英文/自然三科，分組統計起來更有感），存到你的程式同一個資料夾就能跟著跑。</blockquote>
+<p>用 pandas 讀進來：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import pandas as pd        # 慣例：pandas 簡寫成 pd
+
+df = pd.read_csv(&quot;students.csv&quot;)   # 讀 CSV，得到一個 DataFrame
+
+print(df)                  # 印出整張表
+print(df.head(3))          # 只看前 3 列
+print(df.info())           # 看欄位、資料型別、筆數
+print(df.describe())       # 數值欄位的統計摘要（平均、最大最小等）</code></pre></div>
+<ul>
+<li><strong><code>pd.read_csv(檔名)</code></strong>：讀 CSV 成 DataFrame。</li>
+<li><strong><code>.head(n)</code></strong>：看前 n 列（資料多時很好用）。</li>
+<li><strong><code>.info()</code></strong>：看整張表的結構。</li>
+<li><strong><code>.describe()</code></strong>：自動算出數值欄位的統計摘要。</li>
+</ul>
+<h2>三、篩選與操作</h2>
+<p><strong>選某一欄：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">print(df[&quot;score&quot;])           # 只看分數那一欄
+print(df[&quot;name&quot;])            # 只看名字</code></pre></div>
+<p><strong>依條件篩選列</strong>（這是最常用的）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 分數 &gt;= 80 的學生
+high = df[df[&quot;score&quot;] &gt;= 80]
+print(high)
+
+# 數學科的學生
+math = df[df[&quot;subject&quot;] == &quot;數學&quot;]
+print(math)</code></pre></div>
+<p>讀法：<code>df[df[&quot;score&quot;] &gt;= 80]</code> 就是「從 df 裡，挑出 score 欄 &gt;= 80 的那些列」。</p>
+<p><strong>排序、新增欄位：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 依分數由高到低排序
+print(df.sort_values(&quot;score&quot;, ascending=False))
+
+# 新增一欄「是否及格」
+df[&quot;pass&quot;] = df[&quot;score&quot;] &gt;= 60
+print(df)</code></pre></div>
+<h2>四、分組統計：groupby</h2>
+<p>資料分析最強的功能之一——<strong>依某欄分組，再對每組做統計</strong>。例如「各科的平均分數」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 依科目分組，算每組 score 的平均
+avg = df.groupby(&quot;subject&quot;)[&quot;score&quot;].mean()
+print(avg)
+# subject
+# 數學    75.666667
+# 英文    86.500000
+
+# 各科有幾人
+count = df.groupby(&quot;subject&quot;)[&quot;name&quot;].count()
+print(count)</code></pre></div>
+<p><code>groupby(&quot;subject&quot;)</code> 把資料依科目分成幾組，再 <code>[&quot;score&quot;].mean()</code> 算每組的平均分。這在 Excel 要做樞紐分析，pandas 一行搞定。</p>
+<h2>五、簡單視覺化</h2>
+<p>pandas 可以直接畫圖（底層用 matplotlib，裝 pandas 時通常會一起有，若無就 <code>pip install matplotlib</code>）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+# 讓圖表能正常顯示中文（詳細說明見下方）
+plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;Microsoft JhengHei&quot;]   # Mac 改 &quot;Arial Unicode MS&quot;
+plt.rcParams[&quot;axes.unicode_minus&quot;] = False
+
+df = pd.read_csv(&quot;students.csv&quot;)
+
+# 各科平均分數畫成長條圖
+avg = df.groupby(&quot;subject&quot;)[&quot;score&quot;].mean()
+avg.plot(kind=&quot;bar&quot;)        # kind 可換 line（折線）、pie（圓餅）等
+
+plt.title(&quot;各科平均分數&quot;)
+plt.show()                  # 顯示圖表</code></pre></div>
+<p>幾行就能把資料變成圖表。想換圖表類型改 <code>kind</code> 就好（<code>bar</code> 長條、<code>line</code> 折線、<code>pie</code> 圓餅）。</p>
+<blockquote>上面開頭那兩行 <code>rcParams</code> 就是在設定中文字型——如果少了它們，圖上的中文會變成方塊。下面詳細說明。</blockquote>
+<p><strong>中文顯示問題（很常遇到，一定會用到）</strong>：matplotlib 預設的字型沒有中文，所以圖表上的中文標題、標籤會變成一個個<strong>空心方塊</strong>。解法是在畫圖<strong>之前</strong>，指定一個「系統裡有的中文字型」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import matplotlib.pyplot as plt
+
+# 指定中文字型（放在畫圖之前）
+plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;Microsoft JhengHei&quot;]  # Windows：微軟正黑體
+# Mac 改用：plt.rcParams[&quot;font.sans-serif&quot;] = [&quot;Arial Unicode MS&quot;]
+plt.rcParams[&quot;axes.unicode_minus&quot;] = False                # 修正負號變成方塊的問題</code></pre></div>
+<ul>
+<li><strong><code>font.sans-serif</code></strong>：指定要用的字型。字型名稱要是<strong>你系統真的有裝</strong>的——Windows 常用 <code>Microsoft JhengHei</code>（微軟正黑體）或 <code>DFKai-SB</code>（標楷體）；Mac 可用 <code>Arial Unicode MS</code> 或 <code>Heiti TC</code>；若還是方塊，就換一個你電腦有的中文字型名稱試試。</li>
+<li><strong><code>axes.unicode_minus = False</code></strong>：不加這行的話，負數的負號（像 -5）有時也會變方塊，加了就正常。</li>
+</ul>
+<p>把這兩三行放在畫圖程式的最前面，中文就會正常顯示了。</p>
+<blockquote>這段內容參考 matplotlib 社群常見做法整理，已改寫說明。實際字型名稱請以你電腦安裝的為準。</blockquote>
+<h2>六、動手練習</h2>
+<ul>
+<li>找一份公開 CSV（政府開放資料、Kaggle，或自己用 Excel 存一份），用 <code>read_csv</code> 讀進來。</li>
+<li>練 <code>head()</code>、<code>info()</code>、<code>describe()</code> 看懂資料長相。</li>
+<li>練條件篩選（挑出符合某條件的列）。</li>
+<li>練 <code>groupby</code> 做分組統計，再畫成圖表。</li>
+</ul>
+<p>拿你有興趣的資料來玩最有感——銷售紀錄、記帳明細、運動數據都行。</p>
+<h2>這一步大約要花多久？</h2>
+<p>pandas 功能很多，但入門只要掌握「讀資料 → 篩選 → 分組統計 → 畫圖」這條主線，抓 <strong>2~3 週</strong>。它是個大題目，這篇是入門敲門磚，之後想深入資料分析、甚至往 AI/機器學習走，pandas 都是必備基礎。練法：</p>
+<ul>
+<li>一定要拿<strong>真實資料</strong>練，光看範例沒用。</li>
+<li>把「用 Excel 會做的事」試著改用 pandas 做一遍。</li>
+<li><code>groupby</code> 多練，它是資料分析的核心武器。</li>
+</ul>
+<h2>下一篇</h2>
+<p>實用應用篇到這裡就完整了——檔案、爬蟲、自動化、資料處理，你已經能用 Python 做很多實際的事。下一篇是整個系列的<strong>壓軸實戰</strong>：把前面學的整合起來，動手做一個<strong>檔案整理小工具</strong>，體會從零打造一個完整程式的成就感。</p>
+<p>準備好收尾了嗎？下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 資料分析學得更深？</span><span class="affiliate-card-desc">pandas 是資料分析的敲門磚，往後還有視覺化、機器學習。Hahow 上有從 Python 資料分析到 AI 的系統課程，想要有完整範例與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-automation.html" rel="noopener">自動化腳本：把重複的工作交給程式</a></li>
+<li>➡️ 下一篇：<a href="python-project-cli-tool.html" rel="noopener">實戰專案：做一個檔案整理小工具</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

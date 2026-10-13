@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】Python 是什麼、能做什麼？從零開始的學習地圖 - 智慧喵</title>
+    <meta name="description" content="想學程式、聽說 Python 最好上手？這篇一次講清楚 Python 是什麼、能做哪些事（自動化、爬蟲、資料分析、AI、後端）、要裝什麼工具，並給你一張從語法基礎到實戰的完整學習路徑，當作整個 Python 教學系列的入口。">
+    <meta name="keywords" content="Python,Python 教學,Python 入門,Python 能做什麼,學 Python,程式設計入門,爬蟲,資料分析">
+    <meta property="og:title" content="【Python 教學】Python 是什麼、能做什麼？從零開始的學習地圖">
+    <meta property="og:description" content="想學程式、聽說 Python 最好上手？這篇一次講清楚 Python 是什麼、能做哪些事（自動化、爬蟲、資料分析、AI、後端）、要裝什麼工具，並給你一張從語法基礎到實戰的完整學習路徑，當作整個 Python 教學系列的入口。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-complete-guide-overview.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-complete-guide-overview/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-complete-guide-overview.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】Python 是什麼、能做什麼？從零開始的學習地圖","description":"想學程式、聽說 Python 最好上手？這篇一次講清楚 Python 是什麼、能做哪些事（自動化、爬蟲、資料分析、AI、後端）、要裝什麼工具，並給你一張從語法基礎到實戰的完整學習路徑，當作整個 Python 教學系列的入口。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-complete-guide-overview.html"},"image":"https://neowise.com.tw/life/assets/python-complete-guide-overview/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】Python 是什麼、能做什麼？從零開始的學習地圖</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-complete-guide-overview/cover.jpg" alt="一台筆電螢幕上顯示 Python 程式碼與 Python 標誌的示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>「我想學程式，大家都推薦 Python……但它到底能做什麼？從哪裡開始？」</p>
+<p>如果你有這個疑問，這篇就是為你寫的。Python 幾乎是現在最多人推薦的入門語言，但一上網找教學，往往一堆術語砸過來，反而更不知道怎麼開始。這篇先不急著寫 code，而是帶你把整張地圖看清楚：<strong>Python 是什麼、能做哪些事、要裝什麼、以及這個系列會怎麼帶你學。</strong></p>
+<p>這是「Python 教學」系列的入口。後面我規劃的是一條<strong>循序漸進、重實用</strong>的路——不只教你語法，還會帶你用 Python 做它最擅長的事：自動化、爬蟲、資料處理。</p>
+<blockquote>如果你看過我的 <a href="csharp.html" rel="noopener">C# 教學系列</a>，會發現兩個系列結構類似。差別在：C# 偏扎實、工程導向；Python 偏好上手、重實用。兩個語言各有強項，學哪個都好，甚至都學也行。</blockquote>
+<h2>一、Python 是什麼？</h2>
+<p>Python 是一種<strong>通用程式語言</strong>，1991 年問世，以「<strong>語法乾淨、好讀好寫</strong>」聞名。它的設計哲學就是「簡單優雅」——同樣一件事，Python 常常比其他語言用更少、更像白話的程式碼就能完成。</p>
+<p>幾個它的特色，用白話說：</p>
+<ul>
+<li><strong>好上手</strong>：語法接近英文，初學者負擔小，很適合當第一個語言。</li>
+<li><strong>直譯式</strong>：寫完直接跑，不用像 C# 那樣先編譯，試錯很快。</li>
+<li><strong>跨平台</strong>：Windows、Mac、Linux 都能跑。</li>
+<li><strong>套件生態超強</strong>：幾乎你想做的事，都有現成的套件（library）可以用，站在巨人肩膀上。</li>
+</ul>
+<blockquote>關於縮排：Python 有個跟多數語言很不一樣的特色——它用<strong>縮排（空白）來表示程式區塊</strong>，而不是大括號 <code>{ }</code>。這讓程式天生整齊，但也代表縮排不能亂，這點基礎篇會細談。</blockquote>
+<h2>二、Python 能做什麼？</h2>
+<p>這是最多人好奇的地方。Python 的用途<strong>非常廣</strong>，這也是它紅的原因：</p>
+<div class="table-wrap"><table><thead><tr><th>領域</th><th>用的工具</th><th>做出來的東西</th></tr></thead><tbody><tr><td>自動化</td><td>內建模組、腳本</td><td>批次改檔名、整理資料夾、定時任務</td></tr><tr><td>網路爬蟲</td><td>requests、BeautifulSoup</td><td>自動抓網頁資料</td></tr><tr><td>資料分析</td><td>pandas、matplotlib</td><td>處理試算表、統計、畫圖表</td></tr><tr><td>人工智慧 / 機器學習</td><td>TensorFlow、PyTorch</td><td>AI 模型、深度學習</td></tr><tr><td>網站後端</td><td>Django、Flask</td><td>網站與 Web API</td></tr><tr><td>小工具</td><td>內建 + 各種套件</td><td>各種自用的小程式</td></tr></tbody></table></div>
+<p>對初學者特別有感的是前三項——<strong>自動化、爬蟲、資料分析</strong>。這些是「學一點就能馬上幫自己省事」的實用技能，也是這個系列會特別著墨的部分。</p>
+<blockquote>近年 AI 爆紅，Python 更是水漲船高——因為主流的 AI/機器學習工具幾乎都用 Python。想往 AI 方向發展，Python 幾乎是必備。</blockquote>
+<h2>三、學 Python 要裝什麼？</h2>
+<p>好消息：全部免費，任何電腦都能開始。你需要兩樣東西。</p>
+<p><strong>1. Python 直譯器</strong></p>
+<p>這是讓 Python 程式能跑的核心，到 Python 官方網站下載安裝即可（Windows / Mac / Linux 都有）。安裝時 Windows 使用者記得勾「Add Python to PATH」（這點下一篇會提醒）。</p>
+<p><strong>2. 一個編輯器</strong></p>
+<ul>
+<li><strong>VS Code</strong>：免費、輕量、裝個 Python 擴充套件就很好用，<strong>新手推薦這個</strong>。</li>
+<li><strong>PyCharm</strong>：專為 Python 設計的完整 IDE，功能強大，有免費社群版。</li>
+<li>另外還有 <strong>Jupyter Notebook</strong>，很適合資料分析時「一格一格跑」，之後資料處理篇會提到。</li>
+</ul>
+<blockquote>安裝 Python 時還會附帶一個超重要的工具 <strong>pip</strong>——它是「套件安裝器」，前面說的那些強大套件（requests、pandas…）都是用 pip 一行指令就裝好。環境篇會帶你認識它。</blockquote>
+<h2>四、這個系列會帶你走到哪</h2>
+<p>我把 Python 的學習路徑分成五個階段，一階一階往上疊：</p>
+<ol>
+<li><strong>總覽</strong>（就是這篇）：先看懂全貌。</li>
+<li><strong>語法基礎</strong>：變數型別、流程控制、函式，以及 list、dict 等資料結構——寫任何 Python 程式的地基。</li>
+<li><strong>物件導向</strong>：類別與物件、繼承，學會用結構良好的方式組織程式。</li>
+<li><strong>實用應用</strong>：Python 的強項——檔案處理、網路爬蟲、自動化腳本、資料分析入門。這部分最「有感」，學一點就能幫自己做事。</li>
+<li><strong>實戰專案</strong>：把前面學到的整合成一個完整的小工具。</li>
+</ol>
+<p>建議從頭照順序走。Python 雖然好上手，但地基（尤其資料結構）打穩了，後面的實用應用才學得輕鬆。</p>
+<h2>五、給初學者的三句真心話</h2>
+<ul>
+<li><strong>別怕看不懂，先動手跑</strong>。Python 試錯超快，讀十遍不如自己打一次、按下執行看結果。</li>
+<li><strong>善用現成套件</strong>。Python 的精神就是「不要重造輪子」，很多事都有人寫好套件了，學會「找套件、用套件」跟學語法一樣重要。</li>
+<li><strong>慢就是快</strong>。不急著追進度，每個概念真的懂了再往下，整體反而學得更穩。</li>
+</ul>
+<p>準備好了嗎？下一篇我們就來把開發環境裝起來，跑出你的第一支 Python 程式。這個系列每一篇底部都有導覽連結，跟著走就對了。</p>
+<p>那麼，我們下一篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想更有系統地學 Python？</span><span class="affiliate-card-desc">想要有完整練習與專案帶著走的話，Hahow 上有不少從 Python 入門到爬蟲、資料分析的系統課程，可以挑一門有興趣的開始。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>➡️ 下一篇：<a href="python-setup-tools.html" rel="noopener">開發環境準備：安裝 Python、VS Code，跑出第一支程式</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

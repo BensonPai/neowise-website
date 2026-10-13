@@ -108,6 +108,29 @@ const SERIES = {
     ytText: '影片版的 C# 與程式教學、工具分享，歡迎來看看',
   },
 
+  python: {
+    navLabel: 'Python 教學',
+    group: 'academy',
+    pageClass: 'page-python',
+    title: 'Python 程式設計完整教學 🐾',
+    subtitle: '從零開始學 Python，從語法基礎到資料處理、自動化與實戰，一條好上手的學習路徑',
+    metaDescription: '智慧喵的 Python 程式設計完整教學系列目錄：從開發環境、語法基礎、函式與資料結構，到物件導向、實用應用（檔案、爬蟲、自動化、資料處理）與實戰專案，一條好上手的學習路徑，適合完全沒寫過程式的新手。',
+    metaKeywords: 'Python,Python 教學,Python 入門,程式設計入門,爬蟲,資料處理,自動化,pip,智慧喵',
+    intro: [
+      '想學程式，很多人第一個推薦就是 Python——語法乾淨、好上手、用途又廣。這個系列把 Python 從頭鋪成一條路：先裝好環境、打穩語法與資料結構，再進物件導向，接著學 Python 最強的「實用應用」（檔案處理、爬蟲、自動化、資料分析），最後用實戰專案收尾。',
+      '走的是「循序漸進、重實用」路線。建議從第一篇環境準備照順序走；每個主題都用能動手跑的小範例說明。每篇文章底部都有系列導覽連結。',
+      '<span style="color:#94a3b8;font-size:0.86rem;">※ 文中版本、套件與 API 均標註查證時間，實際請以 Python 官方文件與各套件文件為準。</span>',
+    ],
+    stages: [
+      { key: '總覽', badge: '總覽', title: '先看全貌', desc: '一篇看懂 Python 能做什麼、要裝什麼、這個系列會帶你走到哪。' },
+      { key: '基礎', badge: '基礎', title: '語法基礎', desc: '變數與型別、流程控制、函式，以及 list、dict 等資料結構，打穩地基。' },
+      { key: '物件導向', badge: 'OOP', title: '物件導向', desc: '類別與物件、繼承與特殊方法，寫出結構良好的程式。' },
+      { key: '實用應用', badge: '應用', title: '實用應用', desc: 'Python 的強項：檔案與 JSON、網路爬蟲、自動化、資料處理入門。' },
+      { key: '實戰', badge: '實戰', title: '實戰專案', desc: '把前面學到的整合起來，做出一個完整的小工具。' },
+    ],
+    ytText: '影片版的 Python 與程式教學、工具分享，歡迎來看看',
+  },
+
   invest: {
     navLabel: '投資理財修煉',
     group: 'invest',          // 獨立，不收進科技學院下拉

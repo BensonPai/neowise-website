@@ -1,5 +1,8 @@
 # 智慧喵・科技｜C# 程式設計完整教學系列 規劃
 
+> **✅ 本系列已全部完成並發布（共 11 篇：總覽 1 + 基礎 3 + 物件導向 3 + 進階 3 + 實戰 1）。**
+> 這份保留作為系列結構與寫作慣例的紀錄；未來要增補或新開類似系列時可對照。
+
 > 這份給「開新 Session 要寫這個系列」時對照用。屬於智慧喵「科技」分類（青藍色 `tech` 標籤）。
 > 收在導覽列「科技學院」下拉，系列目錄頁為 `csharp.html`（由 build 腳本自動產生）。
 
@@ -43,30 +46,32 @@ series_order: "2"          # 圓圈內的編號；數字會依序排列，非數
 
 ---
 
-## 文章規劃（草案，可再增補）
+## 文章規劃（全部已完成 ✅）
 
 ### 總覽（1 篇）
-- **slug: `csharp-complete-guide-overview`**（series_order: 總）
+- ✅ **slug: `csharp-complete-guide-overview`**（series_order: 總）
   C# 是什麼、能做什麼（桌面、Web、遊戲 Unity、後端）、要裝什麼（.NET SDK + VS / VS Code）、
-  這個系列的學習路徑地圖。✅ 已建立（第一篇）
+  這個系列的學習路徑地圖。
 
 ### 基礎
-1. `csharp-setup-tools` — 開發環境：安裝 .NET SDK、Visual Studio / VS Code，跑第一支程式
-2. `csharp-syntax-basics` — 變數、型別、運算子、流程控制（if/for/while/switch）
-3. `csharp-methods-exceptions` — 方法、參數、回傳值、例外處理 try/catch
+1. ✅ `csharp-setup-tools` — 開發環境：安裝 .NET SDK、Visual Studio / VS Code，跑第一支程式
+2. ✅ `csharp-syntax-basics` — 變數、型別、運算子、流程控制（if/for/while/switch）
+3. ✅ `csharp-methods-exceptions` — 方法、參數、回傳值、例外處理 try/catch
 
 ### 物件導向
-4. `csharp-classes-objects` — 類別與物件、欄位屬性、建構式
-5. `csharp-oop-pillars` — 封裝、繼承、多型
-6. `csharp-interfaces-generics` — 介面、抽象類別、泛型
+4. ✅ `csharp-classes-objects` — 類別與物件、欄位屬性、建構式
+5. ✅ `csharp-oop-pillars` — 封裝、繼承、多型
+6. ✅ `csharp-interfaces-generics` — 介面、抽象類別、泛型
 
 ### 進階
-7. `csharp-collections-linq` — 集合（List/Dictionary）與 LINQ
-8. `csharp-async` — 非同步 async/await
-9. `csharp-files-data` — 檔案讀寫、JSON、簡單資料存取
+7. ✅ `csharp-collections-linq` — 集合（List/Dictionary）與 LINQ
+8. ✅ `csharp-async` — 非同步 async/await
+9. ✅ `csharp-files-data` — 檔案讀寫、JSON、簡單資料存取
 
 ### 實戰
-10. `csharp-project-console-app` — 用一個完整的主控台小專案收尾
+10. ✅ `csharp-project-console-app` — 用一個完整的主控台小專案收尾
+
+> 封面圖與內文圖的生圖提示都備在各篇 `assets/<slug>/_圖片需求.txt`，缺圖不影響發布。
 
 ---
 

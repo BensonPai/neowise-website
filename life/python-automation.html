@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】自動化腳本：把重複的工作交給程式 - 智慧喵</title>
+    <meta name="description" content="每天重複做的瑣事，用 Python 自動化。這篇帶你用 Python 批次處理檔案、整理資料夾、做簡單的定時任務，體會「寫一次、省一輩子」的自動化威力。">
+    <meta name="keywords" content="Python 自動化,批次處理,os 模組,pathlib,shutil,定時任務,Python 教學">
+    <meta property="og:title" content="【Python 教學】自動化腳本：把重複的工作交給程式">
+    <meta property="og:description" content="每天重複做的瑣事，用 Python 自動化。這篇帶你用 Python 批次處理檔案、整理資料夾、做簡單的定時任務，體會「寫一次、省一輩子」的自動化威力。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-automation.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-automation/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-automation.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】自動化腳本：把重複的工作交給程式","description":"每天重複做的瑣事，用 Python 自動化。這篇帶你用 Python 批次處理檔案、整理資料夾、做簡單的定時任務，體會「寫一次、省一輩子」的自動化威力。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-automation.html"},"image":"https://neowise.com.tw/life/assets/python-automation/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】自動化腳本：把重複的工作交給程式</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-automation/cover.jpg" alt="示意程式自動批次處理一堆檔案的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-web-scraping.html" rel="noopener">上一篇</a>學會抓網頁。這篇講 Python 最「有感」的應用——<strong>自動化</strong>：把每天手動重複做的瑣事（整理檔案、改檔名、分類）交給程式，寫一次、省一輩子。</p>
+<p>這也是很多人學 Python 的動機：不是要當工程師，而是想<strong>讓自己的日常工作更輕鬆</strong>。</p>
+<h2>一、操作檔案與資料夾</h2>
+<p>Python 用兩個工具操作檔案系統：<code>os</code> 和 <code>pathlib</code>（都是內建的，不用安裝）。<code>pathlib</code> 比較新、比較好用，這篇以它為主。</p>
+<p><strong>列出資料夾裡的檔案：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+folder = Path(&quot;D:/下載&quot;)        # 指定一個資料夾（路徑用你自己的）
+
+for item in folder.iterdir():    # 走訪資料夾裡每個項目
+    if item.is_file():           # 只看檔案（跳過子資料夾）
+        print(item.name)         # 印出檔名</code></pre></div>
+<p><strong>取得檔案資訊：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+p = Path(&quot;D:/下載/report.pdf&quot;)
+print(p.name)        # report.pdf（完整檔名）
+print(p.stem)        # report（不含副檔名）
+print(p.suffix)      # .pdf（副檔名）
+print(p.exists())    # True / False（檔案在不在）</code></pre></div>
+<p>這些是自動化的基礎——先「找到並認得」檔案，才能處理它們。</p>
+<h2>二、複製、移動、刪除：shutil</h2>
+<p>搬動檔案用 <code>shutil</code>（也是內建）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import shutil
+
+shutil.copy(&quot;來源.txt&quot;, &quot;目標.txt&quot;)        # 複製
+shutil.move(&quot;舊位置.txt&quot;, &quot;新位置.txt&quot;)      # 移動（也可用來改名）</code></pre></div>
+<p>刪除用 <code>pathlib</code> 或 <code>os</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+Path(&quot;不要的檔.txt&quot;).unlink()      # 刪除單一檔案</code></pre></div>
+<blockquote>⚠ 刪除、覆寫、移動都是<strong>不可逆</strong>的操作。動真實檔案前，請務必先看第四節的安全提醒。</blockquote>
+<h2>三、實戰範例：依副檔名自動分類</h2>
+<p>來做一個真正有用的腳本——<strong>把資料夾裡的檔案，依副檔名自動分到對應的子資料夾</strong>（圖片進 images、文件進 docs…）。這是自動化最經典的入門範例：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+# 要整理的資料夾（換成你自己的）
+folder = Path(&quot;D:/下載&quot;)
+
+# 副檔名 → 分類資料夾 的對照表（還記得 dict 嗎？）
+categories = {
+    &quot;.jpg&quot;: &quot;images&quot;, &quot;.png&quot;: &quot;images&quot;, &quot;.gif&quot;: &quot;images&quot;,
+    &quot;.pdf&quot;: &quot;docs&quot;, &quot;.docx&quot;: &quot;docs&quot;, &quot;.txt&quot;: &quot;docs&quot;,
+    &quot;.mp3&quot;: &quot;music&quot;, &quot;.mp4&quot;: &quot;videos&quot;,
+}
+
+for item in folder.iterdir():
+    if item.is_file():
+        ext = item.suffix.lower()          # 取副檔名、轉小寫
+        category = categories.get(ext)     # 查對照表
+        if category:
+            target_dir = folder / category
+            target_dir.mkdir(exist_ok=True)  # 建立子資料夾（已存在不報錯）
+            item.rename(target_dir / item.name)  # 把檔案搬進去
+            print(f&quot;{item.name} → {category}/&quot;)</code></pre></div>
+<p>這段把前面學的東西全用上了：<code>pathlib</code> 找檔案、<code>dict</code> 做對照表、<code>for</code> 迴圈、<code>if</code> 判斷。短短十幾行，就能自動整理一個亂糟糟的下載資料夾。</p>
+<p><strong>批次改檔名</strong>也很常見，例如幫一堆檔案加上前綴：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">from pathlib import Path
+
+folder = Path(&quot;D:/照片&quot;)
+for i, item in enumerate(folder.glob(&quot;*.jpg&quot;), start=1):   # glob 找所有 jpg
+    new_name = folder / f&quot;旅遊_{i:03d}.jpg&quot;                  # 旅遊_001.jpg、旅遊_002.jpg…
+    item.rename(new_name)
+    print(f&quot;{item.name} → {new_name.name}&quot;)</code></pre></div>
+<p>（<code>enumerate</code> 幫你一邊走訪一邊編號、<code>{i:03d}</code> 是補零到 3 位數的格式。）</p>
+<h2>四、安全提醒（動檔案前必看）</h2>
+<p>自動化腳本動的是<strong>真實檔案</strong>，一個 bug 可能一次毀掉一堆東西。養成這些習慣：</p>
+<ul>
+<li><strong>先在測試資料夾跑</strong>：複製幾個檔案到一個測試資料夾，確認腳本行為正確，再用在真實檔案。</li>
+<li><strong>先備份</strong>：對重要資料夾動手前，先整個複製一份備份。</li>
+<li><strong>先「預覽」再「執行」</strong>：可以先讓腳本只 <code>print</code>「我會把 A 搬到 B」但不真的動，確認無誤後再加上實際搬移的那行。</li>
+</ul>
+<blockquote>這不是膽小，是專業習慣。再厲害的人也會寫錯，差別在於「出錯時有沒有退路」。</blockquote>
+<h2>五、定時 / 排程（簡介）</h2>
+<p>寫好的腳本想「定時自動跑」（例如每天整理一次），可以：</p>
+<ul>
+<li><strong>Windows</strong>：用內建的「工作排程器」，設定幾點執行你的 <code>.py</code>。</li>
+<li><strong>Mac / Linux</strong>：用 <code>cron</code>（排程工具）。</li>
+<li>或用 Python 的 <code>schedule</code> 套件（<code>pip install schedule</code>），在程式裡寫排程邏輯。</li>
+</ul>
+<p>這部分屬於進階應用，現在知道「腳本可以定時自動跑」這個方向即可，需要時再深入。</p>
+<h2>六、動手練習</h2>
+<ul>
+<li>寫一個「整理下載資料夾」的腳本（照第三節，但先用測試資料夾）。</li>
+<li>加上「預覽模式」：先只印出會怎麼搬，確認後再真的搬。</li>
+<li>挑戰：依「檔案的修改日期」把檔案分到不同月份的資料夾。</li>
+</ul>
+<p>每寫一個小腳本，都是把前面學的語法、資料結構、檔案操作再用一次——而且這次是真的在幫自己省事。</p>
+<h2>這一步大約要花多久？</h2>
+<p>自動化沒有太多新語法要學，主要是熟悉 <code>pathlib</code> / <code>shutil</code> 的常用操作，抓 <strong>1 週</strong>練手感就夠。練法：</p>
+<ul>
+<li>從「列出資料夾檔案」開始，慢慢加到「分類、改名」。</li>
+<li><strong>每個動檔案的腳本都先在測試資料夾跑</strong>，養成安全習慣。</li>
+<li>想想自己生活裡有什麼重複的檔案工作，試著用腳本解決。</li>
+</ul>
+<h2>下一篇</h2>
+<p>會自動化後，下一篇是實用應用的最後一塊、也是 Python 的招牌強項：<strong>資料處理</strong>——用 pandas 讀 CSV、篩選、統計、畫圖表，體會為什麼 Python 在資料分析界是王者。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 自動化玩得更溜？</span><span class="affiliate-card-desc">自動化能真正幫你省時間。Hahow 上有從 Python 入門到自動化、資料處理的系統課程，想要有完整範例與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-web-scraping.html" rel="noopener">網路爬蟲入門：用 requests + BeautifulSoup 抓網頁資料</a></li>
+<li>➡️ 下一篇：<a href="python-data-analysis.html" rel="noopener">資料處理入門：用 pandas 讀 CSV、篩選、統計</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

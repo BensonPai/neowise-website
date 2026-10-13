@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】函式：把程式切成好用的小塊 - 智慧喵</title>
+    <meta name="description" content="程式變長就該拆成函式。這篇帶你搞懂 Python 的函式：用 def 定義、參數與回傳值、預設參數，以及 *args / **kwargs 入門，讓程式有條理、可重用。">
+    <meta name="keywords" content="Python 函式,def,參數,回傳值,預設參數,args kwargs,Python 教學">
+    <meta property="og:title" content="【Python 教學】函式：把程式切成好用的小塊">
+    <meta property="og:description" content="程式變長就該拆成函式。這篇帶你搞懂 Python 的函式：用 def 定義、參數與回傳值、預設參數，以及 *args / **kwargs 入門，讓程式有條理、可重用。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-functions.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-functions/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-functions.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】函式：把程式切成好用的小塊","description":"程式變長就該拆成函式。這篇帶你搞懂 Python 的函式：用 def 定義、參數與回傳值、預設參數，以及 *args / **kwargs 入門，讓程式有條理、可重用。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-functions.html"},"image":"https://neowise.com.tw/life/assets/python-functions/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】函式：把程式切成好用的小塊</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-functions/cover.jpg" alt="示意程式被拆成多個函式區塊的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-syntax-basics.html" rel="noopener">語法基礎</a>學完，你能寫出一段段會跑的程式了。但程式一長，全部擠在一起會越來越難讀、難改。這篇要學的 <strong>函式（function）</strong>，就是把程式切成一塊塊好用的小單位。</p>
+<p>你其實已經用過函式了——<code>print()</code>、<code>type()</code>、<code>range()</code> 都是 Python 內建的函式。這篇要學的是<strong>自己寫函式</strong>。</p>
+<h2>一、函式是什麼、為什麼要用</h2>
+<p><strong>函式</strong>就是一段「打包好、取了名字、可以重複呼叫」的程式碼。拆函式有三個好處：</p>
+<ul>
+<li><strong>可讀</strong>：一段長程式拆成幾個命名清楚的函式，看名字就懂在做什麼。</li>
+<li><strong>可重用</strong>：同樣的邏輯寫一次，到處呼叫，不用複製貼上。</li>
+<li><strong>好維護</strong>：邏輯要改，只改一個地方。</li>
+</ul>
+<p>來看最基本的函式：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 定義一個函式：接收名字，回傳打招呼的句子
+def greet(name):
+    return f&quot;哈囉，{name}！&quot;
+
+# 呼叫它
+message = greet(&quot;智慧喵&quot;)
+print(message)        # 哈囉，智慧喵！</code></pre></div>
+<p>拆解：</p>
+<ul>
+<li><strong><code>def</code></strong>：定義函式的關鍵字（define 的縮寫）。</li>
+<li><strong><code>greet</code></strong>：函式名稱，習慣用小寫加底線。</li>
+<li><strong><code>(name)</code></strong>：參數——呼叫時要給它的資料。</li>
+<li>結尾的 <strong>冒號 <code>:</code></strong> + 下一行<strong>縮排</strong>（還記得上一篇的縮排規則嗎？函式內容也要縮排）。</li>
+<li><strong><code>return</code></strong>：把結果吐回去。</li>
+</ul>
+<h2>二、回傳值與 None</h2>
+<p>函式可以「有回傳值」或「沒有回傳值」：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 有回傳值：算完吐回結果
+def add(a, b):
+    return a + b
+
+# 沒有 return：只做事、不吐東西
+def say_hello():
+    print(&quot;哈囉！&quot;)
+
+total = add(3, 5)     # total = 8
+say_hello()           # 印出：哈囉！</code></pre></div>
+<ul>
+<li>有 <code>return</code> 就會吐回一個值，可以用變數接住。</li>
+<li><strong>沒有 <code>return</code> 的函式，其實會回傳一個特殊值 <code>None</code></strong>（代表「什麼都沒有」）。這點記著，之後會遇到。</li>
+</ul>
+<h2>三、參數的各種寫法</h2>
+<p>Python 的參數很靈活，介紹幾個常用的。</p>
+<p><strong>位置參數 vs 關鍵字參數</strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">def introduce(name, age):
+    print(f&quot;{name} 今年 {age} 歲&quot;)
+
+introduce(&quot;智慧喵&quot;, 3)              # 位置參數：照順序對應
+introduce(age=3, name=&quot;智慧喵&quot;)      # 關鍵字參數：指名道姓，順序就不重要</code></pre></div>
+<p><strong>預設參數值</strong>：參數可以給預設值，呼叫時沒傳就用預設：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">def greet(name, greeting=&quot;哈囉&quot;):
+    return f&quot;{greeting}，{name}！&quot;
+
+print(greet(&quot;智慧喵&quot;))              # 哈囉，智慧喵！（用預設）
+print(greet(&quot;智慧喵&quot;, &quot;早安&quot;))       # 早安，智慧喵！</code></pre></div>
+<p><strong>讓函式「傳幾個都行」（進階，先看懂概念就好）</strong>：</p>
+<p>前面的函式參數個數都是固定的（<code>add(a, b)</code> 就收兩個）。但有時你希望參數「<strong>傳幾個都行</strong>」——想想內建的 <code>print()</code>，你可以 <code>print(a)</code>，也可以 <code>print(a, b, c)</code>，塞幾個都接受。</p>
+<p>要讓自己的函式也能這樣，在參數名前面加一個**星號 <code><em></code></em>*：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">def total(*numbers):          # 星號：把傳進來的一堆數字全部打包給 numbers
+    return sum(numbers)       # sum() 會把它們加總
+
+print(total(1, 2, 3))         # 6
+print(total(1, 2, 3, 4, 5))   # 15（同一個函式，傳幾個都行）</code></pre></div>
+<p>那個 <code>*</code> 的作用就是「<strong>不管你傳幾個，我全部收下、打包成一包</strong>」。呼叫 <code>total(1,2,3)</code> 時，<code>numbers</code> 就等於 <code>(1, 2, 3)</code> 這一包，<code>sum()</code> 再把它加起來。</p>
+<blockquote>你可能也會聽到 <code><em>args</code> 和 <code></em>*kwargs</code> 這兩個詞——<code><em>args</code> 就是上面這種（打包一堆值），<code><strong>kwargs</code> 是進階版（打包「名字=值」成對的參數）。這部分牽涉到下一篇才教的資料結構（tuple、dict），所以</strong>這裡先知道「加星號能讓參數不定個數」就夠了</em>*，細節等學完下一篇再回來看會很好懂，現在不用硬記。</blockquote>
+<h2>四、作用域（簡介）</h2>
+<p>變數有「活動範圍」——函式<strong>裡面</strong>定義的變數，只在函式內有效，外面看不到：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">def my_func():
+    x = 10          # 區域變數，只在函式內有效
+    print(x)
+
+my_func()           # 10
+# print(x)          # ❌ 會出錯，外面看不到函式裡的 x</code></pre></div>
+<ul>
+<li>函式內定義的變數叫<strong>區域變數</strong>，出了函式就不存在。</li>
+<li>函式外定義的變數叫<strong>全域變數</strong>。</li>
+<li>新手先建立「函式內的變數是函式私有的」這個觀念就夠，細節之後遇到再深入。</li>
+</ul>
+<h2>五、動手綜合練習</h2>
+<p>寫幾個小函式練習——計算 BMI、判斷是否及格：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 算 BMI
+def calc_bmi(weight, height):
+    bmi = weight / (height ** 2)
+    return round(bmi, 1)        # round() 四捨五入到小數 1 位
+
+# 判斷等第
+def grade(score):
+    if score &gt;= 90:
+        return &quot;優秀&quot;
+    elif score &gt;= 60:
+        return &quot;及格&quot;
+    else:
+        return &quot;不及格&quot;
+
+print(f&quot;BMI：{calc_bmi(65, 1.70)}&quot;)   # BMI：22.5
+print(f&quot;成績：{grade(85)}&quot;)            # 成績：及格</code></pre></div>
+<p>試著自己改：BMI 加上「過輕／正常／過重」的判斷？<code>grade</code> 多加一個「待加強」等第？把前面學的流程控制和這篇的函式結合起來，就是真正在寫程式了。</p>
+<h2>這一步大約要花多久？</h2>
+<p>函式的基本觀念很快能懂（抓幾天）。<code><em>args</code>/<code></em>*kwargs</code>、作用域這些先知道有、看得懂即可，不用一次全精通。練法：</p>
+<ul>
+<li>把前面寫過的小程式，試著拆成幾個命名清楚的函式。</li>
+<li>練「有回傳值」和「沒回傳值」兩種函式的差別。</li>
+<li>練預設參數——這在實務和用別人套件時超常見。</li>
+</ul>
+<h2>下一篇</h2>
+<p>會寫函式後，下一篇是基礎篇最後一塊、也是 Python 的核心武器：<strong>資料結構</strong>——list、tuple、dict、set，學會優雅地裝一群資料、處理一堆東西。這篇打穩，後面的實用應用才學得輕鬆。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 基礎練得更扎實？</span><span class="affiliate-card-desc">函式是組織程式的關鍵。Hahow 上有從 Python 入門到實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-syntax-basics.html" rel="noopener">語法基礎：變數、型別、流程控制與縮排規則</a></li>
+<li>➡️ 下一篇：<a href="python-data-structures.html" rel="noopener">資料結構：list、tuple、dict、set 一次搞懂</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

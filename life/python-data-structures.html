@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】資料結構：list、tuple、dict、set 一次搞懂 - 智慧喵</title>
+    <meta name="description" content="Python 最常用的四種資料結構：list（清單）、tuple（元組）、dict（字典）、set（集合）。這篇帶你搞懂它們各自怎麼用、差在哪、什麼時候用哪個，還有好用的推導式。">
+    <meta name="keywords" content="Python list,Python dict,tuple,set,資料結構,推導式,list comprehension,Python 教學">
+    <meta property="og:title" content="【Python 教學】資料結構：list、tuple、dict、set 一次搞懂">
+    <meta property="og:description" content="Python 最常用的四種資料結構：list（清單）、tuple（元組）、dict（字典）、set（集合）。這篇帶你搞懂它們各自怎麼用、差在哪、什麼時候用哪個，還有好用的推導式。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-data-structures.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-data-structures/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-data-structures.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】資料結構：list、tuple、dict、set 一次搞懂","description":"Python 最常用的四種資料結構：list（清單）、tuple（元組）、dict（字典）、set（集合）。這篇帶你搞懂它們各自怎麼用、差在哪、什麼時候用哪個，還有好用的推導式。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-data-structures.html"},"image":"https://neowise.com.tw/life/assets/python-data-structures/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】資料結構：list、tuple、dict、set 一次搞懂</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-data-structures/cover.jpg" alt="示意 list、dict、set 等不同資料結構的概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p><a href="python-functions.html" rel="noopener">函式</a>學完，這篇是基礎篇最後一塊、也是 Python 的核心武器：<strong>資料結構</strong>。</p>
+<p>前面我們一次只處理一個值，但真實程式常要處理「一群」資料：一串名字、一堆分數、一組設定。Python 有四種最常用的「容器」來裝它們——<strong>list、tuple、dict、set</strong>。這篇全部搞懂，後面的實用應用才學得輕鬆。</p>
+<blockquote>上一篇函式提到的 tuple、dict，這篇就會講清楚，前後正好接上。</blockquote>
+<h2>一、list（清單）：最常用</h2>
+<p><code>list</code>（清單）用來裝「一串<strong>有順序、可以改</strong>的東西」，用<strong>方括號 <code>[ ]</code></strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">fruits = [&quot;蘋果&quot;, &quot;香蕉&quot;, &quot;橘子&quot;]
+
+print(fruits[0])        # 蘋果（用索引取，從 0 開始）
+print(len(fruits))      # 3（len() 算長度）
+
+fruits.append(&quot;芒果&quot;)   # 加到最後
+fruits.remove(&quot;香蕉&quot;)   # 移除某個
+fruits[0] = &quot;草莓&quot;      # 直接改某個位置
+
+print(fruits)           # ['草莓', '橘子', '芒果']</code></pre></div>
+<p><strong>切片（slicing）</strong>——取一段：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">nums = [10, 20, 30, 40, 50]
+print(nums[1:3])    # [20, 30]（從索引 1 到 2，不含 3）
+print(nums[:2])     # [10, 20]（開頭到索引 1）
+print(nums[-1])     # 50（-1 代表最後一個）</code></pre></div>
+<ul>
+<li>常用方法：<code>append()</code> 加、<code>remove()</code> 刪、<code>len()</code> 算長度。</li>
+<li>走訪用上一篇學的 <code>for</code>：<code>for fruit in fruits:</code>。</li>
+</ul>
+<h2>二、tuple（元組）：不可變的清單</h2>
+<p><code>tuple</code>（元組）跟 list 很像，但<strong>一旦建立就不能改</strong>，用<strong>小括號 <code>( )</code></strong>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">point = (3, 5)        # 一個座標
+print(point[0])       # 3
+
+# point[0] = 10       # ❌ 會出錯，tuple 不能改</code></pre></div>
+<p><strong>什麼時候用 tuple？</strong> 當這組資料「不該被改動」時——例如座標、RGB 顏色、設定值。用 tuple 等於告訴別人（和自己）：這組資料是固定的，別亂動。</p>
+<blockquote>還記得上一篇 <code>*numbers</code> 把一堆參數「打包成一包」嗎？那一包其實就是 tuple。現在這個名詞你懂了。</blockquote>
+<h2>三、dict（字典）：鍵值對</h2>
+<p><code>dict</code>（字典）用來「用一個鍵去查對應的值」，像查字典：給一個詞，得到解釋。用<strong>大括號 <code>{ }</code></strong>，裡面是 <code>鍵: 值</code>：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">scores = {&quot;小明&quot;: 90, &quot;小華&quot;: 85, &quot;小美&quot;: 95}
+
+print(scores[&quot;小明&quot;])        # 90（用鍵查值）
+scores[&quot;小強&quot;] = 88          # 新增一組
+scores[&quot;小明&quot;] = 92          # 修改
+del scores[&quot;小華&quot;]           # 刪除
+
+# 走訪：items() 一次拿鍵和值
+for name, score in scores.items():
+    print(f&quot;{name}：{score} 分&quot;)</code></pre></div>
+<ul>
+<li>用 <code>[鍵]</code> 設定或讀取值。</li>
+<li><code>.items()</code> 走訪、<code>.keys()</code> 只拿鍵、<code>.values()</code> 只拿值。</li>
+<li>適合「用某個東西快速找到對應資料」，例如用名字找分數、用學號找學生。</li>
+</ul>
+<blockquote>上一篇提到的 <code>**kwargs</code>（打包「名字=值」成對參數），打包成的就是 dict。又一個名詞補上了。</blockquote>
+<h2>四、set（集合）：不重複的一堆值</h2>
+<p><code>set</code>（集合）裝「一堆<strong>不重複</strong>的值」，會自動去除重複，用大括號 <code>{ }</code>（但沒有鍵值對）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">nums = {1, 2, 2, 3, 3, 3}
+print(nums)             # {1, 2, 3}（重複的自動消失）
+
+# 常見用途：快速去重複
+names = [&quot;小明&quot;, &quot;小華&quot;, &quot;小明&quot;, &quot;小美&quot;]
+unique = set(names)     # {'小明', '小華', '小美'}</code></pre></div>
+<p>set 還能做數學上的集合運算——交集（兩邊都有的）、聯集（兩邊合起來的）、差集（我有你沒有的）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">a = {1, 2, 3, 4}
+b = {3, 4, 5, 6}
+
+print(a &amp; b)    # {3, 4}（交集：兩邊都有）
+print(a | b)    # {1, 2, 3, 4, 5, 6}（聯集：合起來、自動去重複）
+print(a - b)    # {1, 2}（差集：a 有但 b 沒有）</code></pre></div>
+<p>實際用途例如：兩個人各有一份名單，想找出「兩人共同認識的」就用交集 <code>&amp;</code>、「兩份名單合起來有誰」就用聯集 <code>|</code>。不過最常用的，還是前面那個<strong>去重複</strong>。</p>
+<h2>五、四種怎麼選？</h2>
+<p>快速對照，幫你記：</p>
+<div class="table-wrap"><table><thead><tr><th>結構</th><th>符號</th><th>特性</th><th>什麼時候用</th></tr></thead><tbody><tr><td>list</td><td><code>[ ]</code></td><td>有順序、可改</td><td>最常用，裝一串會變動的資料</td></tr><tr><td>tuple</td><td><code>( )</code></td><td>有順序、不可改</td><td>一組固定不該變的資料</td></tr><tr><td>dict</td><td><code>{鍵:值}</code></td><td>鍵值對</td><td>用鍵查值（名字→分數）</td></tr><tr><td>set</td><td><code>{ }</code></td><td>不重複、無序</td><td>去重複、判斷有沒有</td></tr></tbody></table></div>
+<p><strong>不確定用哪個？</strong> 90% 的情況用 <strong>list</strong> 就對了，需要「用鍵查」才用 <strong>dict</strong>。這兩個是最常用的，先把它們練熟。</p>
+<h2>六、推導式：Python 的招牌寫法</h2>
+<p><strong>推導式（comprehension）</strong> 是 Python 很有特色的簡潔寫法——用一行產生一個 list。先看傳統寫法 vs 推導式的對比：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 傳統寫法：產生 0~4 各乘以 2
+result = []
+for x in range(5):
+    result.append(x * 2)
+# result = [0, 2, 4, 6, 8]
+
+# 推導式：同樣的事，一行搞定
+result = [x * 2 for x in range(5)]
+# result = [0, 2, 4, 6, 8]</code></pre></div>
+<p>還能加條件篩選：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># 只要偶數
+evens = [x for x in range(10) if x % 2 == 0]
+# [0, 2, 4, 6, 8]</code></pre></div>
+<p>推導式讀起來像白話：「對 range(10) 裡每個 x，如果是偶數就留下」。一開始覺得不習慣沒關係，看多就順了——這是很 Python 的寫法，別人的程式裡很常見。</p>
+<h2>七、動手綜合練習</h2>
+<p>用資料結構做一個「統計一段文字裡每個字出現幾次」的小程式（dict 的經典用法）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">text = &quot;香蕉蘋果香蕉橘子蘋果香蕉&quot;
+count = {}
+
+for char in text:
+    if char in count:
+        count[char] += 1      # 已經有了，次數 +1
+    else:
+        count[char] = 1       # 第一次出現，設為 1
+
+for char, times in count.items():
+    print(f&quot;{char}：{times} 次&quot;)
+# 香蕉 → 蕉、香各 3 次；蘋果各 2 次；橘子各 1 次</code></pre></div>
+<p>試著自己改：找出出現最多次的字？用 set 算這段文字用了幾種不同的字？動手改最有感。</p>
+<h2>這一步大約要花多久？</h2>
+<p>四種資料結構裡，<strong>list 和 dict 最常用、一定要熟</strong>；tuple 和 set 先知道特性、用到再深入即可。推導式一開始可以先用傳統 for 寫法，熟了再換成推導式。練法：</p>
+<ul>
+<li>用 list 裝一串東西、增刪改查、走訪。</li>
+<li>用 dict 做「用鍵查值」的小程式（像上面的字數統計）。</li>
+<li>試著把一個 for 迴圈改寫成推導式。</li>
+</ul>
+<p>這四種結構會貫穿你之後寫的所有 Python 程式，是真正的核心基本功。</p>
+<h2>下一篇</h2>
+<p>基礎篇到這裡就完整了——語法、函式、資料結構，你已經能寫出像樣的小程式。接下來進入 <strong>物件導向</strong>，下一篇從 <strong>類別與物件</strong> 開始，學會用「藍圖造物件」的方式組織更大的程式。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 基礎練得更扎實？</span><span class="affiliate-card-desc">資料結構是 Python 的核心武器。Hahow 上有從 Python 入門到實作的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-functions.html" rel="noopener">函式：把程式切成好用的小塊</a></li>
+<li>➡️ 下一篇：<a href="python-classes-objects.html" rel="noopener">類別與物件：用物件的方式組織程式</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

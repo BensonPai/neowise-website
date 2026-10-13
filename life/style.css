@@ -180,6 +180,15 @@ a { text-decoration: none; color: inherit; }
 .page-csharp .toc-video { color: #059669; background: #ecfdf5; }
 .page-csharp .toc-body h3 a:hover { color: #059669; }
 
+/* Python 教學目錄頁：改用藍色（Python 代表色，與 App 青藍、C# 翠綠區隔） */
+.page-python .series-intro { background: linear-gradient(135deg, #eff6ff, #f0f9ff); }
+.page-python .series-stage .stage-badge { background: #eff6ff; color: #2563eb; }
+.page-python .toc-item:hover { border-color: #2563eb; box-shadow: 0 8px 20px rgba(37,99,235,0.10); }
+.page-python .toc-num { background: #2563eb; }
+.page-python .toc-num-extra { background: #60a5fa !important; }
+.page-python .toc-video { color: #2563eb; background: #eff6ff; }
+.page-python .toc-body h3 a:hover { color: #2563eb; }
+
 /* YouTube CTA */
 .yt-cta { background: linear-gradient(135deg, #f0fdfa, #fef9f0); border-radius: 18px; padding: 40px; text-align: center; margin: 40px auto; max-width: 760px; }
 .yt-cta h2 { color: #1e293b; font-size: 1.5rem; margin-bottom: 10px; }

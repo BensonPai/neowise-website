@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>【Python 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料 - 智慧喵</title>
+    <meta name="description" content="程式關掉資料就不見？這篇帶你用 Python 做檔案讀寫（open、with），並用內建 json 模組把資料存成 JSON、再讀回來，讓程式真正能記住東西。">
+    <meta name="keywords" content="Python 檔案讀寫,open,with,JSON,json 模組,讀寫檔案,Python 教學">
+    <meta property="og:title" content="【Python 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料">
+    <meta property="og:description" content="程式關掉資料就不見？這篇帶你用 Python 做檔案讀寫（open、with），並用內建 json 模組把資料存成 JSON、再讀回來，讓程式真正能記住東西。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/python-files-json.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/python-files-json/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/python-files-json.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"【Python 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料","description":"程式關掉資料就不見？這篇帶你用 Python 做檔案讀寫（open、with），並用內建 json 模組把資料存成 JSON、再讀回來，讓程式真正能記住東西。","datePublished":"2026-10-13","dateModified":"2026-10-13","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/python-files-json.html"},"image":"https://neowise.com.tw/life/assets/python-files-json/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>【Python 教學】檔案讀寫與 JSON：讓程式能存資料、讀資料</h1>
+            <p class="article-meta">智慧喵　•　2026-10-13</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/python-files-json/cover.jpg" alt="示意程式把資料寫入檔案、再從檔案讀回的雙向流程概念圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>物件導向篇走完，從這篇開始進入 Python 最有感的 <strong>實用應用</strong> 階段——學一點就能馬上幫自己做事。第一篇講最基本也最常用的：<strong>讓程式能把資料存起來</strong>。</p>
+<p>你前面寫的程式有個共同問題：<strong>一關掉，資料就全沒了</strong>。因為資料都放在記憶體，程式結束就清空。這篇教你把資料<strong>存進檔案</strong>、下次<strong>讀回來</strong>，程式才能真正「記住東西」。這也是最後實戰篇的基礎。</p>
+<h2>一、基本檔案讀寫</h2>
+<p>Python 用 <code>open()</code> 開檔案，但更推薦搭配 <strong><code>with</code></strong> 寫，它會自動幫你關檔，不用自己記得關：</p>
+<p><strong>寫入檔案：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># &quot;w&quot; = write 寫入模式（檔案不存在會建立、存在會整個覆蓋）
+with open(&quot;note.txt&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    f.write(&quot;這是我存下來的筆記。\n&quot;)
+    f.write(&quot;第二行。&quot;)
+
+print(&quot;已寫入 note.txt&quot;)</code></pre></div>
+<p><strong>讀取檔案：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python"># &quot;r&quot; = read 讀取模式
+with open(&quot;note.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    content = f.read()      # 讀整個檔案成一個字串
+
+print(content)</code></pre></div>
+<p>重點：</p>
+<ul>
+<li><strong><code>with open(...) as f:</code></strong>：開檔並命名為 <code>f</code>，區塊結束自動關檔（推薦這樣寫）。</li>
+<li><strong>模式</strong>：<code>&quot;r&quot;</code> 讀、<code>&quot;w&quot;</code> 寫（覆蓋）、<code>&quot;a&quot;</code> 附加（接在後面不覆蓋）。</li>
+<li><strong><code>encoding=&quot;utf-8&quot;</code></strong>：處理中文一定要加，否則可能亂碼。</li>
+<li><code>f.read()</code> 讀整個檔；<code>f.readlines()</code> 讀成一行一個元素的 list。</li>
+</ul>
+<p><strong>一行一行讀</strong>（檔案大時更省記憶體）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">with open(&quot;note.txt&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    for line in f:                   # 直接走訪，一次一行
+        print(line.strip())          # strip() 去掉每行結尾的換行</code></pre></div>
+<h2>二、為什麼需要 JSON</h2>
+<p>純文字好存，但實務上你要存的常是<strong>結構化資料</strong>——一個 dict、一串物件。如果自己把每個欄位拼成文字、讀回來再拆解，太麻煩也容易出錯。</p>
+<p>這就是 <strong>JSON</strong> 登場的時候。JSON 是一種通用資料格式，長這樣：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-json">{
+  &quot;name&quot;: &quot;智慧喵&quot;,
+  &quot;age&quot;: 3
+}</code></pre></div>
+<p>好處是：<strong>人看得懂、程式好處理、跨語言通用</strong>（網路 API 幾乎都用它）。而且它跟 Python 的 dict/list 幾乎長一樣，轉換超自然。</p>
+<h2>三、用 json 模組存讀資料</h2>
+<p>Python 內建 <code>json</code> 模組，不用額外安裝。先 <code>import</code> 進來：</p>
+<p><strong>把資料存成 JSON 檔（<code>json.dump</code>）：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import json
+
+data = {
+    &quot;name&quot;: &quot;智慧喵&quot;,
+    &quot;age&quot;: 3,
+    &quot;skills&quot;: [&quot;Python&quot;, &quot;理財&quot;, &quot;旅遊&quot;]
+}
+
+with open(&quot;data.json&quot;, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    # ensure_ascii=False 讓中文正常顯示、indent=2 讓檔案有排版好閱讀
+    json.dump(data, f, ensure_ascii=False, indent=2)
+
+print(&quot;已存成 data.json&quot;)</code></pre></div>
+<p><strong>從 JSON 檔讀回資料（<code>json.load</code>）：</strong></p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import json
+
+with open(&quot;data.json&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    data = json.load(f)      # 讀回來就是 Python 的 dict
+
+print(data[&quot;name&quot;])          # 智慧喵
+print(data[&quot;skills&quot;])        # ['Python', '理財', '旅遊']</code></pre></div>
+<ul>
+<li><strong><code>json.dump(資料, 檔案)</code></strong>：把 Python 資料寫成 JSON 存檔。</li>
+<li><strong><code>json.load(檔案)</code></strong>：把 JSON 檔讀回成 Python 資料（dict / list）。</li>
+<li>存中文記得加 <strong><code>ensure_ascii=False</code></strong>，否則會變成 <code>\uXXXX</code> 的編碼；<code>indent=2</code> 讓檔案有縮排好讀。</li>
+</ul>
+<blockquote>還有一對 <code>json.dumps()</code> / <code>json.loads()</code>（結尾多個 s）——它們是「物件 ↔ 字串」互轉（不碰檔案），用在例如處理網路 API 回傳的 JSON 字串。名字差一個 s，別搞混：<strong>沒 s 的碰檔案、有 s 的碰字串</strong>。</blockquote>
+<h2>四、別忘了錯誤處理</h2>
+<p>讀檔很容易出錯——<strong>檔案不存在</strong>最常見。用 <code>try / except</code> 接住它：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import json
+
+try:
+    with open(&quot;data.json&quot;, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        data = json.load(f)
+    print(f&quot;讀入成功：{data['name']}&quot;)
+except FileNotFoundError:
+    print(&quot;檔案不存在，可能是第一次執行，從空資料開始。&quot;)
+    data = {}</code></pre></div>
+<p>特別是「<strong>第一次執行時檔案還不存在</strong>」這情況很常見——用 <code>try/except</code> 接住 <code>FileNotFoundError</code>、改成「從空資料開始」，程式就不會因為找不到檔案而崩潰。這個模式實戰篇會直接用到。</p>
+<blockquote><code>try / except</code> 是 Python 的錯誤處理（其他語言常叫 try/catch，Python 用 except）。這裡先看懂這個「接住檔案不存在」的常用模式即可。</blockquote>
+<p><strong>還有哪些常見異常？</strong> <code>FileNotFoundError</code> 只是其中一個，新手最常遇到的還有這幾個：</p>
+<div class="table-wrap"><table><thead><tr><th>異常名稱</th><th>什麼時候發生</th><th>例子</th></tr></thead><tbody><tr><td><code>FileNotFoundError</code></td><td>開啟不存在的檔案</td><td><code>open(&quot;沒這檔.txt&quot;)</code></td></tr><tr><td><code>ValueError</code></td><td>值不對、轉換失敗</td><td><code>int(&quot;abc&quot;)</code></td></tr><tr><td><code>TypeError</code></td><td>型別用錯</td><td><code>&quot;字&quot; + 1</code></td></tr><tr><td><code>KeyError</code></td><td>查 dict 不存在的鍵</td><td><code>d[&quot;沒這鍵&quot;]</code></td></tr><tr><td><code>IndexError</code></td><td>list 索引超出範圍</td><td>空 list 取 <code>[0]</code></td></tr><tr><td><code>ZeroDivisionError</code></td><td>除以 0</td><td><code>10 / 0</code></td></tr></tbody></table></div>
+<p>你可以針對不同異常分別處理，<code>except</code> 也能一次接住全部：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">try:
+    # 可能出錯的程式
+    pass
+except FileNotFoundError:
+    print(&quot;檔案找不到&quot;)
+except ValueError:
+    print(&quot;值不對&quot;)
+except Exception as e:     # 接住「其他所有」異常，e 是錯誤內容
+    print(f&quot;發生其他錯誤：{e}&quot;)</code></pre></div>
+<blockquote>兩個實用小技巧： 1. <strong>不知道會丟哪個異常？先故意跑錯一次</strong>——Python 的錯誤訊息<strong>最後一行</strong>會告訴你異常名字（例如 <code>KeyError: '小李'</code>），照抄去 <code>except</code> 接就對了。 2. <strong>想查完整清單</strong>：看 Python 官方文件的<a href="https://docs.python.org/3/library/exceptions.html" rel="noopener">內建例外頁面</a>（可切換成繁體中文），列出所有內建異常。</blockquote>
+<h2>五、動手綜合練習</h2>
+<p>把檔案 + JSON + 前面學的資料結構串起來，做一個「存讀待辦清單」的小程式（為實戰篇鋪路）：</p>
+<div class="code-wrap"><button class="code-copy" type="button" aria-label="複製程式碼">複製</button><pre class="code-block"><code class="language-python">import json
+
+FILE = &quot;todos.json&quot;
+
+# 準備一串待辦（每筆是一個 dict）
+todos = [
+    {&quot;title&quot;: &quot;寫 Python 教學&quot;, &quot;done&quot;: False},
+    {&quot;title&quot;: &quot;買晚餐&quot;, &quot;done&quot;: True},
+]
+
+# 存檔
+with open(FILE, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    json.dump(todos, f, ensure_ascii=False, indent=2)
+print(f&quot;已存 {len(todos)} 筆&quot;)
+
+# 讀回來（含錯誤處理）
+try:
+    with open(FILE, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        loaded = json.load(f)
+    for t in loaded:
+        mark = &quot;完成&quot; if t[&quot;done&quot;] else &quot;待辦&quot;
+        print(f&quot;[{mark}] {t['title']}&quot;)
+except FileNotFoundError:
+    print(&quot;還沒有待辦清單&quot;)</code></pre></div>
+<p>跑完去程式目錄找找 <code>todos.json</code>，打開看看裡面長什麼樣（排版好的 JSON）。試著自己加一筆、重新跑，確認存讀都正確。</p>
+<h2>這一步大約要花多久？</h2>
+<p>檔案讀寫觀念簡單（<code>with open</code> 的寫法幾分鐘就懂）。JSON 建議多練，因為自動化、爬蟲、資料處理都會用到。練法：</p>
+<ul>
+<li>先練純文字讀寫，確認檔案真的建立、讀得回來（記得加 <code>encoding=&quot;utf-8&quot;</code>）。</li>
+<li>練把一個 dict / list 存成 JSON 再讀回。</li>
+<li>一定要練「檔案不存在時用 try/except 接住」，這是實務必備。</li>
+</ul>
+<h2>下一篇</h2>
+<p>會存讀資料後，下一篇進入 Python 最受歡迎的應用之一：<strong>網路爬蟲</strong>——用 requests + BeautifulSoup 自動抓網頁資料。我也會特別講「禮貌爬取」和法律界線，爬得聰明也要爬得正當。</p>
+<p>下篇見。🐾</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想把 Python 實用技能練得更扎實？</span><span class="affiliate-card-desc">檔案與資料處理是實戰必備。Hahow 上有從 Python 入門到爬蟲、資料分析的系統課程，想要有完整練習與專案帶著走的話可以逛逛。</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<hr>
+<p><strong>系列導覽</strong></p>
+<ul>
+<li>📚 回到 <a href="python.html" rel="noopener">Python 程式設計完整教學 全系列目錄</a></li>
+<li>⬅️ 上一篇：<a href="python-oop-inheritance.html" rel="noopener">繼承與特殊方法：讓類別更強大</a></li>
+<li>➡️ 下一篇：<a href="python-web-scraping.html" rel="noopener">網路爬蟲入門：用 requests + BeautifulSoup 抓網頁資料</a></li>
+</ul>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
