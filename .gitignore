@@ -8,3 +8,47 @@ Thumbs.db
 
 # 依賴鎖定檔（可選，若想追蹤可自行移除此行）
 package-lock.json
+
+# ─────────────────────────────────────────────
+# 幕後工作檔（不公開到 GitHub）
+# 命名慣例：工作檔一律以底線開頭，整組擋掉
+# ─────────────────────────────────────────────
+
+# 各篇 assets 底下以底線開頭的工作檔
+#（_圖片需求.txt、_影片腳本大綱.md、_影片逐字稿.md、_配音稿.md、
+#  _影片圖卡需求.txt、Canva製作提示.md 等）
+**/_*.txt
+**/_*.md
+**/_*.mjs
+
+# 影片字幕工作檔（上傳 YouTube 用，不需放站上）
+*.srt
+
+# 例外（方案 B）：content 的草稿／歸檔資料夾雖以底線開頭，但要保留上傳當備份。
+# 下面用 ! 把上面 **/_*.md 等規則對這些資料夾的效果取消掉。
+!life/content/_drafts/
+!life/content/_drafts/**
+!life/content/_published/
+!life/content/_published/**
+!blog-content/_drafts/
+!blog-content/_drafts/**
+!blog-content/_published/
+!blog-content/_published/**
+
+# 注意（方案 B）：內容草稿 content/_drafts 與 _published 刻意「保留上傳」，
+# 當作 GitHub 上的內容來源備份（草稿內容與已公開文章相近，公開影響小）。
+# 如日後想改為不公開，再把下列加回來並做 git rm --cached：
+#   life/content/_drafts/
+#   blog-content/_drafts/
+
+# 根目錄的規劃／說明／範本類文件（純內部文件）
+life/*規劃.md
+life/使用說明.md
+life/SEO優化說明.md
+life/科技寫作框架.md
+life/生活寫作框架.md
+life/YouTube*.md
+blog/使用說明.md
+SEO優化說明.md
+*規劃.md
+使用說明.md
