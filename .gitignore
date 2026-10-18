@@ -24,6 +24,9 @@ package-lock.json
 # 影片字幕工作檔（上傳 YouTube 用，不需放站上）
 *.srt
 
+# Canva 圖卡製作提示（幕後做圖用，非底線開頭，單獨擋）
+**/Canva製作提示.md
+
 # 例外（方案 B）：content 的草稿／歸檔資料夾雖以底線開頭，但要保留上傳當備份。
 # 下面用 ! 把上面 **/_*.md 等規則對這些資料夾的效果取消掉。
 !life/content/_drafts/
