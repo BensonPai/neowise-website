@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>不露臉也能做教學影片：AI 配音＋螢幕錄影的完整製作流程 - 智慧喵</title>
+    <meta name="description" content="想做技術教學 YouTube 卻不想露臉、不想開麥？這篇分享一套可落地的製作流程：用 AI 配音念旁白、螢幕錄影示範操作、Canva 做概念圖卡，再用免費工具剪輯上字幕，Mac 錄螢幕、Windows 剪輯也能順暢分工。">
+    <meta name="keywords" content="不露臉影片,教學影片製作,AI 配音,螢幕錄影,YouTube 教學頻道,ElevenLabs,CapCut,OBS,免費影片工具">
+    <meta property="og:title" content="不露臉也能做教學影片：AI 配音＋螢幕錄影的完整製作流程">
+    <meta property="og:description" content="想做技術教學 YouTube 卻不想露臉、不想開麥？這篇分享一套可落地的製作流程：用 AI 配音念旁白、螢幕錄影示範操作、Canva 做概念圖卡，再用免費工具剪輯上字幕，Mac 錄螢幕、Windows 剪輯也能順暢分工。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/faceless-tutorial-video-production.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/faceless-tutorial-video-production/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/faceless-tutorial-video-production.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"不露臉也能做教學影片：AI 配音＋螢幕錄影的完整製作流程","description":"想做技術教學 YouTube 卻不想露臉、不想開麥？這篇分享一套可落地的製作流程：用 AI 配音念旁白、螢幕錄影示範操作、Canva 做概念圖卡，再用免費工具剪輯上字幕，Mac 錄螢幕、Windows 剪輯也能順暢分工。","datePublished":"2026-10-15","dateModified":"2026-10-15","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/faceless-tutorial-video-production.html"},"image":"https://neowise.com.tw/life/assets/faceless-tutorial-video-production/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag tech">科技</span>
+            <h1>不露臉也能做教學影片：AI 配音＋螢幕錄影的完整製作流程</h1>
+            <p class="article-meta">智慧喵　•　2026-10-15</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/faceless-tutorial-video-production/cover.jpg" alt="書桌上一台筆電開著影片剪輯軟體，旁邊有麥克風與耳機，示意不露臉影片製作" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>想在 YouTube 做技術教學，卻卡在同一件事：<strong>不想露臉，也不想對著麥克風講話</strong>。鏡頭感、佈景、剪自己說話的畫面，光想就累，很多人就這樣一直沒開始。</p>
+<p>好消息是——<strong>技術教學影片本來就不需要你出鏡</strong>。觀眾要看的是「操作怎麼做」和「觀念怎麼懂」，不是你的臉。這篇就分享我實際在用的一套不露臉製作流程：<strong>AI 配音念旁白、螢幕錄影示範操作、圖卡講概念</strong>，三者合起來就是一支完整的教學影片。</p>
+<p>這套流程我拿來做 App 開發教學系列，Mac 負責錄螢幕、Windows 負責剪輯，全程不露臉、不開麥，照樣能穩定產出。</p>
+<h2>一、先搞懂：教學影片其實分兩種畫面</h2>
+<p>這是整件事最關鍵的觀念。先把你的影片畫面拆成兩類，製作方式完全不同：</p>
+<div class="table-wrap"><table><thead><tr><th>畫面類型</th><th>範例</th><th>怎麼做</th></tr></thead><tbody><tr><td><strong>螢幕實錄</strong></td><td>安裝軟體、操作介面、跑程式</td><td>螢幕錄影，<strong>必須自己錄</strong>，AI 生不出來</td></tr><tr><td><strong>概念說明</strong></td><td>架構圖、比較表、流程</td><td>圖卡 / 簡報，用 Canva 做</td></tr></tbody></table></div>
+<p>為什麼要先分這個？因為很多人以為「不露臉 = 全部交給 AI」，結果想用 AI 生出操作畫面，怎麼弄都不對。<strong>真正要你動手的只有螢幕錄影這一塊</strong>，而它恰好不需要你的臉，只要錄下你的操作就好。概念畫面則用靜態圖卡補上，連錄都不用錄。</p>
+<p>想通這點，不露臉影片就從「好像很難」變成「只是把三種素材拼起來」。</p>
+<figure><img src="assets/faceless-tutorial-video-production/pipeline.jpg" alt="不露臉影片製作流程圖：AI 配音、螢幕錄影、圖卡三軌合成" loading="lazy"></figure>
+<h2>二、三種不露臉的路線</h2>
+<p>不露臉有幾種做法，先看哪種適合你：</p>
+<ul>
+<li><strong>路線 A：螢幕錄影 ＋ AI 配音</strong>（最推薦，最省力）</li>
+</ul>
+<p>  旁白交給 AI 念，你只要錄操作、做圖卡、剪輯。完全不用開麥、不用在意聲音狀態，產線最穩定。這篇主要講這條。</p>
+<ul>
+<li><strong>路線 B：螢幕錄影 ＋ 真人配音</strong></li>
+</ul>
+<p>  一樣不露臉，但旁白你自己念。聲音比 AI 更有溫度、更有個人風格，代價是需要安靜環境和一支堪用的麥克風，而且每次錄音狀態要穩。</p>
+<ul>
+<li><strong>路線 C：虛擬角色（Avatar）</strong></li>
+</ul>
+<p>  用一個 2D／3D 虛擬人物當主播掛在畫面角落。這條最花工，初期不建議，等頻道做起來、想強化人設再考慮。</p>
+<p>如果你是剛起步、想先把影片做出來，<strong>直接選路線 A</strong>。等頻道有了節奏，再決定要不要換自己的聲音。</p>
+<h2>三、工具清單（含免費與付費）</h2>
+<h3>AI 配音</h3>
+<p>旁白是整支影片的骨幹，中文配音自然不自然，差很多。</p>
+<ul>
+<li><strong>TTSMaker</strong>（真免費首選）：線上貼文字就能轉語音、下載 MP3，<strong>不用登入、不帶浮水印</strong>，每週有免費字元額度、部分語音標示無限免費，而且官方條款允許<strong>商業使用</strong>（可放 YouTube）。最棒的是還能直接<strong>下載 SRT 字幕檔</strong>（見下方字幕段）。對旁白稿這種字數來說額度很夠用。</li>
+<li><strong>微軟 Azure TTS</strong>：繁體中文語音（曉臻、雲希等）台灣腔自然、有免費額度，想要更穩定或 API 串接時的好選擇。</li>
+<li><strong>ElevenLabs</strong>：目前中文最自然的 AI 配音，有免費額度，付費方案約每月 5 美元起。想要頻道「門面聲音」更有質感時升級它。</li>
+<li><strong>CapCut（剪映）內建文字轉語音</strong>：直接在剪輯軟體裡就能做、最方便，但要留意<strong>它不是完全免費</strong>——免費版的語音選項和匯出常有限制，較好的音色或無浮水印匯出多半要付費方案（見下方說明）。</li>
+</ul>
+<blockquote>授權提醒：免費 TTS 服務的額度與「可商用」條款常調整，發布前建議到該站授權頁再確認一次。</blockquote>
+<blockquote>小訣竅：整個系列<strong>固定用同一個聲音</strong>，影片聽起來才有一致的「頻道感」。</blockquote>
+<p><strong>用線上 TTS（以 TTSMaker 為例）生成配音的流程</strong>：</p>
+<ol>
+<li>準備好「只有旁白」的稿子——<strong>不要把操作提示（例如「打開 App Store」這種畫面標註）貼進去</strong>，不然會被一起念出來。</li>
+<li>打開 TTSMaker，貼上<strong>一段</strong>旁白，選一個<strong>中文語音音色</strong>（選定後整個系列固定用它）。</li>
+<li>轉換後下載<strong>語音 MP3</strong>，若有需要也一併下載 <strong>SRT 字幕檔</strong>。</li>
+<li>下一段重複步驟 2~3，記得用<strong>同一個音色、同一個語速</strong>，接起來才一致。</li>
+</ol>
+<blockquote><strong>分段貼，不要全篇一次貼</strong>：每段獨立的 MP3 好對齊各段螢幕畫面，改一句只重轉一段，SRT 時間軸也更準。覺得太瑣碎可 2~3 段合併轉，但別整篇一次轉完。</blockquote>
+<p><strong>如果改用 CapCut 內建文字轉語音</strong>：在時間軸新增文字素材 → 貼旁白 → 右側找「文字轉語音（Text to Speech）」→ 選中文音色套用，它會生成語音鋪到軌道；不需要字幕時把文字層透明度調 0 或刪掉、只留聲音。</p>
+<blockquote>付費提醒：CapCut 近年把方案拆成免費、Standard、Pro 多層（Standard 約每月 10 美元、Pro 約每月 20 美元，各地與行動版價格略有差異），較自然的音色、無浮水印匯出等部分需付費。想完全免費，用 TTSMaker 生成 MP3 再匯入剪輯軟體即可。</blockquote>
+<h3>螢幕錄影</h3>
+<ul>
+<li><strong>OBS Studio</strong>：免費、功能強，Windows / Mac 都能用，可錄視窗、加游標高亮，是首選。</li>
+<li><strong>Windows 內建 Xbox Game Bar</strong>：按 <code>Win + G</code> 叫出，點錄影鈕就能錄，零安裝，錄視窗操作很夠用。</li>
+<li><strong>macOS 內建螢幕錄製</strong>：Mac 用內建的「螢幕截圖」工具列（Shift＋Command＋5）或 QuickTime 就能錄，零安裝、很夠用。</li>
+<li><strong>Camtasia / ScreenFlow</strong>：付費的錄影＋剪輯一體方案，想一次搞定可考慮。</li>
+</ul>
+<blockquote>錄程式畫面前，記得把開發工具的<strong>字體調大</strong>，不然程式碼在影片裡會小到看不清。</blockquote>
+<h3>概念圖卡</h3>
+<ul>
+<li><strong>Canva</strong>：做架構圖、比較表、流程圖最快，模板多、好上手。像「軟體堆疊關係圖」「規格需求表」這類畫面，用它做又快又清楚。</li>
+<li><strong>PowerPoint / Keynote</strong>：用內建轉場做簡單動畫，再錄螢幕輸出也行。</li>
+</ul>
+<h3>剪輯 ＋ 字幕</h3>
+<ul>
+<li><strong>CapCut（剪映）</strong>：好上手，自動字幕中文辨識不錯，還內建 AI 配音，一套就能從配音剪到上字幕。有免費版，但部分功能與無浮水印匯出需付費方案（見上方 AI 配音段的付費提醒）。</li>
+<li><strong>DaVinci Resolve</strong>：<strong>完全免費</strong>、專業級，功能強但學習曲線稍陡，想長期深做、又想省訂閱費的首選。</li>
+</ul>
+<p>想更系統地學影片剪輯與頻道經營，線上課程會比自己摸索省時間：</p>
+<div class="affiliate-box affiliate-card">
+    <span class="affiliate-label">🎓 線上學習</span>
+    <a href="https://joymall.co/3Tker" target="_blank" rel="noopener sponsored"><span class="affiliate-card-title">想自學影片剪輯與頻道經營？</span><span class="affiliate-card-desc">從剪輯、配音到 YouTube 經營，Hahow 上有不少實作型課程可以挑</span><span class="affiliate-btn">前往 Hahow 逛逛 →</span></a>
+    <p class="affiliate-note">※ 本連結為 Hahow 好學校聯盟連結，連結導向 Hahow 平台（非特定課程頁）；透過它購課我會獲得少許回饋，不影響你的售價。</p>
+</div>
+<h2>四、最小可行組合：全免費也能開跑</h2>
+<p>如果你想用最低成本先做出第一支，這組合可以<strong>不花訂閱費</strong>跑完：</p>
+<div class="table-wrap"><table><thead><tr><th>工作</th><th>工具</th><th>費用</th></tr></thead><tbody><tr><td>AI 配音 ＋ 字幕</td><td>TTSMaker（下載 MP3 ＋ SRT）</td><td>免費、可商用</td></tr><tr><td>螢幕錄影</td><td>OBS Studio，或系統內建錄製</td><td>免費、無浮水印</td></tr><tr><td>概念圖卡</td><td>Canva</td><td>免費版可用</td></tr><tr><td>剪輯</td><td>DaVinci Resolve</td><td>完全免費、無浮水印</td></tr></tbody></table></div>
+<blockquote>這條線最大的省事點：<strong>配音和字幕一次搞定</strong>——TTSMaker 既給你語音 MP3、又給你對應的 SRT 字幕，剪輯時只要匯入、對齊時間就好。</blockquote>
+<p>&gt;</p>
+<blockquote>為什麼不用 CapCut 當全免費組合？因為 CapCut 免費版匯出常帶<strong>浮水印</strong>，較好的音色與文字轉語音也多半要付費。CapCut 的好處是最好上手、一套搞定，若你不介意付月費或接受浮水印，它仍是方便的選擇。</blockquote>
+<p>等頻道做起來、想讓聲音更自然或剪輯更快，再升級到 ElevenLabs 配音、或付費版 CapCut 就好——<strong>把錢花在最有感的地方</strong>。</p>
+<h2>五、實際製作流程（照這個順序做）</h2>
+<p>我習慣的順序是「先聲音、再畫面、最後合成」，這樣剪輯時最好對齊：</p>
+<ol>
+<li><strong>先配音</strong>：把旁白稿<strong>一段一段</strong>貼進配音工具，分段匯出成多個音檔（例如 <code>seg01</code>、<code>seg02</code>）。分段是為了剪輯時好對齊畫面。</li>
+<li><strong>再錄螢幕</strong>：對照旁白內容，把每一段要示範的操作錄下來。操作放慢、滑鼠別移太快，讓觀眾跟得上。</li>
+<li><strong>做圖卡</strong>：用 Canva 把「概念說明」畫面做出來（架構圖、比較表等），匯出成圖片。</li>
+<li><strong>進剪輯軟體</strong>：配音軌鋪底，再把螢幕錄影和圖卡沿著時間軸鋪上去，對齊旁白。</li>
+<li><strong>上字幕</strong>：<strong>最省事的做法是直接用 TTS 附的 SRT</strong>——因為字幕是從你原本的旁白文字生成的，字一定是對的，匯入剪輯軟體後只要微調時間軸就好，不用像自動語音辨識那樣逐字抓錯字。若沒有 SRT 才退而用剪輯軟體的自動字幕，並<strong>人工校對專有名詞</strong>（英文術語最容易被辨識錯）。</li>
+<li><strong>輸出</strong>：1080p、MP4、H.264 格式。</li>
+<li><strong>最後校時間戳</strong>：影片剪好後，再回頭對 YouTube 說明欄的章節時間（00:00 那種），因為一開始的時間都是估的。</li>
+</ol>
+<h3>旁白稿怎麼準備</h3>
+<p>直接寫一份「口說逐字稿」：把每一句要念的旁白寫出來，並在旁邊標註「這句對應什麼畫面」。配音時只把<strong>要念的旁白</strong>貼進工具，畫面標註別貼進去。這份稿還能一稿多用——念旁白、對剪輯、改成 YouTube 說明欄文字，都靠它。</p>
+<h2>六、哪些影片需要 Mac？跨裝置分工</h2>
+<p>要不要用 Mac，取決於你錄的是哪個平台的操作：</p>
+<div class="table-wrap"><table><thead><tr><th>教學主題</th><th>錄螢幕</th><th>配音／剪輯</th></tr></thead><tbody><tr><td><strong>Android</strong>（Android Studio）</td><td><strong>Windows 就行</strong>（Mac/Linux 也可）</td><td>Windows</td></tr><tr><td><strong>iOS</strong>（Xcode）</td><td><strong>只能 Mac</strong>（Xcode 不支援 Windows）</td><td>Windows</td></tr></tbody></table></div>
+<p>換句話說，<strong>只有 iOS 教學非得用 Mac 錄螢幕</strong>；Android 教學一整台 Windows 就能全包——錄螢幕、配音、剪輯一次搞定，連傳檔都省了。Windows 錄螢幕用 OBS 或內建的 Xbox Game Bar（<code>Win + G</code>）即可。</p>
+<p>如果你跟我一樣做 iOS 教學、開發環境在 Mac、主力剪輯在 Windows，分工這樣：</p>
+<ul>
+<li><strong>Mac 端</strong>：只做一件事——錄 Xcode 的螢幕操作。</li>
+<li><strong>Windows 端</strong>：AI 配音、Canva 圖卡、剪輯、上字幕、輸出，全在這做。</li>
+</ul>
+<p>兩台之間傳檔，螢幕錄影檔通常很大，建議用<strong>雲端硬碟</strong>（Google Drive / OneDrive）或 <strong>exFAT 格式的隨身碟</strong>（Mac、Windows 都讀得到），別用通訊軟體傳，會壓縮掉畫質。</p>
+<h2>七、幾個踩雷提醒</h2>
+<ul>
+<li><strong>操作畫面一定要自己錄</strong>：這是 AI 取代不了的部分，別妄想生成。</li>
+<li><strong>錄之前關通知</strong>：開勿擾模式，免得錄到跳出來的訊息。</li>
+<li><strong>分段錄、別一鏡到底</strong>：每個步驟獨立錄短片段，重錄和剪輯都更有彈性。</li>
+<li><strong>「等很久」的畫面用加速帶過</strong>：下載、安裝、建置這種要等的過程，錄一小段，剪輯時加速或跳接就好。</li>
+<li><strong>字幕務必校對</strong>：自動字幕對中文口語和英文術語常出錯，發布前一定要看過一遍。</li>
+</ul>
+<h2>結語</h2>
+<p>不露臉做教學影片，門檻其實比想像低。核心就一句話：<strong>旁白交給 AI、操作自己錄、概念用圖卡</strong>，再用免費工具把三者拼起來。不用買相機、不用佈景、不用對鏡頭說話，你只要專注在「把內容講清楚」。</p>
+<p>與其糾結要不要露臉，不如今天就把第一支的旁白稿寫出來、錄一段螢幕試試看。做出來，比完美更重要。🐾</p>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+影片：用 Jetpack Compose 做第一個 App（AND-3）
+slug：android-dev-compose-first-app
+用途：影片中的「概念說明」圖卡（非 Android Studio 實錄），建議用 Canva。
+風格：青綠色調、簡潔資訊圖、字夠大、16:9 為主。
+
+說明：這支以「Android Studio 實錄」為主，圖卡用在觀念段。
+remember+state 狀態驅動、以及與 SwiftUI 的對照最值得做圖。
+
+======================================================================
+圖卡清單（共 3 張）
+======================================================================
+
+1) card-containers.png（對應 03:20 版面排列）
+   內容：三容器對照（並標對應 SwiftUI）
+     Column（垂直，=VStack）/ Row（水平，=HStack）/ Box（重疊，=ZStack）
+   版式：16:9 三格
+
+2) card-state-recompose.png（對應 04:50 remember+state）★最重要
+   內容：狀態驅動（重組）
+     按按鈕 → count 改變(remember mutableStateOf) → Compose 自動重組 → 畫面更新
+   旁註：對應 SwiftUI 的 @State，思想完全一樣
+   版式：16:9 流程圖
+
+3) card-add-dependency.png（對應 01:50 加套件，實用）
+   內容：缺 import 的通用解法
+     紅字 Unresolved → 多半缺套件 → build.gradle.kts(Module:app) 的 dependencies 加一行 → Sync Now
+     例：material-icons-extended
+   版式：16:9，步驟流程
+
+======================================================================
+要自己錄的「Android Studio 實錄」畫面（主體）
+======================================================================
+- 新建 Compose 專案，看 @Composable 與預覽
+- 紅字 import：Alt/Option + Enter 補 import
+- 加套件：build.gradle.kts(app) 加 material-icons-extended → Sync
+- Column → 改 Row，預覽變化
+- remember mutableStateOf 計數器逐行、模擬器按按鈕數字跳 ★
+- setContent 決定顯示哪個 Composable 的說明
+- 裝到真機：開發者選項(版本號點七下)、USB 偵錯、接線允許、選手機 Run
+
+======================================================================
+提醒
+======================================================================
+- 圖卡放此資料夾，影片用；文章配圖需求見 _圖片需求.txt。
