@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>當沖每天賺 3000 元有多難？我用回測數據算給你看 - 智慧喵</title>
+    <meta name="description" content="當沖每天賺 3000 元聽起來不多，實際上有多難？我寫了一套日內回測系統，用七套策略、數十檔股票的真實 5 分 K 數據，拆解手續費、事後最佳的陷阱，以及為什麼穩定獲利這麼難。">
+    <meta name="keywords" content="當沖,日內交易,當沖獲利,回測,手續費,交易稅,VWAP,當沖策略,台股當沖">
+    <meta property="og:title" content="當沖每天賺 3000 元有多難？我用回測數據算給你看">
+    <meta property="og:description" content="當沖每天賺 3000 元聽起來不多，實際上有多難？我寫了一套日內回測系統，用七套策略、數十檔股票的真實 5 分 K 數據，拆解手續費、事後最佳的陷阱，以及為什麼穩定獲利這麼難。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/invest-daytrading-reality.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/invest-daytrading-reality/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/invest-daytrading-reality.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"當沖每天賺 3000 元有多難？我用回測數據算給你看","description":"當沖每天賺 3000 元聽起來不多，實際上有多難？我寫了一套日內回測系統，用七套策略、數十檔股票的真實 5 分 K 數據，拆解手續費、事後最佳的陷阱，以及為什麼穩定獲利這麼難。","datePublished":"2026-10-23","dateModified":"2026-10-23","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/invest-daytrading-reality.html"},"image":"https://neowise.com.tw/life/assets/invest-daytrading-reality/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag invest">投資理財</span>
+            <h1>當沖每天賺 3000 元有多難？我用回測數據算給你看</h1>
+            <p class="article-meta">智慧喵　•　2026-10-23</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/invest-daytrading-reality/cover.jpg" alt="當沖日內交易與回測數據示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>最近在網路上滑到不少廣告和貼文，打著「<strong>當沖每天穩賺 3000 元、勝率高達九成</strong>」的名號招攬學員或賣課。數字看起來誘人、門檻好像很低，留言區也一片躍躍欲試。我看了心裡冒出一個念頭：<strong>這種說法，用實際數據回測，到底做不做得到？</strong> 於是有了這篇文章。</p>
+<p>「當沖一天賺 3000 元就好，一個月也有 6 萬，比上班薪水還高。」這是很多人對當沖的美好想像。數字聽起來不大，門檻好像很低——但真的是這樣嗎？</p>
+<p>為了認真回答這個問題，我寫了一套<strong>日內回測系統</strong>：用 yfinance 抓台股近 60 天的 5 分 K，寫進七套常見的當沖策略，然後拿幾十檔股票一檔一檔跑，看看「穩定每天賺 3000」在歷史數據上到底成不成立。這篇就把我測出來的真實結果攤開給你看。</p>
+<blockquote>先說結論：<strong>做得到，但遠比想像中難</strong>。而且難的點，跟多數人以為的「技術不夠好」完全不一樣。</blockquote>
+<h2>先把目標翻譯成數字</h2>
+<p>「每天賺 3000」要拆開來看它實際要求什麼：</p>
+<ul>
+<li>一個月約 20 個交易日 → 月目標 <strong>6 萬元</strong>。</li>
+<li>假設一筆部位 20 萬（約一兩張中價股），要淨賺 3000 → 需要 <strong>1.5% 的淨報酬</strong>。</li>
+<li>而且不是偶爾做到，是要<strong>幾乎天天</strong>做到。</li>
+</ul>
+<p>1.5% 聽起來不多對吧？問題是，這 1.5% 是「<strong>扣掉成本之後</strong>」還要剩下的。而成本，正是當沖第一個、也是最容易被低估的敵人。</p>
+<h2>第一個真相：手續費正在吃掉你的利潤</h2>
+<p>當沖一買一賣，要付兩筆成本：</p>
+<ul>
+<li><strong>手續費</strong>：買賣各一次，每次成交金額 0.1425%（可打折）。</li>
+<li><strong>交易稅</strong>：賣出時收，當沖減半為 0.15%。</li>
+</ul>
+<p>就算用電子下單 6 折手續費，一趟來回大約吃掉 <strong>0.32%</strong>；即使殺到 2.8 折，也還要約 0.2%。這是<strong>固定成本</strong>，不管你賺賠都要繳。</p>
+<p>這個數字在我的回測裡被狠狠印證。拿緯創（3231）其中一套策略來看：</p>
+<div class="table-wrap"><table><thead><tr><th>項目</th><th>結果</th></tr></thead><tbody><tr><td>純價差（不含費用）</td><td>毛賺 +5,500 元，報酬 +2.97% ✅</td></tr><tr><td>扣掉手續費＋交易稅後</td><td>淨賠 −10,545 元，報酬 −5.69% ❌</td></tr><tr><td>27 筆交易的總費用</td><td><strong>16,045 元</strong></td></tr></tbody></table></div>
+<p>看懂了嗎？這套策略選股、進出場其實<strong>是賺的</strong>（毛利 +5,500），但光是手續費加交易稅就花了 1.6 萬——<strong>費用是毛利的三倍</strong>，直接把小賺變成大賠。</p>
+<blockquote>當沖的價差本來就小（日內常只有 1~2%），而來回成本就要 0.2~0.32%。你得先穩定賺超過這個數字，才「開始」真正獲利。這就是為什麼能靠當沖長期賺錢的人這麼少。</blockquote>
+<h2>第二個真相：權值股幾乎注定賠</h2>
+<p>很多新手第一檔就挑台積電、聯發科這種大型權值股，覺得「大公司比較安全」。但對當沖來說，這恰恰是最糟的選擇。</p>
+<p>我用同一套策略分別測了幾檔，換算成「<strong>週轉報酬率</strong>」（用一筆錢反覆週轉做完 60 天所有交易的實際報酬）：</p>
+<div class="table-wrap"><table><thead><tr><th>股票</th><th>週轉報酬率（60 天）</th></tr></thead><tbody><tr><td>台積電 2330</td><td><strong>−9.4%</strong></td></tr><tr><td>聯發科 2454</td><td>−4.1%</td></tr><tr><td>緯創 3231</td><td>−5.7%</td></tr></tbody></table></div>
+<p>原因很簡單：<strong>權值股日內波動小</strong>，一天可能只有 1% 上下的空間，毛利本來就薄，費用一扣就轉負。波動小 = 利潤空間小 = 被固定成本吃光。當沖要的是「波動」，不是「安全」。</p>
+<h2>第三個真相：「事後最佳」是最大的幻覺</h2>
+<p>這是我覺得最值得分享、也最多人沒意識到的陷阱。</p>
+<p>當我把系統設成「<strong>每檔股票自動挑出最適合它的那套策略</strong>」時，數據漂亮得不得了——我測的 14 檔裡，有 11 檔是正報酬：</p>
+<div class="table-wrap"><table><thead><tr><th>股票</th><th>最佳策略</th><th>週轉報酬率</th></tr></thead><tbody><tr><td>合晶</td><td>開盤反向</td><td>+28.8%</td></tr><tr><td>光頡</td><td>VWAP 乖離回歸</td><td>+19.1%</td></tr><tr><td>華新科</td><td>均線交叉</td><td>+16.9%</td></tr><tr><td>南亞科</td><td>均線交叉</td><td>+15.7%</td></tr><tr><td>技嘉</td><td>VWAP 回歸＋移動停利</td><td>+12.8%</td></tr></tbody></table></div>
+<p>看到這裡你可能心動了——這不就賺翻了嗎？<strong>但這裡藏著一個致命的問題：這是「事後」挑出來的最佳解。</strong></p>
+<p>我是從 60 天的歷史資料裡，回頭挑出「每檔表現最好的那套策略」。問題是——<strong>實戰的時候，你根本不知道今天合晶該用『開盤反向』、南亞科該用『均線交叉』。</strong> 這是用答案去對題目，當然每題都對。</p>
+<p>那把條件改成貼近實戰——「<strong>所有股票都用同一套策略</strong>」（因為實戰你得先決定今天用哪套，再套到所有標的上），結果立刻現出原形。同樣這幾檔，全部都用「均線交叉」：</p>
+<div class="table-wrap"><table><thead><tr><th>股票</th><th>週轉報酬率</th></tr></thead><tbody><tr><td>南亞科</td><td>+15.7%</td></tr><tr><td>華新科</td><td>+16.9%</td></tr><tr><td>技嘉</td><td>−14.0%</td></tr><tr><td>合晶</td><td>−15.2%</td></tr><tr><td><strong>平均</strong></td><td><strong>只有 +0.87%</strong></td></tr></tbody></table></div>
+<p>同一套策略，有的賺有的賠，平均下來<strong>勉強打平</strong>。這才是實戰的真實樣貌——你沒有上帝視角，只能選一套策略押下去，然後承受「這套在某些股票靈、某些股票不靈」的隨機性。</p>
+<blockquote>回測報告上漂亮的數字，很多都是「事後最佳」的幻覺。真正該問的是：「如果我<strong>事前</strong>只能做一個決定，結果會怎樣？」</blockquote>
+<h2>第四個真相：勝率高，不代表會賺</h2>
+<p>我還試過加上「停利」機制，想提高賺錢的機會。結果很有意思：某檔股票加了「回到 VWAP 就停利」之後，<strong>勝率從 25% 一口氣跳到 48%</strong>——幾乎翻倍。</p>
+<p>但同一組交易的<strong>總報酬，還是負的</strong>。為什麼？</p>
+<p>因為停利讓你「<strong>贏很多次小的</strong>」（賺 1% 就跑），停損卻是「<strong>輸幾次大的</strong>」（賠 2% 才停）。勝率很好看，但一次大賠就吃掉好幾次小賺。這就是當沖最經典的「賺小賠大」陷阱。</p>
+<blockquote>看任何策略，<strong>勝率和報酬率一定要一起看</strong>。只看勝率，你很容易被一個「贏很多次、卻在賠錢」的策略騙進去。</blockquote>
+<p>所以回到開頭那個「勝率九成」的宣傳——就算真的有九成勝率，<strong>也完全不保證賺錢</strong>。只要那一成的虧損是大賠，一樣可以是負的。高勝率是最好用的行銷話術，因為它聽起來很安心，卻刻意避開了「賠的時候賠多少」這個真正決定輸贏的問題。下次看到「勝率九成」，先問一句：<strong>那報酬率呢？賠的那幾次賠多少？</strong></p>
+<h2>所以，每天賺 3000 到底做不做得到？</h2>
+<p>把以上拼起來，誠實的答案是：</p>
+<ul>
+<li><strong>用權值股做：幾乎注定賠</strong>，費用吃光薄利。</li>
+<li><strong>用中小型波動股＋低手續費＋對的策略：回測上可以賺</strong>，部位放大到兩三張，帳面上確實能接近每天 3000。</li>
+<li><strong>但「穩定」和「每天」才是真正的門檻</strong>——你得盤前就選到當日會噴、而且方向押對的股票，還要忍住不違背紀律。這是連職業交易者都未必能穩定做到的事。</li>
+</ul>
+<p>而且別忘了，回測還有一層樂觀濾鏡沒算進去：<strong>滑價</strong>（實際成交價比理想差）、<strong>流動性</strong>（中小型股掛單不一定成交）、還有最難的——<strong>人性</strong>。回測不會手抖、不會凹單、不會因為連賠三天就亂改規則，但你會。</p>
+<h2>這趟測試真正的收穫</h2>
+<p>我寫這套系統、跑這幾十檔回測，最大的價值其實不是找到「每天賺 3000 的聖杯」——<strong>而是在賠真錢之前，先看清當沖有多難</strong>。</p>
+<p>當沖本質是一場<strong>負和遊戲</strong>：每一筆都要繳手續費和稅給政府和券商，參與者整體加起來是淨輸的。能長期穩定獲利的，是極少數有紀律、有資源、有速度優勢的人。對大多數人來說，這些錢更可能是「交學費」。</p>
+<blockquote>這也呼應我之前寫過的<a href="invest-mindset-long-vs-short.html" rel="noopener">投資心態那篇</a>：對多數人而言，長期投資的勝率，遠遠高於每天猜漲跌的短線當沖。</blockquote>
+<p>如果你還是想試，我的建議是：<strong>先用小量（一張）實際做一段時間，驗證自己能不能複製回測的紀律</strong>，確認真的有正期望、而且撐得過連續虧損的心理壓力，再談放大。千萬不要一開始就重倉，拿「每月多賺 6 萬」的想像去賭真金白銀。</p>
+<h2>小結</h2>
+<ul>
+<li><strong>手續費是第一個敵人</strong>：來回 0.2~0.32% 固定成本，先賺超過它才開始獲利。</li>
+<li><strong>權值股不適合當沖</strong>：波動太小，毛利被費用吃光。</li>
+<li><strong>當心「事後最佳」</strong>：回測漂亮數字常是用答案對題目，實戰你沒有上帝視角。</li>
+<li><strong>勝率 ≠ 報酬</strong>：小心「贏很多次、卻在賠錢」的賺小賠大結構。</li>
+<li><strong>穩定每天賺 3000：理論可能，實戰極難</strong>。當沖是負和遊戲，對多數人是交學費。</li>
+</ul>
+<p>投資不是比誰衝得快，而是比誰活得久。看清楚一條路有多難，本身就是一種保護。🐾</p>
+<hr>
+<p><strong>延伸閱讀</strong></p>
+<ul>
+<li>📚 回到 <a href="invest.html" rel="noopener">投資理財修煉 全系列目錄</a></li>
+<li>🧠 <a href="invest-mindset-long-vs-short.html" rel="noopener">投資心態：長期 vs 短期、耐心 vs 貪婪</a></li>
+<li>📈 <a href="invest-technical-analysis.html" rel="noopener">技術面分析：看懂 K 線、均線與常見指標</a></li>
+</ul>
+<blockquote>本文為個人學習記錄與回測實驗整理，所有數據均為特定期間的歷史回測結果，不代表未來表現，非投資建議。投資有風險，請依自身情況獨立判斷 🐾</blockquote>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
