@@ -1007,9 +1007,9 @@ async function main() {
       // 主要：日期新到舊
       const byDate = String(b.date || '').localeCompare(String(a.date || ''));
       if (byDate !== 0) return byDate;
-      // 次要：同日期時，依 order 由大到小（篇號大＝較新，排前面；沒填 order 的排在有填的後面）
-      const oa = a.order !== undefined && a.order !== '' ? Number(a.order) : -Infinity;
-      const ob = b.order !== undefined && b.order !== '' ? Number(b.order) : -Infinity;
+      // 次要：同日期時，依 series_order 由大到小（篇號大＝較新，排前面；沒填的排後面）
+      const oa = a.series_order !== undefined && a.series_order !== '' && !Number.isNaN(Number(a.series_order)) ? Number(a.series_order) : -Infinity;
+      const ob = b.series_order !== undefined && b.series_order !== '' && !Number.isNaN(Number(b.series_order)) ? Number(b.series_order) : -Infinity;
       return ob - oa;
     });
   const drafts = all.filter(a => a.status === 'draft');

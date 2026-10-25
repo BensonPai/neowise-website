@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>中長期策略可以每個月賺 60000 元嗎？我用回測算給你看 - 智慧喵</title>
+    <meta name="description" content="當沖每天賺 3000 很難，那改用中長期策略、月賺 6 萬可行嗎？我用多檔台股的真實回測，算出需要多少本金，並揭開一個反直覺真相：技術指標進出常常大幅輸給單純買進長抱。">
+    <meta name="keywords" content="中長期投資,月賺6萬,被動收入,買進持有,回測,KD,SAR,移動停利,長期投資">
+    <meta property="og:title" content="中長期策略可以每個月賺 60000 元嗎？我用回測算給你看">
+    <meta property="og:description" content="當沖每天賺 3000 很難，那改用中長期策略、月賺 6 萬可行嗎？我用多檔台股的真實回測，算出需要多少本金，並揭開一個反直覺真相：技術指標進出常常大幅輸給單純買進長抱。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/invest-long-term-strategy.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/invest-long-term-strategy/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/invest-long-term-strategy.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"中長期策略可以每個月賺 60000 元嗎？我用回測算給你看","description":"當沖每天賺 3000 很難，那改用中長期策略、月賺 6 萬可行嗎？我用多檔台股的真實回測，算出需要多少本金，並揭開一個反直覺真相：技術指標進出常常大幅輸給單純買進長抱。","datePublished":"2026-10-24","dateModified":"2026-10-24","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/invest-long-term-strategy.html"},"image":"https://neowise.com.tw/life/assets/invest-long-term-strategy/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag invest">投資理財</span>
+            <h1>中長期策略可以每個月賺 60000 元嗎？我用回測算給你看</h1>
+            <p class="article-meta">智慧喵　•　2026-10-24</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/invest-long-term-strategy/cover.jpg" alt="中長期投資與技術指標回測示意" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>上一篇我拆解了「<a href="invest-daytrading-reality.html" rel="noopener">當沖每天賺 3000 元有多難</a>」，結論是當沖費用吃光薄利、極難穩定獲利。那很多人會接著想：<strong>那我不要那麼累、改做中長期，用技術指標抓波段，一個月賺個 6 萬總行吧？</strong></p>
+<p>月賺 6 萬＝年賺 72 萬，聽起來比當沖輕鬆。這篇就用回測來回答兩件事：<strong>(1) 中長期用技術指標進出，真的比較好賺嗎？(2) 要月賺 6 萬，到底得投入多少本金？</strong></p>
+<blockquote>先說結論：<strong>可行，但關鍵不在「技術」而在「本金」與「選股」</strong>。而且我發現一個反直覺真相——對長期走多的好股票，單純「買進長抱」常常大幅打敗各種技術指標進出。</blockquote>
+<h2>實測一：KD 進出 vs 買進長抱</h2>
+<p>先用最經典的 KD 黃金交叉進、死亡交叉出，跟「買進後就不動」對照（近 2 年、年化報酬）：</p>
+<div class="table-wrap"><table><thead><tr><th>股票</th><th>KD 進出</th><th>買進長抱</th></tr></thead><tbody><tr><td>台積電</td><td>0.7%</td><td><strong>52.2%</strong></td></tr><tr><td>聯發科</td><td>3.6%</td><td><strong>81.5%</strong></td></tr><tr><td>台達電</td><td>4.7%</td><td><strong>100.1%</strong></td></tr><tr><td>鴻海</td><td>1.3%</td><td>10.0%</td></tr><tr><td>長榮</td><td>0.5%</td><td>25.4%</td></tr><tr><td><strong>平均</strong></td><td><strong>2.0%</strong></td><td><strong>50.6%</strong></td></tr></tbody></table></div>
+<p><strong>KD 進出平均年化 2%，買進長抱 50.6%——長抱贏了 25 倍。</strong> 這結果第一次看到時我也很意外。</p>
+<h2>為什麼「避開下跌」反而輸了？</h2>
+<p>KD 進出的邏輯是「死叉先跑、避開下跌」，聽起來該更好才對。關鍵在三個現實：</p>
+<ul>
+<li><strong>指標會延遲</strong>：KD 是落後指標。等它死叉確認，股票常已從高點跌一段；等它金叉再進，又已從低點漲一段。<strong>一出一進，你砍掉的是趨勢最肥的頭和尾。</strong></li>
+<li><strong>多頭股票「漲的時間遠多於跌」</strong>：好股票大部分時間在漲、偶爾拉回。你為了閃那偶爾的拉回，卻常常在拉回後不敢追、錯過後面更大的漲幅。</li>
+<li><strong>盤整空轉</strong>：橫盤時指標頻繁給假訊號，一直小進小出被成本磨掉。</li>
+</ul>
+<p><strong>你想避開的下跌，遠小於你因為進出而錯過的上漲。</strong> 這就是核心。</p>
+<blockquote>看一個數字就懂：KD 進出的最大回撤只有 -2~4%（確實避開了下跌），但買進長抱要吞 -30~50% 的帳面回檔。問題是——你躲開的是「暫時的帳面虧損」（不賣就會漲回來），錯過的卻是「永久的真實漲幅」。</blockquote>
+<h2>實測二：移動停利——唯一能逼近長抱的進出法</h2>
+<p>既然「死叉就跑」太早下車，那改用<strong>移動停利</strong>（不設固定目標，從持有高點回檔超過 X% 才出）呢？這能讓趨勢繼續跑、真的轉折才出場。實測確實大幅改善：</p>
+<div class="table-wrap"><table><thead><tr><th>出場方式</th><th>平均報酬（近2年）</th></tr></thead><tbody><tr><td>KD 死叉出場</td><td>81%</td></tr><tr><td><strong>移動停利（回檔15%才出）</strong></td><td><strong>110%</strong></td></tr><tr><td>買進長抱</td><td>148%</td></tr></tbody></table></div>
+<p>（註：此處為全額單一部位滾入的試算，數字會比分批投入大，但三者同基準可比。）</p>
+<p><strong>移動停利把報酬從 81% 拉到 110%，最接近長抱。</strong> 台積電最明顯：KD 死叉出場只有 2.6%，改移動停利變 118.6%，幾乎追平長抱的 131%。</p>
+<p>但它仍略輸長抱——因為任何「出場機制」在強多頭裡都贏不過「永不下車」。移動停利真正的價值在<strong>空頭</strong>：等市場轉空，長抱會大賠，移動停利早就鎖利出場了。多頭測不出它的好，別因此低估它。</p>
+<h2>實測三：SAR——漂亮的趨勢跟隨，但沒有神奇</h2>
+<p>我還試了 Parabolic SAR（那個會在股價上下翻面的點點指標，本質是內建移動停利的趨勢跟隨）。結果排名：</p>
+<p><strong>買進長抱 &gt; 移動停利 &gt; SAR &gt; KD。</strong></p>
+<p>SAR 贏過 KD（趨勢跟隨本質較好），但輸給移動停利——因為 SAR 盤整時會頻繁翻面被洗。它適合波段明顯的股票，不適合緩漲的大趨勢股。</p>
+<h2>實測四：那「買在哪一天」到底有多重要？單筆 vs 定期定額</h2>
+<p>前面都在比「怎麼進出」，這段來回答另一個每個人都煩惱過的問題：<strong>我這筆錢，是一次全押、還是分批慢慢買？買錯時間點會差多少？</strong></p>
+<p>我用同一批股票、近 5 年資料做了一個不一樣的實驗：<strong>固定持有一年，但把「進場日」掃過期間內的每一天</strong>，看看光是「買在哪天」會讓報酬差多少。再拿「單筆一次全押」跟「定期定額（分 12 個月、每月買一筆）」對照。</p>
+<div class="table-wrap"><table><thead><tr><th>方式</th><th>報酬中位數</th><th>分布寬度（標準差）</th><th>最好 ~ 最差的落差</th></tr></thead><tbody><tr><td>單筆一次全押</td><td>29%</td><td><strong>78</strong></td><td><strong>702 個百分點</strong> 😱</td></tr><tr><td>定期定額 12 個月</td><td>18%</td><td><strong>40</strong></td><td>294 個百分點</td></tr></tbody></table></div>
+<p>（五檔合併、近 5 年、每個進場日各算一次持有一年的報酬。）</p>
+<blockquote><strong>「分布寬度」怎麼看？</strong> 這個實驗不是只算一個結果，而是把「每一天進場」都算一次，得到一大堆報酬。<strong>寬度就是在描述這堆結果散得多開——說白了，就是「你的成敗有多靠運氣（進場時機）」。</strong> 看兩個數字：「最好~最差落差」是頭尾距離（最直覺）；「標準差」是大多數結果離平均有多遠（更精準，不被單一極端值拉歪）。<strong>寬度大＝很看運氣、結果難預測；寬度窄＝不太看運氣、結果穩定可複製。</strong></blockquote>
+<p>先看最震撼的一欄：<strong>單筆全押，光是「買在哪一天」就能讓一年報酬相差 702 個百分點。</strong> 以台積電為例，運氣好買在低點，一年 +187%；運氣差買在高點，同樣抱一年卻是 -35%。<strong>同一檔股票、同樣抱一年，差別只在你哪天按下買入鍵。</strong> 這就是「進場時點」的威力——比你想的大得多。</p>
+<p>那定期定額呢？它把這個落差砍到 294 個百分點，分布寬度（標準差）從 78 直接腰斬到 40。<strong>白話說：定期定額讓你「買貴買便宜」被平均掉，結果不再那麼看運氣。</strong></p>
+<blockquote><strong>但天下沒有白吃的午餐</strong>：定期定額的報酬中位數（18%）低於單筆（29%）。原因很單純——在長期往上的多頭裡，你越晚投入的那幾筆，錯過了前段的漲幅。</blockquote>
+<p>所以這題的正解不是「哪個比較好」，而是<strong>看你在怕什麼</strong>：</p>
+<ul>
+<li><strong>怕買在最高點、抱不住套牢的心理壓力</strong> → 定期定額。它用「少賺一點期望報酬」換「大幅降低看錯時點的運氣風險」，分布更窄、更睡得著。</li>
+<li><strong>手上一次有一筆錢、而且相信長期往上</strong> → 單筆的期望報酬更高（因為資金更早進場），代價是你要承受「剛好買在波段高點」的風險，得扛得住。</li>
+</ul>
+<p>而這整段最重要的一句話是：<strong>「買在哪一天」的影響，遠大於你用什麼技術指標進出。</strong> 與其研究 KD 要不要搭 MACD，不如先想清楚「這筆錢要一次進還是分批進」——那個決定對你最終報酬的影響，大上一個量級。</p>
+<h2>最反直覺的發現：加越多條件，常常越差</h2>
+<p>這是整個探索裡最打破常識的部分。我試著「加條件提高勝率」，例如：</p>
+<ul>
+<li>KD 金叉 <strong>＋</strong> MACD 也翻多才進場</li>
+<li>再 <strong>＋</strong> 週線 KD 也要偏多（大周期定方向）</li>
+<li>用 ADX 過濾掉盤整才進</li>
+</ul>
+<p><strong>結果幾乎每一種「加條件」都讓整體報酬變差。</strong> 原因是同一個：任何「等更多條件確認才進」的過濾，本質都是<strong>延後進場</strong>——換來更少假訊號，卻也錯過了趨勢最肥的起點。在多頭裡，錯過起點的損失遠大於避開盤整的收益。</p>
+<blockquote>簡單的 KD 單獨，反而比「KD＋MACD＋週線＋ADX」一堆條件疊起來更好。<strong>複雜不等於更強。</strong></blockquote>
+<h2>回到正題：月賺 6 萬要投多少本金？</h2>
+<p>把上面的報酬率換算成本金需求。目標是<strong>年賺 72 萬（月均 6 萬）</strong>：</p>
+<div class="table-wrap"><table><thead><tr><th>年化報酬率</th><th>需要本金</th><th>說明</th></tr></thead><tbody><tr><td>2%（KD 進出實測）</td><td><strong>約 3,600 萬</strong> 😱</td><td>技術指標進出報酬太低，本金需求嚇人</td></tr><tr><td>8~10%（務實長期平均）</td><td><strong>約 720~900 萬</strong></td><td>以大盤歷史合理報酬估算</td></tr><tr><td>50%（近兩年長抱）</td><td>約 140 萬</td><td>但這是大多頭的倖存者偏差，別當常態</td></tr></tbody></table></div>
+<p>重點看懂三件事：</p>
+<ul>
+<li><strong>用技術指標頻繁進出（年化 2%）來追月賺 6 萬，需要近 3,600 萬本金</strong>——幾乎是用報酬率懲罰你的勤勞。</li>
+<li><strong>用務實的 8~10% 長期年化</strong>（別用這兩年大多頭的 50%），需要 <strong>700~900 萬本金</strong>。這才是比較誠實的數字。</li>
+<li>那個「140 萬就夠」是用近兩年大多頭的 50% 回推，<strong>不可能年年重現</strong>，拿它規劃會很危險。</li>
+</ul>
+<p>所以「月賺 6 萬」不是做不到，而是——<strong>它主要是「本金 × 合理報酬」的結果，不是靠進出技巧變出來的</strong>。與其花力氣研究進出訊號把年化從 2% 擠到 3%，不如專注在「累積本金」和「選對能長期成長的標的」。</p>
+<h2>那中長期到底該怎麼做？</h2>
+<p>把這些實測拼起來，給一般人的務實結論是：</p>
+<ol>
+<li><strong>選對「長期會成長」的好股票，比任何進出技巧都重要。</strong> 標的對了，長抱就贏大多數花俏操作。</li>
+<li><strong>技術指標進出的價值不是「賺更多」，是「控制回撤」</strong>——它讓你少吞那 30~50% 的帳面大跌，代價是報酬打折。適合「抱不住大跌、會恐慌殺在低點」的人。</li>
+<li><strong>若要用進出，移動停利 &gt; 固定停利 &gt; 指標死叉</strong>——讓趨勢跑、只在真回檔時出。</li>
+<li><strong>別迷信加條件</strong>。多數時候，一個簡單規則＋紀律，勝過一堆過濾條件。</li>
+<li><strong>長抱最大的門檻不是技術，是心理</strong>——要扛得住中途 -30% 的帳面虧損不恐慌賣出。做不到的人，移動停利是折衷。</li>
+</ol>
+<h2>小結</h2>
+<ul>
+<li><strong>月賺 6 萬可行，但靠的是本金與選股，不是進出技巧</strong>：務實 8~10% 年化下約需 700~900 萬本金。</li>
+<li><strong>KD 等指標進出，長期常大幅輸給買進長抱</strong>（實測平均年化 2% vs 50%）。</li>
+<li>「避開下跌」是假優勢——躲開的回檔，遠小於錯過的上漲。</li>
+<li><strong>移動停利是最接近長抱的進出法</strong>，且在空頭能保護獲利。</li>
+<li><strong>「買在哪一天」影響巨大</strong>：單筆全押光靠進場日就能差 700 個百分點；<strong>定期定額把分布寬度腰斬</strong>，用少賺一點換不看運氣。</li>
+<li><strong>加越多條件常常越差</strong>，簡單＋紀律勝過複雜。</li>
+<li>中長期致勝關鍵：<strong>累積本金、選對標的、抱得住、別過度操作。</strong></li>
+</ul>
+<p>從當沖到中長期，我用回測繞了一大圈，最後得到的竟是最樸素的一句話——<strong>投資不是比誰動作多，而是比誰選得準、抱得久、心夠穩。</strong> 🐾</p>
+<hr>
+<p><strong>延伸閱讀</strong></p>
+<ul>
+<li>📚 回到 <a href="invest.html" rel="noopener">投資理財修煉 全系列目錄</a></li>
+<li>⚡ <a href="invest-daytrading-reality.html" rel="noopener">當沖每天賺 3000 元有多難？我用回測數據算給你看</a></li>
+<li>🧠 <a href="invest-mindset-long-vs-short.html" rel="noopener">投資心態：長期 vs 短期、耐心 vs 貪婪</a></li>
+</ul>
+<blockquote>本文為個人學習記錄與回測實驗整理，所有數據均為特定期間的歷史回測結果，不代表未來表現，非投資建議。投資有風險，請依自身情況獨立判斷 🐾</blockquote>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
