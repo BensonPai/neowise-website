@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" font-family="'Noto Sans TC','Microsoft JhengHei',sans-serif">
+  <style>
+    .neu  { stroke:#f39c12; stroke-width:2.5; }
+    .name { font-size:15px; font-weight:bold; fill:#333; text-anchor:middle; }
+    .sub  { font-size:11px; fill:#888; text-anchor:middle; }
+    .lbl  { font-size:12px; fill:#7c3aed; text-anchor:middle; font-weight:bold; }
+  </style>
+  <rect fill="#fafafa" x="0" y="0" width="900" height="200" rx="10"/>
+  <!-- 標準十字星 -->
+  <g>
+    <line class="neu" x1="180" y1="45" x2="180" y2="135"/>
+    <line class="neu" x1="160" y1="90" x2="200" y2="90"/>
+    <text class="name" x="180" y="162">十字星</text>
+    <text class="sub" x="180" y="180">開收同價．多空拉鋸</text>
+  </g>
+  <!-- 高檔十字（偏空） -->
+  <g>
+    <path d="M360 120 L420 80 L480 95 L540 60" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+    <line class="neu" x1="540" y1="40" x2="540" y2="80"/>
+    <line class="neu" x1="522" y1="58" x2="558" y2="58"/>
+    <text class="lbl" x="450" y="150">漲多後出現 → 偏見頂</text>
+  </g>
+  <!-- 低檔十字（偏多） -->
+  <g>
+    <path d="M620 70 L680 110 L740 95 L800 130" fill="none" stroke="#e0e0e0" stroke-width="2"/>
+    <line class="neu" x1="800" y1="110" x2="800" y2="150"/>
+    <line class="neu" x1="782" y1="128" x2="818" y2="128"/>
+    <text class="lbl" x="710" y="170">跌深後出現 → 偏止跌</text>
+  </g>
+</svg>

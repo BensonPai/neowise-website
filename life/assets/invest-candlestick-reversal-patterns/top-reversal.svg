@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" font-family="'Noto Sans TC','Microsoft JhengHei',sans-serif">
+  <style>
+    .up   { fill:#e74c3c; stroke:#e74c3c; }
+    .down { fill:#27ae60; stroke:#27ae60; }
+    .wick { stroke-width:2; }
+    .name { font-size:15px; font-weight:bold; fill:#333; text-anchor:middle; }
+    .sub  { font-size:11px; fill:#888; text-anchor:middle; }
+  </style>
+  <rect fill="#fafafa" x="0" y="0" width="900" height="220" rx="10"/>
+  <!-- 射擊之星：小實體在下、長上影 -->
+  <g>
+    <line class="wick down" x1="80" y1="45" x2="80" y2="100"/>
+    <rect class="down" x="70" y="100" width="20" height="18"/>
+    <line class="wick down" x1="80" y1="118" x2="80" y2="128"/>
+    <text class="name" x="80" y="160">射擊之星</text>
+    <text class="sub" x="80" y="178">長上影．衝高被壓</text>
+  </g>
+  <!-- 吊人線：小實體在上、長下影（高檔） -->
+  <g>
+    <line class="wick down" x1="210" y1="45" x2="210" y2="55"/>
+    <rect class="down" x="200" y="55" width="20" height="18"/>
+    <line class="wick down" x1="210" y1="73" x2="210" y2="128"/>
+    <text class="name" x="210" y="160">吊人線</text>
+    <text class="sub" x="210" y="178">高檔長下影．見頂</text>
+  </g>
+  <!-- 空方吞噬 -->
+  <g>
+    <line class="wick up" x1="332" y1="70" x2="332" y2="108"/>
+    <rect class="up" x="324" y="75" width="16" height="26"/>
+    <line class="wick down" x1="362" y1="55" x2="362" y2="123"/>
+    <rect class="down" x="351" y="62" width="22" height="52"/>
+    <text class="name" x="347" y="160">空方吞噬</text>
+    <text class="sub" x="347" y="178">大陰包住前陽線</text>
+  </g>
+  <!-- 烏雲罩頂 -->
+  <g>
+    <line class="wick up" x1="472" y1="55" x2="472" y2="123"/>
+    <rect class="up" x="463" y="62" width="18" height="52"/>
+    <line class="wick down" x1="507" y1="48" x2="507" y2="110"/>
+    <rect class="down" x="498" y="55" width="18" height="46"/>
+    <text class="name" x="490" y="160">烏雲罩頂</text>
+    <text class="sub" x="490" y="178">開高走低跌過半</text>
+  </g>
+  <!-- 空方孕育 -->
+  <g>
+    <line class="wick up" x1="617" y1="48" x2="617" y2="122"/>
+    <rect class="up" x="607" y="55" width="20" height="58"/>
+    <line class="wick down" x1="650" y1="78" x2="650" y2="100"/>
+    <rect class="down" x="642" y="83" width="16" height="12"/>
+    <text class="name" x="634" y="160">空方孕育</text>
+    <text class="sub" x="634" y="178">小實體被大陽包</text>
+  </g>
+  <!-- 夜星 -->
+  <g>
+    <rect class="up" x="745" y="66" width="16" height="44"/>
+    <rect class="down" x="772" y="50" width="14" height="8"/>
+    <rect class="down" x="800" y="66" width="16" height="44"/>
+    <text class="name" x="782" y="160">夜星（三根）</text>
+    <text class="sub" x="782" y="178">陽→星→陰．做頭</text>
+  </g>
+</svg>
