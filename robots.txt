@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://neowise.com.tw/sitemap.xml
+Sitemap: https://neowise.com.tw/life/sitemap.xml
