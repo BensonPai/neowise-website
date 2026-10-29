@@ -11,7 +11,7 @@ series: "appdev"
 series_stage: "iOS"
 series_order: "3"
 status: "approved"
-youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
+youtube: "https://youtu.be/3fWFsZ3-ZM4?si=XWEKdiBGxSDhzZlj"              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "iPhone 模擬器上顯示一個簡單 App 畫面的示意"
 images:
   - file: "cover.jpg"

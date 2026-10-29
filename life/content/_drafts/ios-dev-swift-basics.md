@@ -11,7 +11,7 @@ series: "appdev"
 series_stage: "iOS"
 series_order: "2"
 status: "approved"
-youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
+youtube: "https://youtu.be/Te_60-WcgxY?si=eHHj8__AVC2RMhlA"              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "Xcode 中一段 Swift 程式碼的示意"
 images:
   - file: "cover.jpg"

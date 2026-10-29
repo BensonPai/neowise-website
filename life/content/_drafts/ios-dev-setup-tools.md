@@ -11,7 +11,7 @@ series: "appdev"
 series_stage: "iOS"
 series_order: "1"
 status: "approved"
-youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
+youtube: "https://youtu.be/KF4oW12dDGA?si=eiPhRNOIf6OCcPU7"              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "一台 Mac 上開著 Xcode 開發環境的示意"
 images:
   - file: "cover.jpg"
