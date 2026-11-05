@@ -11,7 +11,7 @@ series: "appdev"
 series_stage: "iOS"
 series_order: "4"
 status: "approved"
-youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
+youtube: "https://youtu.be/JW59HSjGEpU?si=xvGR7V4_7yL1FKYb"              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "App 從網路雲端抓取資料的示意"
 images:
   - file: "cover.jpg"
