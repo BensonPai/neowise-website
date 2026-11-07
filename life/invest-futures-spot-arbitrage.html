@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECQ2F0L341"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ECQ2F0L341');</script>
+    <title>股票期貨正逆價差套利怎麼做？一步步帶你算一次完整範例 - 智慧喵</title>
+    <meta name="description" content="股票期貨和現貨之間的價差，可以不猜漲跌、靠「價差收斂」賺錢嗎？這篇用白話拆解正價差、逆價差套利的原理，並用兩個完整試算範例，帶你算出成本、淨利與年化報酬，也講清楚強制回補等真實風險。">
+    <meta name="keywords" content="股票期貨,正價差,逆價差,價差套利,期現套利,融券,強制回補,價差比,退休族投資">
+    <meta property="og:title" content="股票期貨正逆價差套利怎麼做？一步步帶你算一次完整範例">
+    <meta property="og:description" content="股票期貨和現貨之間的價差，可以不猜漲跌、靠「價差收斂」賺錢嗎？這篇用白話拆解正價差、逆價差套利的原理，並用兩個完整試算範例，帶你算出成本、淨利與年化報酬，也講清楚強制回補等真實風險。">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neowise.com.tw/life/invest-futures-spot-arbitrage.html">
+    <meta property="og:image" content="https://neowise.com.tw/life/assets/invest-futures-spot-arbitrage/cover.jpg">
+    <link rel="canonical" href="https://neowise.com.tw/life/invest-futures-spot-arbitrage.html">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"股票期貨正逆價差套利怎麼做？一步步帶你算一次完整範例","description":"股票期貨和現貨之間的價差，可以不猜漲跌、靠「價差收斂」賺錢嗎？這篇用白話拆解正價差、逆價差套利的原理，並用兩個完整試算範例，帶你算出成本、淨利與年化報酬，也講清楚強制回補等真實風險。","datePublished":"2026-11-07","dateModified":"2026-11-07","author":{"@type":"Person","name":"智慧喵"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://neowise.com.tw/life/invest-futures-spot-arbitrage.html"},"image":"https://neowise.com.tw/life/assets/invest-futures-spot-arbitrage/cover.jpg"}</script>
+</head>
+<body>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="logo"><span class="cat">🐾</span>智慧喵</a>
+        <button class="menu-toggle" aria-label="開啟選單">☰</button>
+        <ul class="nav-links">
+            <li><a href="index.html">首頁</a></li>
+            <li><a href="invest.html">投資理財修煉</a></li>
+            <li class="has-dropdown">
+                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false">科技學院 <span class="caret">▾</span></a>
+                <ul class="dropdown-menu">
+                <li><a href="appdev.html">App 開發指南</a></li>
+                <li><a href="csharp.html">C# 教學</a></li>
+                <li><a href="python.html">Python 教學</a></li>
+                </ul>
+            </li>
+            <li><a href="tools.html">我的工具</a></li>
+            <li><a href="about.html" class="btn-nav">關於</a></li>
+        </ul>
+    </div>
+</nav>
+<article class="article">
+    <header class="article-header">
+        <div class="container article-container">
+            <span class="post-tag invest">投資理財</span>
+            <h1>股票期貨正逆價差套利怎麼做？一步步帶你算一次完整範例</h1>
+            <p class="article-meta">智慧喵　•　2026-11-07</p>
+        </div>
+    </header>
+    <div class="container article-container"><img class="article-cover" src="assets/invest-futures-spot-arbitrage/cover.jpg" alt="股票期貨與現貨價差套利的示意圖" loading="lazy"></div>
+    <div class="container article-container">
+        <div class="article-body">
+<p>看盤軟體裡有一個「正逆價差排行榜」，列出股票期貨和現貨價格差最多的幾檔股票。很多人看到「價差比 1.5%」會好奇：<strong>這是不是一種不用猜漲跌、也能賺錢的方法？</strong></p>
+<p>答案是：<strong>原理上可行，但利潤很薄、細節很多，而且有一個方向的風險特別高。</strong> 這篇用白話拆解原理，再用兩個完整的試算範例，帶你從頭算到尾，讓你知道實際做起來是什麼樣子。</p>
+<blockquote>先說明：本文的股價、價差、費率都是<strong>教學用的假設數字</strong>，目的是讓你看懂邏輯與算法，不是推薦任何標的。實際操作前，請以你的券商與期貨商的最新費率為準。</blockquote>
+<h2>先搞懂三個名詞</h2>
+<p>同一檔股票，市場上其實有兩個價格：</p>
+<ul>
+<li><strong>現貨價</strong>：你在股市買賣的股票價格</li>
+<li><strong>期貨價</strong>：這檔股票的「股票期貨」合約價格</li>
+</ul>
+<p>兩者理論上很接近，但盤中常有落差，這個落差就是<strong>價差</strong>：</p>
+<div class="table-wrap"><table><thead><tr><th>名詞</th><th>意思</th><th>白話</th></tr></thead><tbody><tr><td>正價差</td><td>期貨價 &gt; 現貨價</td><td>期貨比較貴</td></tr><tr><td>逆價差</td><td>期貨價 &lt; 現貨價</td><td>期貨比較便宜</td></tr><tr><td>價差比</td><td>價差 ÷ 現貨價（%）</td><td>用百分比比較不同價位的股票</td></tr></tbody></table></div>
+<h2>套利的核心：到期一定收斂</h2>
+<p><strong>股票期貨到了最後結算日，結算價就是當天現貨的價格</strong>，也就是說，期貨和現貨到期時價差必定歸零。</p>
+<p>既然到期必定歸零，我們只要在價差存在時「<strong>賣貴的、買便宜的</strong>」，等它收斂，價差就是我們的利潤。不管股價中途漲或跌，兩邊的損益會互相抵銷，只剩價差。</p>
+<div class="table-wrap"><table><thead><tr><th>情況</th><th>做法</th><th>你賺的是</th></tr></thead><tbody><tr><td>正價差（期貨貴）</td><td><strong>買股票 + 空期貨</strong></td><td>期貨比現貨多出來的部分</td></tr><tr><td>逆價差（期貨便宜）</td><td><strong>融券空股票 + 買期貨</strong></td><td>現貨比期貨多出來的部分</td></tr></tbody></table></div>
+<p><strong>方向不能反過來。</strong> 反過來等於「買貴的、賣便宜的」，到期收斂時你是倒虧價差。</p>
+<h2>範例一：正價差套利（買股票 + 空期貨）</h2>
+<p>這是比較單純、風險較低的方向，因為你手上是真的持有股票。</p>
+<h3>情境設定（假設）</h3>
+<ul>
+<li>A 股票現貨 <strong>100 元</strong></li>
+<li>A 股票近月期貨 <strong>101.5 元</strong>，距離結算還有 <strong>20 天</strong></li>
+<li>價差 = 1.5 元，價差比 = <strong>+1.5%</strong></li>
+<li>一口股票期貨 = <strong>2,000 股</strong></li>
+<li>期貨保證金約合約價值的 13.5%（假設，實際以期交所公告為準）</li>
+</ul>
+<h3>第一步：同時建立兩邊部位</h3>
+<div class="table-wrap"><table><thead><tr><th>動作</th><th>計算</th><th>金額</th></tr></thead><tbody><tr><td>買進 A 股票 2,000 股</td><td>100 × 2,000</td><td>支出 200,000 元</td></tr><tr><td>空 1 口 A 期貨（101.5 元）</td><td>101.5 × 2,000 = 203,000</td><td>繳保證金約 27,400 元</td></tr></tbody></table></div>
+<p>投入的資金約 <strong>227,400 元</strong>（股票款 + 期貨保證金）。</p>
+<h3>第二步：持有到結算，看看不同結果</h3>
+<p>不管股價最後漲或跌，兩邊都會收斂到同一個結算價。我們試三種情況：</p>
+<div class="table-wrap"><table><thead><tr><th>結算價</th><th>股票損益</th><th>期貨損益（空）</th><th>合計</th></tr></thead><tbody><tr><td>106 元（上漲）</td><td>(106 − 100) × 2,000 = <strong>+12,000</strong></td><td>(101.5 − 106) × 2,000 = <strong>−9,000</strong></td><td><strong>+3,000</strong></td></tr><tr><td>100 元（不變）</td><td>0</td><td>(101.5 − 100) × 2,000 = <strong>+3,000</strong></td><td><strong>+3,000</strong></td></tr><tr><td>94 元（下跌）</td><td>(94 − 100) × 2,000 = <strong>−12,000</strong></td><td>(101.5 − 94) × 2,000 = <strong>+15,000</strong></td><td><strong>+3,000</strong></td></tr></tbody></table></div>
+<p><strong>不論漲跌，毛利都是 3,000 元</strong>，也就是 1.5 元的價差 × 2,000 股。這就是套利的意思：賺的跟股價方向無關。</p>
+<h3>第三步：扣掉成本，才是真正的獲利</h3>
+<p>這一步最重要，很多人只看價差比，卻忘了成本。以結算價 106 元為例（費率為假設，手續費以 6 折計）：</p>
+<div class="table-wrap"><table><thead><tr><th>成本項目</th><th>算法</th><th>約略金額</th></tr></thead><tbody><tr><td>股票買進手續費</td><td>200,000 × 0.1425% × 0.6</td><td>171 元</td></tr><tr><td>股票賣出手續費</td><td>212,000 × 0.1425% × 0.6</td><td>181 元</td></tr><tr><td>股票證交稅</td><td>212,000 × 0.3%</td><td>636 元</td></tr><tr><td>期貨手續費與交易稅</td><td>進出合計（假設）</td><td>150 元</td></tr><tr><td><strong>成本合計</strong></td><td></td><td><strong>約 1,140 元</strong></td></tr></tbody></table></div>
+<p><strong>淨利 ≈ 3,000 − 1,140 = 1,860 元</strong></p>
+<h3>第四步：算報酬率與年化</h3>
+<ul>
+<li>單次報酬率：1,860 ÷ 227,400 ≈ <strong>0.82%</strong></li>
+<li>持有 20 天，年化：0.82% × 365 ÷ 20 ≈ <strong>約 15%</strong></li>
+</ul>
+<p>看起來還不錯，但請注意兩件事：</p>
+<ol>
+<li><strong>投入的是 22 萬多的資金，換來的是 1,860 元</strong>。如果價差比只有 0.5%，毛利才 1,000 元，連成本 1,140 都蓋不過，反而是虧的。所以才會有「價差比要夠大」的門檻。</li>
+<li>這 22 萬如果放定存或貨幣基金，20 天也會有一點利息。嚴格來說，套利的真正利潤要再扣掉這個「機會成本」。</li>
+</ol>
+<h2>範例二：逆價差套利（融券空股票 + 買期貨）</h2>
+<p>逆價差的邏輯一樣，只是方向相反：現貨比期貨貴，所以<strong>放空現貨、買進期貨</strong>。</p>
+<h3>情境設定（假設）</h3>
+<ul>
+<li>B 股票現貨 <strong>50 元</strong></li>
+<li>B 股票近月期貨 <strong>49.3 元</strong>，距離結算還有 <strong>22 天</strong></li>
+<li>價差 = 0.7 元，價差比 = <strong>−1.4%</strong></li>
+<li>一口 = 2,000 股</li>
+</ul>
+<h3>建立部位</h3>
+<div class="table-wrap"><table><thead><tr><th>動作</th><th>計算</th><th>資金</th></tr></thead><tbody><tr><td>融券賣出 B 股票 2,000 股</td><td>50 × 2,000 = 100,000</td><td>融券保證金約 9 成，約 90,000 元</td></tr><tr><td>買進 1 口 B 期貨（49.3 元）</td><td>49.3 × 2,000 = 98,600</td><td>期貨保證金約 13,300 元</td></tr></tbody></table></div>
+<p>投入資金約 <strong>103,300 元</strong>（賣股的款項會被券商扣留當擔保，不能動用）。</p>
+<h3>結算時的損益</h3>
+<p>假設結算價是 52 元（股價上漲）：</p>
+<ul>
+<li>融券空股票：(50 − 52) × 2,000 = <strong>−4,000</strong></li>
+<li>買期貨：(52 − 49.3) × 2,000 = <strong>+5,400</strong></li>
+<li>毛利合計：<strong>+1,400 元</strong>（= 0.7 × 2,000）</li>
+</ul>
+<p>若結算價是 46 元，則融券賺 8,000、期貨虧 6,600，一樣合計 +1,400。<strong>方向一樣不影響。</strong></p>
+<h3>扣掉成本</h3>
+<div class="table-wrap"><table><thead><tr><th>成本項目</th><th>約略金額</th></tr></thead><tbody><tr><td>融券賣出手續費</td><td>約 86 元</td></tr><tr><td>證交稅（0.3%）</td><td>300 元</td></tr><tr><td>融券手續費（約 0.08%）</td><td>約 80 元</td></tr><tr><td>回補（還券）手續費</td><td>約 86 元</td></tr><tr><td>期貨手續費與交易稅</td><td>約 100 元</td></tr><tr><td><strong>成本合計</strong></td><td><strong>約 650 元</strong></td></tr></tbody></table></div>
+<p><strong>淨利 ≈ 1,400 − 650 = 750 元</strong>，報酬率約 0.72%，年化約 12%。</p>
+<h3>為什麼逆價差比較危險？</h3>
+<p>數字看起來跟範例一差不多，但<strong>逆價差的風險明顯更高</strong>，因為你是「借」股票來賣的：</p>
+<ul>
+<li><strong>強制回補</strong>：融券遇到股東會、除權息、或券源不足時，券商或交易所可能要求你提前把股票買回來還。這時期貨還在，套利組合被硬拆開，<strong>你變成單邊持有期貨</strong>，漲跌風險全部回到你身上。</li>
+<li><strong>無法保證不被回補</strong>：圖上特別提醒「確定沒有強制回補才融券空」，就是這個原因。操作前務必查清楚該檔股票最近有沒有股東會、除權息、停止融券的公告。</li>
+<li><strong>保證金壓力</strong>：行情劇烈時，兩邊的帳面損益會一邊大虧、一邊大賺，但你的現金是分在兩個帳戶，虧損那邊可能要補保證金，賺的那邊要等平倉才能拿回來。</li>
+<li><strong>券源與費用</strong>：借不到券，或是融券費用調高，都會吃掉利潤。</li>
+</ul>
+<h2>想提前出場？要看「價差」，不是看價格</h2>
+<p>這是最容易搞混的觀念。<strong>平倉時兩邊的價格不需要一樣，要看的是「價差有沒有縮小」。</strong></p>
+<p>延續範例一：進場價差 +1.5，一週後股票 108 元、期貨 108.4 元，價差縮成 0.4。</p>
+<ul>
+<li>股票：(108 − 100) × 2,000 = <strong>+16,000</strong></li>
+<li>期貨（空）：(101.5 − 108.4) × 2,000 = <strong>−13,800</strong></li>
+<li>合計：<strong>+2,200</strong>，也就是價差從 1.5 縮到 0.4（縮了 1.1）× 2,000 股。</li>
+</ul>
+<p>提前出場的好處是資金可以更快轉去做別的，代價是<strong>少賺了剩下的 0.4 元價差</strong>，而且還要再付一次完整的手續費與稅。如果價差反而擴大（例如從 1.5 變成 2.5），你是虧的。所以不趕時間的話，<strong>持有到結算最省事、也最確定</strong>。</p>
+<h2>到底值不值得做？先過這張檢查表</h2>
+<div class="table-wrap"><table><thead><tr><th>檢查項目</th><th>為什麼重要</th></tr></thead><tbody><tr><td>價差比有沒有大到蓋過成本？</td><td>一次來回成本約佔 0.5%，價差比低於 1% 通常賺不到什麼</td></tr><tr><td>離結算還有幾天？</td><td>同樣 1%，10 天結算比 60 天結算划算很多，要看年化</td></tr><tr><td>期貨流動性夠不夠？</td><td>成交量太低，進出會有滑價，價差就被吃掉</td></tr><tr><td>股票、期貨口數對不對？</td><td>一口 2,000 股，不是整數口要考慮小型契約</td></tr><tr><td>逆價差：有沒有強制回補風險？</td><td>這是最大的破口，沒確認就別做</td></tr><tr><td>近期有沒有除權息、股東會？</td><td>影響期貨價格調整與融券回補</td></tr><tr><td>資金夠不夠放兩邊？</td><td>要同時備足股票款（或融券保證金）與期貨保證金</td></tr></tbody></table></div>
+<h2>常見的幾個誤解</h2>
+<ul>
+<li><strong>「套利就是穩賺不賠」</strong>：不是。價差可能中途擴大、強制回補會拆散組合、成本也可能超過預期。套利只是「風險比單邊押注低」，不是零風險。</li>
+<li><strong>「看到價差比大就衝」</strong>：價差大有時是因為市場預期除權息、或是融券券源出了問題，<strong>價差大不一定是免費午餐，可能是風險的價格</strong>。</li>
+<li><strong>「適合退休族所以很安全」</strong>：它確實不用猜漲跌，但需要懂融券、保證金與結算規則，對新手來說並不簡單。</li>
+</ul>
+<h2>小結</h2>
+<ul>
+<li>正價差：<strong>買股票 + 空期貨</strong>；逆價差：<strong>融券空股票 + 買期貨</strong>。方向由「哪邊貴」決定，不能反過來。</li>
+<li>到期價差必歸零，所以賺的是<strong>價差收斂</strong>，跟股價漲跌無關（範例一不管漲跌，毛利都是 3,000 元）。</li>
+<li>真正的獲利要<strong>扣掉手續費、證交稅、融券費</strong>，價差比太小根本不划算。</li>
+<li>評估要看<strong>年化</strong>，不是只看價差比；越接近結算、同樣價差比越划算。</li>
+<li><strong>逆價差的最大風險是強制回補</strong>，會讓套利組合變成單邊賭注。</li>
+<li>提前平倉看的是「價差有沒有縮小」，不是價格是否一樣；持有到結算最確定。</li>
+</ul>
+<p>套利聽起來像一個「聰明人才懂的小技巧」，但真正做起來，贏的往往不是算得最快的人，而是<strong>成本控制得好、風險看得清楚、願意放棄不划算機會的人</strong>。🐾</p>
+<hr>
+<p><strong>延伸閱讀</strong></p>
+<ul>
+<li>📚 回到 <a href="invest.html" rel="noopener">投資理財修煉 全系列目錄</a></li>
+<li>🎯 <a href="invest-leverage-warrants-futures.html" rel="noopener">槓桿工具：權證與期貨入門</a></li>
+<li>🧠 <a href="invest-mindset-long-vs-short.html" rel="noopener">投資心態：長期 vs 短期、耐心 vs 貪婪</a></li>
+</ul>
+<blockquote>本文為個人學習記錄，所有股價、費率與數字均為教學用假設，不代表實際行情與費用，非投資建議。股票期貨與融券具有槓桿與強制回補等風險，請依自身情況獨立判斷，並以券商、期貨商與期交所最新公告為準 🐾</blockquote>
+        </div>
+        <div class="sub-cta">
+            <div class="sub-cta-text">
+                <strong>喜歡這篇的話，來 YouTube 找我 🐾</strong>
+                <span>訂閱智慧喵，收看理財、投資與工具的影片分享</span>
+            </div>
+            <a href="https://www.youtube.com/@智慧喵?sub_confirmation=1" class="btn-yt" rel="noopener">訂閱頻道</a>
+        </div>
+        <div class="article-back"><a href="index.html">← 回文章列表</a></div>
+    </div>
+</article>
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand"><h4>🐾 智慧喵</h4><p>理財 · 旅遊 · 生活</p></div>
+            <div class="footer-links">
+                <a href="index.html">首頁</a>
+                <a href="invest.html">投資理財修煉</a>
+                <a href="appdev.html">App 開發指南</a>
+                <a href="csharp.html">C# 教學</a>
+                <a href="python.html">Python 教學</a>
+                <a href="tools.html">我的工具</a>
+                <a href="about.html">關於</a>
+                <a href="https://www.youtube.com/@智慧喵" rel="noopener">YouTube</a>
+            </div>
+        </div>
+        <p class="footer-copy">&copy; 2026 智慧喵. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+document.querySelector('.menu-toggle').addEventListener('click',function(){document.querySelector('.nav-links').classList.toggle('active');});
+document.querySelectorAll('.has-dropdown > .dropdown-toggle').forEach(function(t){
+    t.addEventListener('click',function(e){ e.preventDefault(); t.parentElement.classList.toggle('open'); });
+});
+</script>
+<script>
+document.querySelectorAll('.code-copy').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var pre = btn.parentElement.querySelector('code');
+    if (!pre) return;
+    var text = pre.innerText;
+    navigator.clipboard.writeText(text).then(function () {
+      var old = btn.textContent;
+      btn.textContent = '已複製';
+      btn.classList.add('copied');
+      setTimeout(function () { btn.textContent = old; btn.classList.remove('copied'); }, 1500);
+    }).catch(function () {
+      btn.textContent = '複製失敗';
+      setTimeout(function () { btn.textContent = '複製'; }, 1500);
+    });
+  });
+});
+</script>
+</body>
+</html>
