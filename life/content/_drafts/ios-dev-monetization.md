@@ -11,7 +11,7 @@ series: "appdev"
 series_stage: "iOS"
 series_order: "6"
 status: "approved"
-youtube: ""              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
+youtube: "https://youtu.be/eIktY8b5kT4"              # 錄好對應影片後填入影片 ID 或網址，會自動在文末嵌入播放器
 cover_alt: "App 產生收入的示意"
 images:
   - file: "cover.jpg"
